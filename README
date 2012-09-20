@@ -1,0 +1,105 @@
+/*******************************************************************************   
+ * Copyright (c) 2012, Lingkan Gong                                                
+ * All rights reserved.                                                            
+ *                                                                                 
+ * Redistribution and use in source and binary forms, with or without              
+ * modification, are permitted provided that the following conditions are met:     
+ *                                                                                 
+ *  * Redistributions of source code must retain the above copyright notice,       
+ *    this list of conditions and the following disclaimer.                        
+ *                                                                                 
+ *  * Redistributions in binary form must reproduce the above copyright notice,    
+ *    this list of conditions and the following disclaimer in the documentation    
+ *    and/or other materials provided with the distribution.                       
+ *                                                                                 
+ *  * Neither the name of the copyright holder(s) nor the names of its             
+ *    contributors may be used to endorse or promote products derived from this    
+ *    software without specific prior written permission.                          
+ *                                                                                 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED   
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE          
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS BE LIABLE FOR ANY           
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES      
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;    
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND     
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT      
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS   
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                    
+ *                                                                                 
+*******************************************************************************/   
+
+ReSim is a reusable library for RTL simulation of Dynamically Reconfigurable Systems
+(DRS). It uses simulation-only artifacts to mimic the behavior of the FPGA fabric
+during reconfiguration, and assists designer in detecting bugs BEFORE, DURING and 
+AFTER reconfiguration. 
+
+1. System requirement
+
+    ReSim is implemented using SystemVerilog and OVM library. It has been tested
+    using QuestaSim/ModelSim 6.5g on Windows XP Professional SP2 machine and should 
+    work on other platforms. 
+    
+    Some of the examples have only been tested on ISE/EDK 12.4. The examples also
+    require Tcl 8.4 or later. 
+    
+2. Directory structure
+    
+    doc      ---- Document
+    examples ---- Example DRS designs that uses ReSim
+    scripts  ---- Library script code
+    src      ---- Library source code
+    
+3. Running examples
+    
+    The library includes 3 examples: XDRS, Fast PCIe configuration, and State Migration. 
+    The XDRS example further include two versions: XDRS.QUICKSTART XDRS.SINGLE
+    
+    It is recommended that you run these examples in the following order:
+    
+        XDRS.QUICKSTART: 
+            This example demonstrates the minimal effort to use ReSim.
+            
+        XDRS.SINGLE:
+            This example demonstrates the advanced concepts of ReSim. The concepts
+            include, modifying artifacts for test-specific purposes (e.g. monitor, 
+            error injection), using coverage-driven verification on DRS designs. 
+        
+        Fast PCIe configuration:
+            This example demonstrates the use of ReSim on a Xilinx reference design.
+        
+        State Migration: 
+            This example demonstrates using ReSim to simulate a processor-based design
+            with EDK tools. It also demonstrates designing and simulating a system 
+            that aesses module state (FF, memory cells) via the configuration port. 
+            
+4. For in deepth explanation of ReSim library, please refer to the following publications:
+
+    * Lingkan Gong, Oliver Diessel, "Modeling Dynamically Reconfigurable Systems 
+      for Simulation-based Functional Verification", Sym. on Field-Prog. Cust. 
+      Compt. Machines (FCCM), 2011, pp. 9-16
+      
+    * Lingkan Gong, Oliver Diessel, "ReSim: A Reusable Library for RTL Simulation
+      of Dynamic Partial Reconfiguration", IEEE Int. Conf. on Field-Prog. Technology 
+      (FPT), 2011, pp. 1-8, BEST PAPER CANDIDATE
+    
+    * Lingkan Gong, Oliver Diessel, "Functionally Verifying State Saving and 
+      Restoration in Dynamically Reconfigurable Systems", ACM/SIGDA Int. Sym. on 
+      Field-Prog. Gate Arrays (FPGA) , 2012, pp. 241-244
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
