@@ -1,0 +1,51 @@
+// ==== Logic Allocation File (ReSim) ====
+// ==== Format: $frame_address $offset $bitwidth $signal_path
+
+//------------------------------------------------------------------------------
+// state_c:
+// 
+//     state_c signal is allocated to frame_address = 0x00010000, offset = 32,
+//     bitwith = 4. Note that in sll file, signal_path start from the top of the 
+//     reconfigurable region, thus the full path of the state_c signal is:
+//     
+//         $HIERACHICAL_PATH_TO_RECONFIGURABLE_REGION/state_c. 
+//
+
+0x00010000 32 4 state_c
+
+//------------------------------------------------------------------------------
+// sync_0/state_c:
+// 
+//     sync_0/state_c signal is allocated to frame_address = 0x00010000, offset = 36, 
+//     bitwith = 2. This signal is stored "next" to the state_c signal. The full 
+//     path of the sync_0/state_c signal is 
+//     
+//         $HIERACHICAL_PATH_TO_RECONFIGURABLE_REGION/sync_0/state_c. 
+//
+
+0x00010000 36 2 sync_0/state_c
+
+//------------------------------------------------------------------------------
+
+0x00010000 38 8 retrycnt
+0x00010000 46 32 data1
+0x00010000 78 32 data2
+0x00010000 110 4 tocnt
+0x00010001 32 32 stat_0/indata
+0x00010001 64 24 stat_0/incnt
+0x00010001 88 32 stat_0/outdata
+0x00010002 48 24 stat_0/outcnt
+
+//------------------------------------------------------------------------------
+// sync_0/rc_tc_0:
+// 
+//     Each frame holds 4 words: 1 word for configuration data and 3 words for 
+//     state data. Thus for all the signals stored in the spy memory, we have
+
+//         offset + bitwith <= 128 
+//     
+//     Meanwile, the user also need to make sure that signals defined in the sll 
+//     file do not overlap with each other.
+//
+
+0x00010002 96 32 sync_0/rc_tc_0

@@ -1,0 +1,120 @@
+/*******************************************************************************   
+ * Copyright (c) 2012, Lingkan Gong                                                
+ * All rights reserved.                                                            
+ *                                                                                 
+ * Redistribution and use in source and binary forms, with or without              
+ * modification, are permitted provided that the following conditions are met:     
+ *                                                                                 
+ *  * Redistributions of source code must retain the above copyright notice,       
+ *    this list of conditions and the following disclaimer.                        
+ *                                                                                 
+ *  * Redistributions in binary form must reproduce the above copyright notice,    
+ *    this list of conditions and the following disclaimer in the documentation    
+ *    and/or other materials provided with the distribution.                       
+ *                                                                                 
+ *  * Neither the name of the copyright holder(s) nor the names of its             
+ *    contributors may be used to endorse or promote products derived from this    
+ *    software without specific prior written permission.                          
+ *                                                                                 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED   
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE          
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS BE LIABLE FOR ANY           
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES      
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;    
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND     
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT      
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS   
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                    
+ *                                                                                 
+*******************************************************************************/   
+
+This example demonstrates using ReSim in an in-house design, the XDRS demonstration
+platform. To focus on verification issues, the design is simplified. This example 
+illustrates using ReSim with designs that have multiple reconfigurable regions. 
+It is strongely recommended that the readers run the XDRS.QUICKSTART example 
+before running this example. 
+
+TO Run the "XDRS.MULTIPLE" example:
+
+1. Understand the XDRS design 
+    
+    1.1 The XDRS design is similar to the "XDRS.QUICKSTART" example but has 
+        three reconfigurable regions: math_0_rr, math_1_rr & lpfilter_2_rr
+        
+        The math_0_rr, math_1_rr regions are identical (in terms of the 
+        reconfigurable modules associated within the regions). However, 
+        they are viewed as different regions in ReSim-based simulatoin and
+        are defined using different names in the auto_generation.tcl script. 
+        
+        The lpfilter_2_rr is new in XDRS.MULTIPLE. This region instantiate 
+        two versions of a Low Pass FIR Filters. Both filters have the same
+        coefficient set. The MAC design uses less resource but has lower
+        throughput while the TF one is parallel and uses more resource. 
+        
+        The two alternative architectures (MAC, TF) of the filter are specified
+        by one generic/parameter value of the filter. Therefore, the 
+        lpfilter_2_rr has two modules with different generics. ReSim
+        support multiple same modules in one reconfigurable region. 
+        
+        The reconfiguration of lpfilter_2_rr is different as well. Upon a 
+        reconfiguration is requested by the manager, lpfilter_2_rr stops 
+        taking new data samples. It then flushes the internal filter
+        pipeline by feeding zeros. After all pipelined data samples have 
+        been successfully transmitted to the consumer, the lpfilter_2_rr
+        acknowledges the reconfiguration request. 
+        
+    1.2 Test(s)
+    
+        The TDPR_STREAMING test drives to the design with impluses (i.e.,
+        a one followed by zeros), which tests the impluse response of the 
+        filters. The TDPR_RANDOM test drives purely random stimuli. 
+
+2. Preparations for running simulations
+     
+    2.1 Create a "settings.do" file in the working folder
+    This file is required to setup directory pathes
+    
+        set RSV_HOME "C:/DPR_TOOLS/ReSim"
+        set OVM_HOME "C:/ModelSim6.5g/verilog_src/ovm-2.1.1"
+    
+        source "$RSV_HOME/scripts/resim.do"
+        
+    2.2 Run auto_generation.tcl
+        
+        This auto_generation.tcl script is different from the one used in 
+        the quickstart or single project. It defines the three reconfigurable 
+        regions, and the modules associated to them. 
+        
+    2.3 Read ./artifacts/my_solyr_todolist.txt 
+        
+3. Run one single test
+    
+    3.1 Open simulate_mti.do and change the name of the test to be compiled
+        (line 34). For example, to run the random test (tdpr_random.sv), change to
+    
+        vlog ..... +define+TEST_DPR_RANDOM "./xdrs/xdrs.sv"
+        
+        Valid test names include:
+        
+            TEST_DPR_STREAMING
+            TEST_DPR_RANDOM
+        
+    3.2 Start ModelSim in the working directory type in the prompt
+     
+        ModelSim> do simulate_mti.do
+     
+4. For in deepth explanation of ReSim library, please refer to the following publications:
+
+    * Lingkan Gong, Oliver Diessel, "Modeling Dynamically Reconfigurable Systems 
+      for Simulation-based Functional Verification", Sym. on Field-Prog. Cust. 
+      Compt. Machines (FCCM), 2011, pp. 9-16
+      
+    * Lingkan Gong, Oliver Diessel, "ReSim: A Reusable Library for RTL Simulation
+      of Dynamic Partial Reconfiguration", IEEE Int. Conf. on Field-Prog. Technology 
+      (FPT), 2011, pp. 1-8, BEST PAPER CANDIDATE
+    
+    * Lingkan Gong, Oliver Diessel, "Functionally Verifying State Saving and 
+      Restoration in Dynamically Reconfigurable Systems", ACM/SIGDA Int. Sym. on 
+      Field-Prog. Gate Arrays (FPGA) , 2012, pp. 241-244
+      

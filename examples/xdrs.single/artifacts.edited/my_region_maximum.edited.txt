@@ -1,0 +1,39 @@
+// ==== Logic Allocation File (ReSim) ====
+// ==== Format: $frame_address $offset $bitwidth $signal_path
+
+//------------------------------------------------------------------------------
+// data1:
+// 
+//     data1 signal is allocated to frame_address = 0x00000000, offset = 32,
+//     bitwith = 32. Note that in sll file, signal_path start from the top of the 
+//     reconfigurable region, thus the full path of the data1 signal is:
+//     
+//         $HIERACHICAL_PATH_TO_RECONFIGURABLE_REGION/data1. 
+//
+
+0x00000000 32 32 data1
+
+//------------------------------------------------------------------------------
+
+0x00000000 64 4  state_c
+0x00000000 68 32 data2
+0x00000000 100 8 retrycnt
+0x00000000 108 2 sync_0/state_c
+0x00000000 110 4 tocnt
+0x00000001 32 32 stat_0/outdata
+
+//------------------------------------------------------------------------------
+// stat_0/outcnt:
+// 
+//     For signals that are more than 32 bits, they can be stored across multiple
+//     words in a frame. But it should not exceed offset 128 as one spy memory 
+//     frame only has 4 words (128 bits), one word for configuration data and 
+//     the remaining 3 for state data.
+// 
+
+0x00000001 64 48 stat_0/outcnt
+
+//------------------------------------------------------------------------------
+
+0x00000002 32 32 stat_0/indata
+0x00000002 64 48 stat_0/incnt

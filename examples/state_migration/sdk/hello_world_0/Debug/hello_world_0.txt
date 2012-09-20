@@ -1,0 +1,926 @@
+
+./hello_world_0/Debug/hello_world_0.elf:     file format elf32-powerpc
+
+Disassembly of section .vectors:
+
+00000000 <dummy_vector_1>:
+   0:	94 21 ff f0 	stwu	r1,-16(r1)
+   4:	93 e1 00 0c 	stw	r31,12(r1)
+   8:	7c 3f 0b 78 	mr	r31,r1
+   c:	81 61 00 00 	lwz	r11,0(r1)
+  10:	83 eb ff fc 	lwz	r31,-4(r11)
+  14:	7d 61 5b 78 	mr	r1,r11
+  18:	4e 80 00 20 	blr
+
+0000001c <dummy_vector_2>:
+  1c:	94 21 ff f0 	stwu	r1,-16(r1)
+  20:	93 e1 00 0c 	stw	r31,12(r1)
+  24:	7c 3f 0b 78 	mr	r31,r1
+  28:	81 61 00 00 	lwz	r11,0(r1)
+  2c:	83 eb ff fc 	lwz	r31,-4(r11)
+  30:	7d 61 5b 78 	mr	r1,r11
+  34:	4e 80 00 20 	blr
+Disassembly of section .text:
+
+00010000 <_start>:
+   10000:	48 00 02 f1 	bl	102f0 <__cpu_init>
+   10004:	3c a0 00 01 	lis	r5,1
+   10008:	60 a5 8b d8 	ori	r5,r5,35800
+   1000c:	81 a5 80 14 	lwz	r13,-32748(r5)
+   10010:	80 45 80 18 	lwz	r2,-32744(r5)
+   10014:	80 c5 80 00 	lwz	r6,-32768(r5)
+   10018:	80 e5 80 04 	lwz	r7,-32764(r5)
+   1001c:	7c 86 38 40 	cmplw	cr1,r6,r7
+   10020:	40 84 00 3c 	bge	cr1,1005c <_start+0x5c>
+   10024:	38 00 00 00 	li	r0,0
+   10028:	7d 06 38 50 	subf	r8,r6,r7
+   1002c:	55 09 f0 bf 	rlwinm.	r9,r8,30,2,31
+   10030:	41 82 00 14 	beq	10044 <_start+0x44>
+   10034:	7d 29 03 a6 	mtctr	r9
+   10038:	38 c6 ff fc 	addi	r6,r6,-4
+   1003c:	94 06 00 04 	stwu	r0,4(r6)
+   10040:	42 00 ff fc 	bdnz	1003c <_start+0x3c>
+   10044:	71 09 00 03 	andi.	r9,r8,3
+   10048:	41 82 00 14 	beq	1005c <_start+0x5c>
+   1004c:	7d 29 03 a6 	mtctr	r9
+   10050:	38 c6 ff ff 	addi	r6,r6,-1
+   10054:	9c 06 00 01 	stbu	r0,1(r6)
+   10058:	42 00 ff fc 	bdnz	10054 <_start+0x54>
+   1005c:	80 c5 80 08 	lwz	r6,-32760(r5)
+   10060:	80 e5 80 0c 	lwz	r7,-32756(r5)
+   10064:	7c 86 38 40 	cmplw	cr1,r6,r7
+   10068:	40 84 00 3c 	bge	cr1,100a4 <_start+0xa4>
+   1006c:	38 00 00 00 	li	r0,0
+   10070:	7d 06 38 50 	subf	r8,r6,r7
+   10074:	55 09 f0 bf 	rlwinm.	r9,r8,30,2,31
+   10078:	41 82 00 14 	beq	1008c <_start+0x8c>
+   1007c:	7d 29 03 a6 	mtctr	r9
+   10080:	38 c6 ff fc 	addi	r6,r6,-4
+   10084:	94 06 00 04 	stwu	r0,4(r6)
+   10088:	42 00 ff fc 	bdnz	10084 <_start+0x84>
+   1008c:	71 09 00 03 	andi.	r9,r8,3
+   10090:	41 82 00 14 	beq	100a4 <_start+0xa4>
+   10094:	7d 29 03 a6 	mtctr	r9
+   10098:	38 c6 ff ff 	addi	r6,r6,-1
+   1009c:	9c 06 00 01 	stbu	r0,1(r6)
+   100a0:	42 00 ff fc 	bdnz	1009c <_start+0x9c>
+   100a4:	80 25 80 10 	lwz	r1,-32752(r5)
+   100a8:	38 21 ff f8 	addi	r1,r1,-8
+   100ac:	3c 00 00 00 	lis	r0,0
+   100b0:	90 01 00 00 	stw	r0,0(r1)
+   100b4:	7c 1c 43 a6 	mttbl	r0
+   100b8:	7c 1d 43 a6 	mttbu	r0
+   100bc:	48 00 09 cd 	bl	10a88 <__init>
+   100c0:	48 00 01 11 	bl	101d0 <main>
+   100c4:	48 00 09 e9 	bl	10aac <__fini>
+   100c8:	48 00 07 d9 	bl	108a0 <exit>
+
+000100cc <_exit>:
+   100cc:	48 00 00 00 	b	100cc <_exit>
+
+000100d0 <__do_global_dtors_aux>:
+   100d0:	94 21 ff f0 	stwu	r1,-16(r1)
+   100d4:	7c 08 02 a6 	mflr	r0
+   100d8:	93 c1 00 08 	stw	r30,8(r1)
+   100dc:	3f c0 00 01 	lis	r30,1
+   100e0:	90 01 00 14 	stw	r0,20(r1)
+   100e4:	88 1e 0c 18 	lbz	r0,3096(r30)
+   100e8:	93 e1 00 0c 	stw	r31,12(r1)
+   100ec:	2f 80 00 00 	cmpwi	cr7,r0,0
+   100f0:	40 9e 00 5c 	bne	cr7,1014c <__do_global_dtors_aux+0x7c>
+   100f4:	3f e0 00 01 	lis	r31,1
+   100f8:	81 7f 0a e4 	lwz	r11,2788(r31)
+   100fc:	81 2b 00 00 	lwz	r9,0(r11)
+   10100:	2f 89 00 00 	cmpwi	cr7,r9,0
+   10104:	41 9e 00 24 	beq	cr7,10128 <__do_global_dtors_aux+0x58>
+   10108:	38 0b 00 04 	addi	r0,r11,4
+   1010c:	7d 29 03 a6 	mtctr	r9
+   10110:	90 1f 0a e4 	stw	r0,2788(r31)
+   10114:	4e 80 04 21 	bctrl
+   10118:	81 7f 0a e4 	lwz	r11,2788(r31)
+   1011c:	81 2b 00 00 	lwz	r9,0(r11)
+   10120:	2f 89 00 00 	cmpwi	cr7,r9,0
+   10124:	40 9e ff e4 	bne	cr7,10108 <__do_global_dtors_aux+0x38>
+   10128:	3d 20 00 00 	lis	r9,0
+   1012c:	39 29 00 00 	addi	r9,r9,0
+   10130:	2f 89 00 00 	cmpwi	cr7,r9,0
+   10134:	41 9e 00 10 	beq	cr7,10144 <__do_global_dtors_aux+0x74>
+   10138:	3c 60 00 01 	lis	r3,1
+   1013c:	38 63 0c 04 	addi	r3,r3,3076
+   10140:	4b fe fe c1 	bl	0 <dummy_vector_1>
+   10144:	38 00 00 01 	li	r0,1
+   10148:	98 1e 0c 18 	stb	r0,3096(r30)
+   1014c:	80 01 00 14 	lwz	r0,20(r1)
+   10150:	83 c1 00 08 	lwz	r30,8(r1)
+   10154:	83 e1 00 0c 	lwz	r31,12(r1)
+   10158:	38 21 00 10 	addi	r1,r1,16
+   1015c:	7c 08 03 a6 	mtlr	r0
+   10160:	4e 80 00 20 	blr
+
+00010164 <frame_dummy>:
+   10164:	3d 20 00 00 	lis	r9,0
+   10168:	94 21 ff f0 	stwu	r1,-16(r1)
+   1016c:	39 29 00 00 	addi	r9,r9,0
+   10170:	7c 08 02 a6 	mflr	r0
+   10174:	2f 89 00 00 	cmpwi	cr7,r9,0
+   10178:	3c 60 00 01 	lis	r3,1
+   1017c:	3c 80 00 01 	lis	r4,1
+   10180:	90 01 00 14 	stw	r0,20(r1)
+   10184:	38 63 0c 04 	addi	r3,r3,3076
+   10188:	38 84 0c 1c 	addi	r4,r4,3100
+   1018c:	41 9e 00 08 	beq	cr7,10194 <frame_dummy+0x30>
+   10190:	4b fe fe 71 	bl	0 <dummy_vector_1>
+   10194:	3d 60 00 01 	lis	r11,1
+   10198:	3d 20 00 00 	lis	r9,0
+   1019c:	80 0b 0c 0c 	lwz	r0,3084(r11)
+   101a0:	39 29 00 00 	addi	r9,r9,0
+   101a4:	38 6b 0c 0c 	addi	r3,r11,3084
+   101a8:	2f 80 00 00 	cmpwi	cr7,r0,0
+   101ac:	41 9e 00 14 	beq	cr7,101c0 <frame_dummy+0x5c>
+   101b0:	2f 89 00 00 	cmpwi	cr7,r9,0
+   101b4:	41 9e 00 0c 	beq	cr7,101c0 <frame_dummy+0x5c>
+   101b8:	7d 29 03 a6 	mtctr	r9
+   101bc:	4e 80 04 21 	bctrl
+   101c0:	80 01 00 14 	lwz	r0,20(r1)
+   101c4:	38 21 00 10 	addi	r1,r1,16
+   101c8:	7c 08 03 a6 	mtlr	r0
+   101cc:	4e 80 00 20 	blr
+
+000101d0 <main>:
+   101d0:	94 21 ff f0 	stwu	r1,-16(r1)
+   101d4:	7c 08 02 a6 	mflr	r0
+   101d8:	93 e1 00 0c 	stw	r31,12(r1)
+   101dc:	90 01 00 14 	stw	r0,20(r1)
+   101e0:	7c 3f 0b 78 	mr	r31,r1
+   101e4:	48 00 00 ad 	bl	10290 <init_platform>
+   101e8:	3d 20 00 01 	lis	r9,1
+   101ec:	38 69 0a cc 	addi	r3,r9,2764
+   101f0:	48 00 01 05 	bl	102f4 <print>
+   101f4:	48 00 00 cd 	bl	102c0 <cleanup_platform>
+   101f8:	38 00 00 00 	li	r0,0
+   101fc:	7c 03 03 78 	mr	r3,r0
+   10200:	81 61 00 00 	lwz	r11,0(r1)
+   10204:	80 0b 00 04 	lwz	r0,4(r11)
+   10208:	7c 08 03 a6 	mtlr	r0
+   1020c:	83 eb ff fc 	lwz	r31,-4(r11)
+   10210:	7d 61 5b 78 	mr	r1,r11
+   10214:	4e 80 00 20 	blr
+
+00010218 <enable_caches>:
+   10218:	94 21 ff f0 	stwu	r1,-16(r1)
+   1021c:	7c 08 02 a6 	mflr	r0
+   10220:	93 e1 00 0c 	stw	r31,12(r1)
+   10224:	90 01 00 14 	stw	r0,20(r1)
+   10228:	7c 3f 0b 78 	mr	r31,r1
+   1022c:	3c 60 c0 00 	lis	r3,-16384
+   10230:	60 63 00 01 	ori	r3,r3,1
+   10234:	48 00 03 e5 	bl	10618 <Xil_ICacheEnableRegion>
+   10238:	3c 60 c0 00 	lis	r3,-16384
+   1023c:	60 63 00 01 	ori	r3,r3,1
+   10240:	48 00 02 f5 	bl	10534 <Xil_DCacheEnableRegion>
+   10244:	81 61 00 00 	lwz	r11,0(r1)
+   10248:	80 0b 00 04 	lwz	r0,4(r11)
+   1024c:	7c 08 03 a6 	mtlr	r0
+   10250:	83 eb ff fc 	lwz	r31,-4(r11)
+   10254:	7d 61 5b 78 	mr	r1,r11
+   10258:	4e 80 00 20 	blr
+
+0001025c <disable_caches>:
+   1025c:	94 21 ff f0 	stwu	r1,-16(r1)
+   10260:	7c 08 02 a6 	mflr	r0
+   10264:	93 e1 00 0c 	stw	r31,12(r1)
+   10268:	90 01 00 14 	stw	r0,20(r1)
+   1026c:	7c 3f 0b 78 	mr	r31,r1
+   10270:	48 00 02 11 	bl	10480 <Xil_DCacheDisable>
+   10274:	48 00 03 79 	bl	105ec <Xil_ICacheDisable>
+   10278:	81 61 00 00 	lwz	r11,0(r1)
+   1027c:	80 0b 00 04 	lwz	r0,4(r11)
+   10280:	7c 08 03 a6 	mtlr	r0
+   10284:	83 eb ff fc 	lwz	r31,-4(r11)
+   10288:	7d 61 5b 78 	mr	r1,r11
+   1028c:	4e 80 00 20 	blr
+
+00010290 <init_platform>:
+   10290:	94 21 ff f0 	stwu	r1,-16(r1)
+   10294:	7c 08 02 a6 	mflr	r0
+   10298:	93 e1 00 0c 	stw	r31,12(r1)
+   1029c:	90 01 00 14 	stw	r0,20(r1)
+   102a0:	7c 3f 0b 78 	mr	r31,r1
+   102a4:	4b ff ff 75 	bl	10218 <enable_caches>
+   102a8:	81 61 00 00 	lwz	r11,0(r1)
+   102ac:	80 0b 00 04 	lwz	r0,4(r11)
+   102b0:	7c 08 03 a6 	mtlr	r0
+   102b4:	83 eb ff fc 	lwz	r31,-4(r11)
+   102b8:	7d 61 5b 78 	mr	r1,r11
+   102bc:	4e 80 00 20 	blr
+
+000102c0 <cleanup_platform>:
+   102c0:	94 21 ff f0 	stwu	r1,-16(r1)
+   102c4:	7c 08 02 a6 	mflr	r0
+   102c8:	93 e1 00 0c 	stw	r31,12(r1)
+   102cc:	90 01 00 14 	stw	r0,20(r1)
+   102d0:	7c 3f 0b 78 	mr	r31,r1
+   102d4:	4b ff ff 89 	bl	1025c <disable_caches>
+   102d8:	81 61 00 00 	lwz	r11,0(r1)
+   102dc:	80 0b 00 04 	lwz	r0,4(r11)
+   102e0:	7c 08 03 a6 	mtlr	r0
+   102e4:	83 eb ff fc 	lwz	r31,-4(r11)
+   102e8:	7d 61 5b 78 	mr	r1,r11
+   102ec:	4e 80 00 20 	blr
+
+000102f0 <__cpu_init>:
+   102f0:	4e 80 00 20 	blr
+
+000102f4 <print>:
+   102f4:	94 21 ff f0 	stwu	r1,-16(r1)
+   102f8:	7c 08 02 a6 	mflr	r0
+   102fc:	93 e1 00 0c 	stw	r31,12(r1)
+   10300:	7c 7f 1b 78 	mr	r31,r3
+   10304:	90 01 00 14 	stw	r0,20(r1)
+   10308:	88 63 00 00 	lbz	r3,0(r3)
+   1030c:	2f 83 00 00 	cmpwi	cr7,r3,0
+   10310:	41 9e 00 14 	beq	cr7,10324 <print+0x30>
+   10314:	48 00 03 f9 	bl	1070c <outbyte>
+   10318:	8c 7f 00 01 	lbzu	r3,1(r31)
+   1031c:	2f 83 00 00 	cmpwi	cr7,r3,0
+   10320:	40 9e ff f4 	bne	cr7,10314 <print+0x20>
+   10324:	80 01 00 14 	lwz	r0,20(r1)
+   10328:	83 e1 00 0c 	lwz	r31,12(r1)
+   1032c:	38 21 00 10 	addi	r1,r1,16
+   10330:	7c 08 03 a6 	mtlr	r0
+   10334:	4e 80 00 20 	blr
+
+00010338 <Xil_CacheWriteCCR0>:
+   10338:	7c 00 04 ac 	msync
+   1033c:	4c 00 01 2c 	isync
+   10340:	7c 73 eb a6 	mtccr0	r3
+   10344:	7c 00 04 ac 	msync
+   10348:	4c 00 01 2c 	isync
+   1034c:	4e 80 00 20 	blr
+
+00010350 <Xil_DCacheFlushRange>:
+   10350:	2c 04 00 00 	cmpwi	r4,0
+   10354:	4d 82 00 20 	beqlr	
+   10358:	54 69 00 34 	rlwinm	r9,r3,0,0,26
+   1035c:	7c 64 1a 14 	add	r3,r4,r3
+   10360:	7f 83 48 40 	cmplw	cr7,r3,r9
+   10364:	4c 9d 00 20 	blelr	cr7
+   10368:	38 00 00 00 	li	r0,0
+   1036c:	7c 00 48 ac 	dcbf	r0,r9
+   10370:	7c 00 04 ac 	msync
+   10374:	4c 00 01 2c 	isync
+   10378:	39 29 00 20 	addi	r9,r9,32
+   1037c:	7f 83 48 40 	cmplw	cr7,r3,r9
+   10380:	41 9d ff ec 	bgt	cr7,1036c <Xil_DCacheFlushRange+0x1c>
+   10384:	4e 80 00 20 	blr
+
+00010388 <Xil_DCacheFlush>:
+   10388:	38 00 00 10 	li	r0,16
+   1038c:	39 60 00 00 	li	r11,0
+   10390:	7c 09 03 a6 	mtctr	r0
+   10394:	39 20 00 01 	li	r9,1
+   10398:	7c 09 17 64 	tlbre	r0,r9,2
+   1039c:	7c 00 04 ac 	msync
+   103a0:	70 0a 08 00 	andi.	r10,r0,2048
+   103a4:	54 0a b7 fe 	rlwinm	r10,r0,22,31,31
+   103a8:	2f 0a 00 00 	cmpwi	cr6,r10,0
+   103ac:	7c 00 00 26 	mfcr	r0
+   103b0:	54 00 1f fe 	rlwinm	r0,r0,3,31,31
+   103b4:	40 9a 00 0c 	bne	cr6,103c0 <Xil_DCacheFlush+0x38>
+   103b8:	7d 6b 02 14 	add	r11,r11,r0
+   103bc:	4c 00 01 2c 	isync
+   103c0:	39 29 00 02 	addi	r9,r9,2
+   103c4:	42 00 ff d4 	bdnz	10398 <Xil_DCacheFlush+0x10>
+   103c8:	2f 8b 00 00 	cmpwi	cr7,r11,0
+   103cc:	41 9e 00 60 	beq	cr7,1042c <Xil_DCacheFlush+0xa4>
+   103d0:	38 00 04 00 	li	r0,1024
+   103d4:	39 60 00 00 	li	r11,0
+   103d8:	7c 09 03 a6 	mtctr	r0
+   103dc:	48 00 00 0c 	b	103e8 <Xil_DCacheFlush+0x60>
+   103e0:	39 6b 00 20 	addi	r11,r11,32
+   103e4:	42 40 00 48 	bdz	1042c <Xil_DCacheFlush+0xa4>
+   103e8:	7c 00 04 ac 	msync
+   103ec:	38 00 00 00 	li	r0,0
+   103f0:	7c 00 5b cc 	dcread	r0,r11
+   103f4:	4c 00 01 2c 	isync
+   103f8:	7d 3d e2 a6 	mfdcdbtrh	r9
+   103fc:	38 00 ff 7f 	li	r0,-129
+   10400:	7d 20 03 78 	or	r0,r9,r0
+   10404:	2f 80 ff ff 	cmpwi	cr7,r0,-1
+   10408:	55 20 00 2e 	rlwinm	r0,r9,0,0,23
+   1040c:	55 69 06 3e 	clrlwi	r9,r11,24
+   10410:	40 9e ff d0 	bne	cr7,103e0 <Xil_DCacheFlush+0x58>
+   10414:	7c 09 4b 78 	or	r9,r0,r9
+   10418:	38 00 00 00 	li	r0,0
+   1041c:	7c 00 48 ac 	dcbf	r0,r9
+   10420:	7c 00 04 ac 	msync
+   10424:	39 6b 00 20 	addi	r11,r11,32
+   10428:	42 00 ff c0 	bdnz	103e8 <Xil_DCacheFlush+0x60>
+   1042c:	7c 00 04 ac 	msync
+   10430:	4e 80 00 20 	blr
+
+00010434 <Xil_DCacheInvalidateRange>:
+   10434:	2c 04 00 00 	cmpwi	r4,0
+   10438:	4d 82 00 20 	beqlr	
+   1043c:	54 69 00 34 	rlwinm	r9,r3,0,0,26
+   10440:	7c 64 1a 14 	add	r3,r4,r3
+   10444:	7f 83 48 40 	cmplw	cr7,r3,r9
+   10448:	4c 9d 00 20 	blelr	cr7
+   1044c:	38 00 00 00 	li	r0,0
+   10450:	7c 00 4b ac 	dcbi	r0,r9
+   10454:	7c 00 04 ac 	msync
+   10458:	4c 00 01 2c 	isync
+   1045c:	39 29 00 20 	addi	r9,r9,32
+   10460:	7f 83 48 40 	cmplw	cr7,r3,r9
+   10464:	41 9d ff ec 	bgt	cr7,10450 <Xil_DCacheInvalidateRange+0x1c>
+   10468:	4e 80 00 20 	blr
+
+0001046c <Xil_DCacheInvalidate>:
+   1046c:	7c 00 04 ac 	msync
+   10470:	38 00 00 00 	li	r0,0
+   10474:	7c 00 03 8c 	dccci	r0,r0
+   10478:	4c 00 01 2c 	isync
+   1047c:	4e 80 00 20 	blr
+
+00010480 <Xil_DCacheDisable>:
+   10480:	38 00 00 10 	li	r0,16
+   10484:	39 40 00 00 	li	r10,0
+   10488:	7c 09 03 a6 	mtctr	r0
+   1048c:	39 60 00 01 	li	r11,1
+   10490:	7c 0b 17 64 	tlbre	r0,r11,2
+   10494:	7c 00 04 ac 	msync
+   10498:	70 09 08 00 	andi.	r9,r0,2048
+   1049c:	54 09 b7 fe 	rlwinm	r9,r0,22,31,31
+   104a0:	2f 09 00 00 	cmpwi	cr6,r9,0
+   104a4:	54 00 05 66 	rlwinm	r0,r0,0,21,19
+   104a8:	7d 20 00 26 	mfcr	r9
+   104ac:	55 29 1f fe 	rlwinm	r9,r9,3,31,31
+   104b0:	40 9a 00 14 	bne	cr6,104c4 <Xil_DCacheDisable+0x44>
+   104b4:	7d 4a 4a 14 	add	r10,r10,r9
+   104b8:	60 00 04 00 	ori	r0,r0,1024
+   104bc:	7c 0b 17 a4 	tlbwe	r0,r11,2
+   104c0:	4c 00 01 2c 	isync
+   104c4:	39 6b 00 02 	addi	r11,r11,2
+   104c8:	42 00 ff c8 	bdnz	10490 <Xil_DCacheDisable+0x10>
+   104cc:	2f 8a 00 00 	cmpwi	cr7,r10,0
+   104d0:	41 9e 00 60 	beq	cr7,10530 <Xil_DCacheDisable+0xb0>
+   104d4:	38 00 04 00 	li	r0,1024
+   104d8:	39 60 00 00 	li	r11,0
+   104dc:	7c 09 03 a6 	mtctr	r0
+   104e0:	48 00 00 0c 	b	104ec <Xil_DCacheDisable+0x6c>
+   104e4:	39 6b 00 20 	addi	r11,r11,32
+   104e8:	42 40 00 48 	bdz	10530 <Xil_DCacheDisable+0xb0>
+   104ec:	7c 00 04 ac 	msync
+   104f0:	38 00 00 00 	li	r0,0
+   104f4:	7c 00 5b cc 	dcread	r0,r11
+   104f8:	4c 00 01 2c 	isync
+   104fc:	7d 3d e2 a6 	mfdcdbtrh	r9
+   10500:	38 00 ff 7f 	li	r0,-129
+   10504:	7d 20 03 78 	or	r0,r9,r0
+   10508:	2f 80 ff ff 	cmpwi	cr7,r0,-1
+   1050c:	55 20 00 2e 	rlwinm	r0,r9,0,0,23
+   10510:	55 69 06 3e 	clrlwi	r9,r11,24
+   10514:	40 9e ff d0 	bne	cr7,104e4 <Xil_DCacheDisable+0x64>
+   10518:	7c 09 4b 78 	or	r9,r0,r9
+   1051c:	38 00 00 00 	li	r0,0
+   10520:	7c 00 48 ac 	dcbf	r0,r9
+   10524:	7c 00 04 ac 	msync
+   10528:	39 6b 00 20 	addi	r11,r11,32
+   1052c:	42 00 ff c0 	bdnz	104ec <Xil_DCacheDisable+0x6c>
+   10530:	4b ff ff 3c 	b	1046c <Xil_DCacheInvalidate>
+
+00010534 <Xil_DCacheEnableRegion>:
+   10534:	94 21 ff f0 	stwu	r1,-16(r1)
+   10538:	7c 08 02 a6 	mflr	r0
+   1053c:	93 e1 00 0c 	stw	r31,12(r1)
+   10540:	7c 7f 1b 78 	mr	r31,r3
+   10544:	90 01 00 14 	stw	r0,20(r1)
+   10548:	4b ff ff 39 	bl	10480 <Xil_DCacheDisable>
+   1054c:	38 00 00 00 	li	r0,0
+   10550:	7c 18 e3 a6 	mtdvlim	r0
+   10554:	39 20 00 00 	li	r9,0
+   10558:	7d 30 e3 a6 	mtdnv0	r9
+   1055c:	7c 11 e3 a6 	mtdnv1	r0
+   10560:	7d 32 e3 a6 	mtdnv2	r9
+   10564:	7c 13 e3 a6 	mtdnv3	r0
+   10568:	7d 34 e3 a6 	mtdtv0	r9
+   1056c:	7c 15 e3 a6 	mtdtv1	r0
+   10570:	7d 36 e3 a6 	mtdtv2	r9
+   10574:	7c 17 e3 a6 	mtdtv3	r0
+   10578:	2f 9f 00 00 	cmpwi	cr7,r31,0
+   1057c:	41 9e 00 40 	beq	cr7,105bc <Xil_DCacheEnableRegion+0x88>
+   10580:	38 00 00 10 	li	r0,16
+   10584:	39 20 00 1f 	li	r9,31
+   10588:	7c 09 03 a6 	mtctr	r0
+   1058c:	48 00 00 08 	b	10594 <Xil_DCacheEnableRegion+0x60>
+   10590:	41 82 00 2c 	beq	105bc <Xil_DCacheEnableRegion+0x88>
+   10594:	73 e0 00 03 	andi.	r0,r31,3
+   10598:	41 82 00 18 	beq	105b0 <Xil_DCacheEnableRegion+0x7c>
+   1059c:	7c 09 17 64 	tlbre	r0,r9,2
+   105a0:	7c 00 04 ac 	msync
+   105a4:	54 00 05 a8 	rlwinm	r0,r0,0,22,20
+   105a8:	7c 09 17 a4 	tlbwe	r0,r9,2
+   105ac:	4c 00 01 2c 	isync
+   105b0:	39 29 ff fe 	addi	r9,r9,-2
+   105b4:	57 ff f0 bf 	rlwinm.	r31,r31,30,2,31
+   105b8:	42 00 ff d8 	bdnz	10590 <Xil_DCacheEnableRegion+0x5c>
+   105bc:	80 01 00 14 	lwz	r0,20(r1)
+   105c0:	83 e1 00 0c 	lwz	r31,12(r1)
+   105c4:	38 21 00 10 	addi	r1,r1,16
+   105c8:	7c 08 03 a6 	mtlr	r0
+   105cc:	4e 80 00 20 	blr
+
+000105d0 <Xil_DCacheEnable>:
+   105d0:	3c 60 c0 00 	lis	r3,-16384
+   105d4:	60 63 00 01 	ori	r3,r3,1
+   105d8:	4b ff ff 5c 	b	10534 <Xil_DCacheEnableRegion>
+
+000105dc <Xil_ICacheInvalidate>:
+   105dc:	7c 00 04 ac 	msync
+   105e0:	7c 00 07 8c 	iccci	r0,r0
+   105e4:	4c 00 01 2c 	isync
+   105e8:	4e 80 00 20 	blr
+
+000105ec <Xil_ICacheDisable>:
+   105ec:	38 00 00 10 	li	r0,16
+   105f0:	39 20 00 00 	li	r9,0
+   105f4:	7c 09 03 a6 	mtctr	r0
+   105f8:	7c 09 17 64 	tlbre	r0,r9,2
+   105fc:	7c 00 04 ac 	msync
+   10600:	60 00 04 00 	ori	r0,r0,1024
+   10604:	7c 09 17 a4 	tlbwe	r0,r9,2
+   10608:	4c 00 01 2c 	isync
+   1060c:	39 29 00 02 	addi	r9,r9,2
+   10610:	42 00 ff e8 	bdnz	105f8 <Xil_ICacheDisable+0xc>
+   10614:	4b ff ff c8 	b	105dc <Xil_ICacheInvalidate>
+
+00010618 <Xil_ICacheEnableRegion>:
+   10618:	94 21 ff f0 	stwu	r1,-16(r1)
+   1061c:	7c 08 02 a6 	mflr	r0
+   10620:	93 e1 00 0c 	stw	r31,12(r1)
+   10624:	7c 7f 1b 78 	mr	r31,r3
+   10628:	90 01 00 14 	stw	r0,20(r1)
+   1062c:	4b ff ff c1 	bl	105ec <Xil_ICacheDisable>
+   10630:	38 00 00 00 	li	r0,0
+   10634:	7c 19 e3 a6 	mtivlim	r0
+   10638:	39 20 00 00 	li	r9,0
+   1063c:	7d 30 db a6 	mtinv0	r9
+   10640:	7c 11 db a6 	mtinv1	r0
+   10644:	7d 32 db a6 	mtinv2	r9
+   10648:	7c 13 db a6 	mtinv3	r0
+   1064c:	7d 34 db a6 	mtitv0	r9
+   10650:	7c 15 db a6 	mtitv1	r0
+   10654:	7d 36 db a6 	mtitv2	r9
+   10658:	7c 17 db a6 	mtitv3	r0
+   1065c:	2f 9f 00 00 	cmpwi	cr7,r31,0
+   10660:	41 9e 00 40 	beq	cr7,106a0 <Xil_ICacheEnableRegion+0x88>
+   10664:	38 00 00 10 	li	r0,16
+   10668:	39 20 00 1e 	li	r9,30
+   1066c:	7c 09 03 a6 	mtctr	r0
+   10670:	48 00 00 08 	b	10678 <Xil_ICacheEnableRegion+0x60>
+   10674:	41 82 00 2c 	beq	106a0 <Xil_ICacheEnableRegion+0x88>
+   10678:	73 e0 00 03 	andi.	r0,r31,3
+   1067c:	41 82 00 18 	beq	10694 <Xil_ICacheEnableRegion+0x7c>
+   10680:	7c 09 17 64 	tlbre	r0,r9,2
+   10684:	7c 00 04 ac 	msync
+   10688:	54 00 05 a8 	rlwinm	r0,r0,0,22,20
+   1068c:	7c 09 17 a4 	tlbwe	r0,r9,2
+   10690:	4c 00 01 2c 	isync
+   10694:	39 29 ff fe 	addi	r9,r9,-2
+   10698:	57 ff f0 bf 	rlwinm.	r31,r31,30,2,31
+   1069c:	42 00 ff d8 	bdnz	10674 <Xil_ICacheEnableRegion+0x5c>
+   106a0:	80 01 00 14 	lwz	r0,20(r1)
+   106a4:	83 e1 00 0c 	lwz	r31,12(r1)
+   106a8:	38 21 00 10 	addi	r1,r1,16
+   106ac:	7c 08 03 a6 	mtlr	r0
+   106b0:	4e 80 00 20 	blr
+
+000106b4 <Xil_ICacheEnable>:
+   106b4:	3c 60 c0 00 	lis	r3,-16384
+   106b8:	60 63 00 01 	ori	r3,r3,1
+   106bc:	4b ff ff 5c 	b	10618 <Xil_ICacheEnableRegion>
+
+000106c0 <Xil_ICacheInvalidateRange>:
+   106c0:	2c 04 00 00 	cmpwi	r4,0
+   106c4:	4d 82 00 20 	beqlr	
+   106c8:	54 6a 00 34 	rlwinm	r10,r3,0,0,26
+   106cc:	7c 64 1a 14 	add	r3,r4,r3
+   106d0:	7f 83 50 40 	cmplw	cr7,r3,r10
+   106d4:	4c 9d 00 20 	blelr	cr7
+   106d8:	7d 60 00 a6 	mfmsr	r11
+   106dc:	7c 00 04 ac 	msync
+   106e0:	7d 60 5b 78 	mr	r0,r11
+   106e4:	51 60 fe f6 	rlwimi	r0,r11,31,27,27
+   106e8:	7c 00 01 24 	mtmsr	r0
+   106ec:	39 20 00 00 	li	r9,0
+   106f0:	7c 09 57 ac 	icbi	r9,r10
+   106f4:	7d 60 01 24 	mtmsr	r11
+   106f8:	4c 00 01 2c 	isync
+   106fc:	39 4a 00 20 	addi	r10,r10,32
+   10700:	7f 83 50 40 	cmplw	cr7,r3,r10
+   10704:	41 9d ff d4 	bgt	cr7,106d8 <Xil_ICacheInvalidateRange+0x18>
+   10708:	4e 80 00 20 	blr
+
+0001070c <outbyte>:
+   1070c:	94 21 ff f8 	stwu	r1,-8(r1)
+   10710:	7c 08 02 a6 	mflr	r0
+   10714:	7c 64 1b 78 	mr	r4,r3
+   10718:	3c 60 84 00 	lis	r3,-31744
+   1071c:	90 01 00 0c 	stw	r0,12(r1)
+   10720:	48 00 00 65 	bl	10784 <XUartLite_SendByte>
+   10724:	80 01 00 0c 	lwz	r0,12(r1)
+   10728:	38 21 00 08 	addi	r1,r1,8
+   1072c:	7c 08 03 a6 	mtlr	r0
+   10730:	4e 80 00 20 	blr
+
+00010734 <XUartLite_RecvByte>:
+   10734:	94 21 ff f0 	stwu	r1,-16(r1)
+   10738:	7c 08 02 a6 	mflr	r0
+   1073c:	90 01 00 14 	stw	r0,20(r1)
+   10740:	93 c1 00 08 	stw	r30,8(r1)
+   10744:	7c 7e 1b 78 	mr	r30,r3
+   10748:	93 e1 00 0c 	stw	r31,12(r1)
+   1074c:	3b e3 00 08 	addi	r31,r3,8
+   10750:	7f e3 fb 78 	mr	r3,r31
+   10754:	48 00 00 ad 	bl	10800 <Xil_In32>
+   10758:	70 60 00 01 	andi.	r0,r3,1
+   1075c:	41 82 ff f4 	beq	10750 <XUartLite_RecvByte+0x1c>
+   10760:	7f c3 f3 78 	mr	r3,r30
+   10764:	48 00 00 9d 	bl	10800 <Xil_In32>
+   10768:	80 01 00 14 	lwz	r0,20(r1)
+   1076c:	54 63 06 3e 	clrlwi	r3,r3,24
+   10770:	83 c1 00 08 	lwz	r30,8(r1)
+   10774:	83 e1 00 0c 	lwz	r31,12(r1)
+   10778:	38 21 00 10 	addi	r1,r1,16
+   1077c:	7c 08 03 a6 	mtlr	r0
+   10780:	4e 80 00 20 	blr
+
+00010784 <XUartLite_SendByte>:
+   10784:	94 21 ff e8 	stwu	r1,-24(r1)
+   10788:	7c 08 02 a6 	mflr	r0
+   1078c:	90 01 00 1c 	stw	r0,28(r1)
+   10790:	93 a1 00 0c 	stw	r29,12(r1)
+   10794:	7c 9d 23 78 	mr	r29,r4
+   10798:	93 c1 00 10 	stw	r30,16(r1)
+   1079c:	7c 7e 1b 78 	mr	r30,r3
+   107a0:	93 e1 00 14 	stw	r31,20(r1)
+   107a4:	3b e3 00 08 	addi	r31,r3,8
+   107a8:	7f e3 fb 78 	mr	r3,r31
+   107ac:	48 00 00 55 	bl	10800 <Xil_In32>
+   107b0:	70 60 00 08 	andi.	r0,r3,8
+   107b4:	40 82 ff f4 	bne	107a8 <XUartLite_SendByte+0x24>
+   107b8:	38 7e 00 04 	addi	r3,r30,4
+   107bc:	7f a4 eb 78 	mr	r4,r29
+   107c0:	48 00 00 81 	bl	10840 <Xil_Out32>
+   107c4:	80 01 00 1c 	lwz	r0,28(r1)
+   107c8:	83 a1 00 0c 	lwz	r29,12(r1)
+   107cc:	83 c1 00 10 	lwz	r30,16(r1)
+   107d0:	83 e1 00 14 	lwz	r31,20(r1)
+   107d4:	7c 08 03 a6 	mtlr	r0
+   107d8:	38 21 00 18 	addi	r1,r1,24
+   107dc:	4e 80 00 20 	blr
+
+000107e0 <Xil_In8>:
+   107e0:	7c 00 06 ac 	mbar
+   107e4:	88 63 00 00 	lbz	r3,0(r3)
+   107e8:	54 63 06 3e 	clrlwi	r3,r3,24
+   107ec:	4e 80 00 20 	blr
+
+000107f0 <Xil_In16>:
+   107f0:	7c 00 06 ac 	mbar
+   107f4:	a0 63 00 00 	lhz	r3,0(r3)
+   107f8:	54 63 04 3e 	clrlwi	r3,r3,16
+   107fc:	4e 80 00 20 	blr
+
+00010800 <Xil_In32>:
+   10800:	7c 00 06 ac 	mbar
+   10804:	80 63 00 00 	lwz	r3,0(r3)
+   10808:	4e 80 00 20 	blr
+
+0001080c <Xil_In16LE>:
+   1080c:	7c 00 06 ac 	mbar
+   10810:	7c 60 1e 2c 	lhbrx	r3,r0,r3
+   10814:	54 63 04 3e 	clrlwi	r3,r3,16
+   10818:	4e 80 00 20 	blr
+
+0001081c <Xil_In32LE>:
+   1081c:	7c 00 06 ac 	mbar
+   10820:	7c 60 1c 2c 	lwbrx	r3,r0,r3
+   10824:	4e 80 00 20 	blr
+
+00010828 <Xil_Out8>:
+   10828:	98 83 00 00 	stb	r4,0(r3)
+   1082c:	7c 00 06 ac 	mbar
+   10830:	4e 80 00 20 	blr
+
+00010834 <Xil_Out16>:
+   10834:	b0 83 00 00 	sth	r4,0(r3)
+   10838:	7c 00 06 ac 	mbar
+   1083c:	4e 80 00 20 	blr
+
+00010840 <Xil_Out32>:
+   10840:	90 83 00 00 	stw	r4,0(r3)
+   10844:	7c 00 06 ac 	mbar
+   10848:	4e 80 00 20 	blr
+
+0001084c <Xil_Out16LE>:
+   1084c:	7c 80 1f 2c 	sthbrx	r4,r0,r3
+   10850:	7c 00 06 ac 	mbar
+   10854:	4e 80 00 20 	blr
+
+00010858 <Xil_Out32LE>:
+   10858:	7c 80 1d 2c 	stwbrx	r4,r0,r3
+   1085c:	7c 00 06 ac 	mbar
+   10860:	4e 80 00 20 	blr
+
+00010864 <Xil_EndianSwap16>:
+   10864:	54 60 44 2e 	rlwinm	r0,r3,8,16,23
+   10868:	54 63 c2 3e 	rlwinm	r3,r3,24,8,31
+   1086c:	7c 63 03 78 	or	r3,r3,r0
+   10870:	4e 80 00 20 	blr
+
+00010874 <Xil_EndianSwap32>:
+   10874:	54 60 04 3e 	clrlwi	r0,r3,16
+   10878:	54 63 84 3e 	rlwinm	r3,r3,16,16,31
+   1087c:	54 09 44 2e 	rlwinm	r9,r0,8,16,23
+   10880:	54 00 c2 3e 	rlwinm	r0,r0,24,8,31
+   10884:	54 6b 44 2e 	rlwinm	r11,r3,8,16,23
+   10888:	7c 00 4b 78 	or	r0,r0,r9
+   1088c:	54 63 c2 3e 	rlwinm	r3,r3,24,8,31
+   10890:	54 00 80 1e 	rlwinm	r0,r0,16,0,15
+   10894:	7c 63 5b 78 	or	r3,r3,r11
+   10898:	7c 03 1b 78 	or	r3,r0,r3
+   1089c:	4e 80 00 20 	blr
+
+000108a0 <exit>:
+   108a0:	94 21 ff f0 	stwu	r1,-16(r1)
+   108a4:	7c 08 02 a6 	mflr	r0
+   108a8:	38 80 00 00 	li	r4,0
+   108ac:	93 e1 00 0c 	stw	r31,12(r1)
+   108b0:	7c 7f 1b 78 	mr	r31,r3
+   108b4:	90 01 00 14 	stw	r0,20(r1)
+   108b8:	48 00 00 29 	bl	108e0 <__call_exitprocs>
+   108bc:	3d 20 00 01 	lis	r9,1
+   108c0:	80 69 0c 14 	lwz	r3,3092(r9)
+   108c4:	80 03 00 28 	lwz	r0,40(r3)
+   108c8:	2f 80 00 00 	cmpwi	cr7,r0,0
+   108cc:	41 9e 00 0c 	beq	cr7,108d8 <exit+0x38>
+   108d0:	7c 09 03 a6 	mtctr	r0
+   108d4:	4e 80 04 21 	bctrl
+   108d8:	7f e3 fb 78 	mr	r3,r31
+   108dc:	4b ff f7 f1 	bl	100cc <_exit>
+
+000108e0 <__call_exitprocs>:
+   108e0:	94 21 ff d0 	stwu	r1,-48(r1)
+   108e4:	7c 08 02 a6 	mflr	r0
+   108e8:	3d 20 00 01 	lis	r9,1
+   108ec:	7d 80 00 26 	mfcr	r12
+   108f0:	81 69 0c 14 	lwz	r11,3092(r9)
+   108f4:	90 01 00 34 	stw	r0,52(r1)
+   108f8:	93 81 00 20 	stw	r28,32(r1)
+   108fc:	93 21 00 14 	stw	r25,20(r1)
+   10900:	7c 79 1b 78 	mr	r25,r3
+   10904:	83 8b 00 48 	lwz	r28,72(r11)
+   10908:	93 41 00 18 	stw	r26,24(r1)
+   1090c:	7c 9a 23 78 	mr	r26,r4
+   10910:	93 61 00 1c 	stw	r27,28(r1)
+   10914:	2f 9c 00 00 	cmpwi	cr7,r28,0
+   10918:	93 a1 00 24 	stw	r29,36(r1)
+   1091c:	93 c1 00 28 	stw	r30,40(r1)
+   10920:	93 e1 00 2c 	stw	r31,44(r1)
+   10924:	91 81 00 10 	stw	r12,16(r1)
+   10928:	41 9e 00 58 	beq	cr7,10980 <__call_exitprocs+0xa0>
+   1092c:	80 1c 00 04 	lwz	r0,4(r28)
+   10930:	83 7c 00 88 	lwz	r27,136(r28)
+   10934:	37 e0 ff ff 	addic.	r31,r0,-1
+   10938:	41 80 00 48 	blt	10980 <__call_exitprocs+0xa0>
+   1093c:	57 e9 10 3a 	rlwinm	r9,r31,2,0,29
+   10940:	2d 84 00 00 	cmpwi	cr3,r4,0
+   10944:	7d 7c 4a 14 	add	r11,r28,r9
+   10948:	2e 1b 00 00 	cmpwi	cr4,r27,0
+   1094c:	39 29 00 80 	addi	r9,r9,128
+   10950:	3b ab 00 08 	addi	r29,r11,8
+   10954:	7f db 4a 14 	add	r30,r27,r9
+   10958:	41 8e 00 60 	beq	cr3,109b8 <__call_exitprocs+0xd8>
+   1095c:	41 92 00 10 	beq	cr4,1096c <__call_exitprocs+0x8c>
+   10960:	80 1e 00 00 	lwz	r0,0(r30)
+   10964:	7f 9a 00 00 	cmpw	cr7,r26,r0
+   10968:	41 9e 00 50 	beq	cr7,109b8 <__call_exitprocs+0xd8>
+   1096c:	2f 9f 00 00 	cmpwi	cr7,r31,0
+   10970:	3b de ff fc 	addi	r30,r30,-4
+   10974:	3b bd ff fc 	addi	r29,r29,-4
+   10978:	3b ff ff ff 	addi	r31,r31,-1
+   1097c:	40 9e ff dc 	bne	cr7,10958 <__call_exitprocs+0x78>
+   10980:	81 81 00 10 	lwz	r12,16(r1)
+   10984:	80 01 00 34 	lwz	r0,52(r1)
+   10988:	83 21 00 14 	lwz	r25,20(r1)
+   1098c:	83 41 00 18 	lwz	r26,24(r1)
+   10990:	7d 81 01 20 	mtcrf	16,r12
+   10994:	83 61 00 1c 	lwz	r27,28(r1)
+   10998:	7c 08 03 a6 	mtlr	r0
+   1099c:	83 81 00 20 	lwz	r28,32(r1)
+   109a0:	7d 80 81 20 	mtcrf	8,r12
+   109a4:	83 a1 00 24 	lwz	r29,36(r1)
+   109a8:	83 c1 00 28 	lwz	r30,40(r1)
+   109ac:	83 e1 00 2c 	lwz	r31,44(r1)
+   109b0:	38 21 00 30 	addi	r1,r1,48
+   109b4:	4e 80 00 20 	blr
+   109b8:	81 3c 00 04 	lwz	r9,4(r28)
+   109bc:	81 7d 00 00 	lwz	r11,0(r29)
+   109c0:	39 29 ff ff 	addi	r9,r9,-1
+   109c4:	7f 89 f8 00 	cmpw	cr7,r9,r31
+   109c8:	41 9e 00 54 	beq	cr7,10a1c <__call_exitprocs+0x13c>
+   109cc:	38 00 00 00 	li	r0,0
+   109d0:	90 1d 00 00 	stw	r0,0(r29)
+   109d4:	2f 8b 00 00 	cmpwi	cr7,r11,0
+   109d8:	41 be ff 94 	beq-	cr7,1096c <__call_exitprocs+0x8c>
+   109dc:	41 92 00 34 	beq	cr4,10a10 <__call_exitprocs+0x130>
+   109e0:	80 1b 01 00 	lwz	r0,256(r27)
+   109e4:	39 20 00 01 	li	r9,1
+   109e8:	7d 29 f8 30 	slw	r9,r9,r31
+   109ec:	7d 2a 00 39 	and.	r10,r9,r0
+   109f0:	41 82 00 20 	beq	10a10 <__call_exitprocs+0x130>
+   109f4:	80 1b 01 04 	lwz	r0,260(r27)
+   109f8:	7d 2a 00 39 	and.	r10,r9,r0
+   109fc:	41 82 00 28 	beq	10a24 <__call_exitprocs+0x144>
+   10a00:	80 7e ff 80 	lwz	r3,-128(r30)
+   10a04:	7d 69 03 a6 	mtctr	r11
+   10a08:	4e 80 04 21 	bctrl
+   10a0c:	4b ff ff 60 	b	1096c <__call_exitprocs+0x8c>
+   10a10:	7d 69 03 a6 	mtctr	r11
+   10a14:	4e 80 04 21 	bctrl
+   10a18:	4b ff ff 54 	b	1096c <__call_exitprocs+0x8c>
+   10a1c:	93 fc 00 04 	stw	r31,4(r28)
+   10a20:	4b ff ff b4 	b	109d4 <__call_exitprocs+0xf4>
+   10a24:	7f 23 cb 78 	mr	r3,r25
+   10a28:	80 9e ff 80 	lwz	r4,-128(r30)
+   10a2c:	7d 69 03 a6 	mtctr	r11
+   10a30:	4e 80 04 21 	bctrl
+   10a34:	4b ff ff 38 	b	1096c <__call_exitprocs+0x8c>
+
+00010a38 <__do_global_ctors_aux>:
+   10a38:	94 21 ff f0 	stwu	r1,-16(r1)
+   10a3c:	7c 08 02 a6 	mflr	r0
+   10a40:	3d 20 00 01 	lis	r9,1
+   10a44:	39 29 0b f8 	addi	r9,r9,3064
+   10a48:	90 01 00 14 	stw	r0,20(r1)
+   10a4c:	93 e1 00 0c 	stw	r31,12(r1)
+   10a50:	3b e9 ff fc 	addi	r31,r9,-4
+   10a54:	80 09 ff fc 	lwz	r0,-4(r9)
+   10a58:	2f 80 ff ff 	cmpwi	cr7,r0,-1
+   10a5c:	41 9e 00 18 	beq	cr7,10a74 <__do_global_ctors_aux+0x3c>
+   10a60:	7c 09 03 a6 	mtctr	r0
+   10a64:	4e 80 04 21 	bctrl
+   10a68:	84 1f ff fc 	lwzu	r0,-4(r31)
+   10a6c:	2f 80 ff ff 	cmpwi	cr7,r0,-1
+   10a70:	40 9e ff f0 	bne	cr7,10a60 <__do_global_ctors_aux+0x28>
+   10a74:	80 01 00 14 	lwz	r0,20(r1)
+   10a78:	83 e1 00 0c 	lwz	r31,12(r1)
+   10a7c:	38 21 00 10 	addi	r1,r1,16
+   10a80:	7c 08 03 a6 	mtlr	r0
+   10a84:	4e 80 00 20 	blr
+Disassembly of section .init:
+
+00010a88 <__init>:
+   10a88:	94 21 ff f0 	stwu	r1,-16(r1)
+   10a8c:	7c 08 02 a6 	mflr	r0
+   10a90:	90 01 00 14 	stw	r0,20(r1)
+   10a94:	4b ff f6 d1 	bl	10164 <frame_dummy>
+   10a98:	4b ff ff a1 	bl	10a38 <__do_global_ctors_aux>
+   10a9c:	80 01 00 14 	lwz	r0,20(r1)
+   10aa0:	7c 08 03 a6 	mtlr	r0
+   10aa4:	38 21 00 10 	addi	r1,r1,16
+   10aa8:	4e 80 00 20 	blr
+Disassembly of section .fini:
+
+00010aac <__fini>:
+   10aac:	94 21 ff f0 	stwu	r1,-16(r1)
+   10ab0:	7c 08 02 a6 	mflr	r0
+   10ab4:	90 01 00 14 	stw	r0,20(r1)
+   10ab8:	4b ff f6 19 	bl	100d0 <__do_global_dtors_aux>
+   10abc:	80 01 00 14 	lwz	r0,20(r1)
+   10ac0:	7c 08 03 a6 	mtlr	r0
+   10ac4:	38 21 00 10 	addi	r1,r1,16
+   10ac8:	4e 80 00 20 	blr
+Disassembly of section .rodata:
+
+00010acc <__rodata_start>:
+   10acc:	48 65 6c 6c 	b	667738 <_SDA_BASE_+0x64eb28>
+   10ad0:	6f 20 57 6f 	xoris	r0,r25,22383
+   10ad4:	72 6c 64 0a 	andi.	r12,r19,25610
+   10ad8:	0d 00 00 00 	twgti	r0,0
+   10adc:	Address 0x10adc is out of bounds.
+
+Disassembly of section .sdata2:
+Disassembly of section .sbss2:
+Disassembly of section .data:
+
+00010ae0 <__data_start>:
+   10ae0:	00 00 00 00 	.long 0x0
+
+00010ae4 <p.3088>:
+   10ae4:	00 01 0c 00 	.long 0x10c00
+
+00010ae8 <impure_data>:
+	...
+   10b08:	00 01 0a dc 	.long 0x10adc
+	...
+Disassembly of section .got:
+Disassembly of section .got1:
+Disassembly of section .got2:
+
+00010bd8 <__GOT2_START__>:
+   10bd8:	00 01 0c 18 	.long 0x10c18
+   10bdc:	00 01 0c 18 	.long 0x10c18
+   10be0:	00 01 0c 18 	.long 0x10c18
+   10be4:	00 01 0c 34 	.long 0x10c34
+   10be8:	00 01 14 40 	.long 0x11440
+   10bec:	00 01 8c 10 	.long 0x18c10
+   10bf0:	00 01 8a e0 	.long 0x18ae0
+Disassembly of section .ctors:
+
+00010bf4 <__CTOR_LIST__>:
+   10bf4:	ff ff ff ff 	fnmadd.	f31,f31,f31,f31
+
+00010bf8 <__CTOR_END__>:
+   10bf8:	00 00 00 00 	.long 0x0
+Disassembly of section .dtors:
+
+00010bfc <__DTOR_LIST__>:
+   10bfc:	ff ff ff ff 	fnmadd.	f31,f31,f31,f31
+
+00010c00 <__DTOR_END__>:
+   10c00:	00 00 00 00 	.long 0x0
+Disassembly of section .fixup:
+Disassembly of section .eh_frame:
+
+00010c04 <__EH_FRAME_BEGIN__>:
+   10c04:	00 00 00 00 	.long 0x0
+
+00010c08 <__EH_FRAME_END__>:
+   10c08:	00 00 00 00 	.long 0x0
+Disassembly of section .jcr:
+
+00010c0c <__JCR_END__>:
+   10c0c:	00 00 00 00 	.long 0x0
+Disassembly of section .gcc_except_table:
+Disassembly of section .sdata:
+
+00010c10 <__SDATA_START__>:
+   10c10:	00 01 0a e8 	.long 0x10ae8
+
+00010c14 <_global_impure_ptr>:
+   10c14:	00 01 0a e8 	.long 0x10ae8
+Disassembly of section .boot0:
+
+ffffff00 <__boot0_start>:
+ffffff00:	38 00 00 00 	li	r0,0
+ffffff04:	7c 00 03 8c 	dccci	r0,r0
+ffffff08:	3c 40 00 20 	lis	r2,32
+ffffff0c:	60 42 00 00 	ori	r2,r2,0
+ffffff10:	7c 53 eb a6 	mtccr0	r2
+ffffff14:	7c 18 db a6 	mtspr	888,r0
+ffffff18:	7c 12 eb a6 	mtspr	946,r0
+ffffff1c:	7c 00 07 8c 	iccci	r0,r0
+ffffff20:	7c 0f f1 20 	mtcr	r0
+ffffff24:	7c 01 03 a6 	mtxer	r0
+ffffff28:	7c 09 03 a6 	mtctr	r0
+ffffff2c:	38 e0 04 3f 	li	r7,1087
+ffffff30:	3c c0 10 00 	lis	r6,4096
+ffffff34:	60 c6 00 00 	ori	r6,r6,0
+ffffff38:	7c 05 03 78 	mr	r5,r0
+ffffff3c:	7c 04 03 78 	mr	r4,r0
+
+ffffff40 <tlbloop>:
+ffffff40:	7c 83 23 78 	mr	r3,r4
+ffffff44:	60 63 02 90 	ori	r3,r3,656
+ffffff48:	7c 65 07 a4 	tlbwehi	r3,r5
+ffffff4c:	7c 85 0f a4 	tlbwelo	r4,r5
+ffffff50:	7c e5 17 a4 	tlbwe	r7,r5,2
+ffffff54:	68 63 01 00 	xori	r3,r3,256
+ffffff58:	38 a5 00 01 	addi	r5,r5,1
+ffffff5c:	7c 65 07 a4 	tlbwehi	r3,r5
+ffffff60:	7c 85 0f a4 	tlbwelo	r4,r5
+ffffff64:	7c e5 17 a4 	tlbwe	r7,r5,2
+ffffff68:	7c 84 32 14 	add	r4,r4,r6
+ffffff6c:	38 a5 00 01 	addi	r5,r5,1
+ffffff70:	2c 05 00 20 	cmpwi	r5,32
+ffffff74:	40 82 ff cc 	bne	ffffff40 <tlbloop>
+
+ffffff78 <tlbzero>:
+ffffff78:	7c 05 07 a4 	tlbwehi	r0,r5
+ffffff7c:	7c 05 0f a4 	tlbwelo	r0,r5
+ffffff80:	7c 05 17 a4 	tlbwe	r0,r5,2
+ffffff84:	38 a5 00 01 	addi	r5,r5,1
+ffffff88:	2c 05 00 40 	cmpwi	r5,64
+ffffff8c:	40 82 ff ec 	bne	ffffff78 <tlbzero>
+ffffff90:	3c 20 00 01 	lis	r1,1
+ffffff94:	60 21 00 00 	ori	r1,r1,0
+ffffff98:	7c 3a 03 a6 	mtsrr0	r1
+ffffff9c:	38 20 00 10 	li	r1,16
+ffffffa0:	7c 3b 03 a6 	mtsrr1	r1
+ffffffa4:	4c 00 00 64 	rfi
+Disassembly of section .boot:
+
+fffffffc <__boot_start>:
+fffc:	4b ff ff 04 	b	ffffff00 <__boot0_start>

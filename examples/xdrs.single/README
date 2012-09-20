@@ -1,0 +1,112 @@
+/*******************************************************************************   
+ * Copyright (c) 2012, Lingkan Gong                                                
+ * All rights reserved.                                                            
+ *                                                                                 
+ * Redistribution and use in source and binary forms, with or without              
+ * modification, are permitted provided that the following conditions are met:     
+ *                                                                                 
+ *  * Redistributions of source code must retain the above copyright notice,       
+ *    this list of conditions and the following disclaimer.                        
+ *                                                                                 
+ *  * Redistributions in binary form must reproduce the above copyright notice,    
+ *    this list of conditions and the following disclaimer in the documentation    
+ *    and/or other materials provided with the distribution.                       
+ *                                                                                 
+ *  * Neither the name of the copyright holder(s) nor the names of its             
+ *    contributors may be used to endorse or promote products derived from this    
+ *    software without specific prior written permission.                          
+ *                                                                                 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED   
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE          
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS BE LIABLE FOR ANY           
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES      
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;    
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND     
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT      
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS   
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                    
+ *                                                                                 
+*******************************************************************************/   
+
+This example demonstrates using ReSim in an in-house design, the XDRS demonstration
+platform. To focus on verification issues, the design is simplified. This example 
+illustrates the advanced concepts of using ReSim. It is strongely recommended that 
+the readers run the XDRS.QUICKSTART example before running this example. 
+
+TO Run the "XDRS.SINGLE" example:
+
+1. Understand the XDRS design 
+    
+    1.1 The XDRS design is exactly the same as the "XDRS.QUICKSTART" example
+    1.2 Test(s)
+    
+        This example creates more tests. These tests examins various aspects of 
+        the XDRS system (./testplan.xml)
+
+2. Preparations for running simulations
+     
+    2.1 Create a "settings.do" file in the working folder
+    This file is required to setup directory pathes
+    
+        set RSV_HOME "C:/DPR_TOOLS/ReSim"
+        set OVM_HOME "C:/ModelSim6.5g/verilog_src/ovm-2.1.1"
+    
+        source "$RSV_HOME/scripts/resim.do"
+        
+    2.2 Run auto_generation.tcl
+    2.3 Read ./artifacts/my_solyr_todolist.txt 
+    
+        The designer need to do step 1,2,3,4 at minimal in order to use ReSim. 
+        These steps integrates the generated artifacts into the simulation testbench.
+        
+        Steps 5,6,7 are for advanced users who wish to change the default artifacts 
+        for their purposes. In this example, the modified artifacts are in the 
+        "artifacts.edited" folder and they are all copied by the Tcl script.
+        
+3. Run one single test
+    
+    3.1 Open simulate_mti.do and change the name of the test to be compiled
+        (line 34). For example, to run the random test (tdpr_random.sv), change to
+    
+        vlog ..... +define+TEST_DPR_RANDOM "./xdrs/xdrs.sv"
+        
+        Valid test names include:
+        
+            TEST_DPR_DEMO 
+            TEST_DPR_SIMPLE 
+            TEST_DPR_READBACK 
+            TEST_DPR_EI 
+            TEST_DPR_ISOLATION 
+            TEST_DPR_RETRY 
+            TEST_DPR_RANDOM
+        
+    3.2 Start ModelSim in the working directory type in the prompt
+     
+        ModelSim> do simulate_mti.do
+   
+4. Run all tests and analyze test coverage
+    
+    4.1 Start ModelSim in the working directory.
+     
+        ModelSim> do simulate_coverage.do
+        
+        After simulating all tests, the coverage data of all tests are merged
+        to a single database (./coverage/merged.ucdb), and ModelSim generates
+        an HTML report (./coverage/covhtmlrpt/index.html). The report compares
+        the test results with the testplan (./testplan.xml)
+     
+5. For in deepth explanation of ReSim library, please refer to the following publications:
+
+    * Lingkan Gong, Oliver Diessel, "Modeling Dynamically Reconfigurable Systems 
+      for Simulation-based Functional Verification", Sym. on Field-Prog. Cust. 
+      Compt. Machines (FCCM), 2011, pp. 9-16
+      
+    * Lingkan Gong, Oliver Diessel, "ReSim: A Reusable Library for RTL Simulation
+      of Dynamic Partial Reconfiguration", IEEE Int. Conf. on Field-Prog. Technology 
+      (FPT), 2011, pp. 1-8, BEST PAPER CANDIDATE
+    
+    * Lingkan Gong, Oliver Diessel, "Functionally Verifying State Saving and 
+      Restoration in Dynamically Reconfigurable Systems", ACM/SIGDA Int. Sym. on 
+      Field-Prog. Gate Arrays (FPGA) , 2012, pp. 241-244
+      

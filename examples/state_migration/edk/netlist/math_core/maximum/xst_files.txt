@@ -1,0 +1,2 @@
+verilog work ../../../../edk/pcores/xps_math_v1_01_a/partial/verilog/maximum.v
+verilog work ../../../../edk/pcores/xps_math_v1_01_a/partial/verilog/math_core_maximum.v

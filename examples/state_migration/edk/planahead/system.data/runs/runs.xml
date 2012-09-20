@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<Runs Version="1" Minor="4">
+	<Run Id="config_1" Type="Ft2:EntireDesign" SrcSet="sources_1" Part="xc5vfx70tff1136-2" ConstrsSet="constrs_1" Dir="$PRUNDIR/config_1" LaunchTime="1341113371">
+		<File Type="PA-EDIF" Name="config_1.edf"/>
+		<File Type="BG-BGN" Name="config_1.bgn"/>
+		<File Type="PA-UCF" Name="config_1.ucf"/>
+		<File Type="TRCE-TWR" Name="config_1.twr"/>
+		<File Type="TRCE-TWX" Name="config_1.twx"/>
+		<File Type="XDL-XDL" Name="config_1_routed.xdl"/>
+		<File Type="WBT-USG" Name="usage_statistics_webtalk.html"/>
+		<File Type="WBT-LOG" Name="webtalk.log"/>
+		<File Type="NGDB-NGD" Name="config_1.ngd"/>
+		<File Type="NGDB-BLD" Name="config_1.bld"/>
+		<File Type="MAP-NCD" Name="config_1.ncd"/>
+		<File Type="MAP-PCF" Name="config_1.pcf"/>
+		<File Type="MAP-MRP" Name="config_1.mrp"/>
+		<File Type="MAP-MAP" Name="config_1.map"/>
+		<File Type="MAP-PSR" Name="config_1.psr"/>
+		<File Type="PAR-NCD" Name="config_1_routed.ncd"/>
+		<File Type="PAR-PAD" Name="config_1_routed_pad.txt"/>
+		<File Type="PAR-PAR" Name="config_1_routed.par"/>
+		<File Type="PAR-UNR" Name="config_1_routed.unroutes"/>
+		<File Type="BG-BIT" Name="config_1.bit"/>
+		<File Type="BG-DRC" Name="config_1.drc"/>
+	</Run>
+	<Run Id="config_0" Type="Ft2:EntireDesign" SrcSet="sources_1" Part="xc5vfx70tff1136-2" ConstrsSet="constrs_1" State="current" Dir="$PRUNDIR/config_0" LaunchTime="1341111674">
+		<File Type="PA-EDIF" Name="config_0.edf"/>
+		<File Type="BG-BGN" Name="config_0.bgn"/>
+		<File Type="PA-UCF" Name="config_0.ucf"/>
+		<File Type="TRCE-TWR" Name="config_0.twr"/>
+		<File Type="TRCE-TWX" Name="config_0.twx"/>
+		<File Type="XDL-XDL" Name="config_0_routed.xdl"/>
+		<File Type="WBT-USG" Name="usage_statistics_webtalk.html"/>
+		<File Type="WBT-LOG" Name="webtalk.log"/>
+		<File Type="NGDB-NGD" Name="config_0.ngd"/>
+		<File Type="NGDB-BLD" Name="config_0.bld"/>
+		<File Type="MAP-NCD" Name="config_0.ncd"/>
+		<File Type="MAP-PCF" Name="config_0.pcf"/>
+		<File Type="MAP-MRP" Name="config_0.mrp"/>
+		<File Type="MAP-MAP" Name="config_0.map"/>
+		<File Type="MAP-PSR" Name="config_0.psr"/>
+		<File Type="PAR-NCD" Name="config_0_routed.ncd"/>
+		<File Type="PAR-PAD" Name="config_0_routed_pad.txt"/>
+		<File Type="PAR-PAR" Name="config_0_routed.par"/>
+		<File Type="PAR-UNR" Name="config_0_routed.unroutes"/>
+		<File Type="BG-BIT" Name="config_0.bit"/>
+		<File Type="BG-DRC" Name="config_0.drc"/>
+	</Run>
+</Runs>
+

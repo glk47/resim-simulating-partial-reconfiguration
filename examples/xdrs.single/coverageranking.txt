@@ -1,0 +1,110 @@
+vcover ranktest -concise -plansection / -rankfile 1.rank coverage/testplan.ucdb coverage/tdpr_simple.ucdb coverage/tdpr_readback.ucdb coverage/tdpr_demo.ucdb coverage/tdpr_isolation.ucdb coverage/tdpr_ei.ucdb coverage/tdpr_retry.ucdb
+vcover ranktest -concise -plansection / -rankfile 1.rank coverage/testplan.ucdb coverage/tdpr_simple.ucdb coverage/tdpr_readback.ucdb coverage/tdpr_demo.ucdb coverage/tdpr_isolation.ucdb coverage/tdpr_ei.ucdb coverage/tdpr_retry.ucdb coverage/tdpr_random_25.ucdb
+vcover ranktest -concise -plansection / -rankfile 1.rank coverage/testplan.ucdb coverage/tdpr_simple.ucdb coverage/tdpr_readback.ucdb coverage/tdpr_demo.ucdb coverage/tdpr_isolation.ucdb coverage/tdpr_ei.ucdb coverage/tdpr_retry.ucdb coverage/tdpr_random_25.ucdb coverage/tdpr_random_73.ucdb
+vcover ranktest -concise -plansection / -rankfile 1.rank coverage/testplan.ucdb coverage/tdpr_simple.ucdb coverage/tdpr_readback.ucdb coverage/tdpr_demo.ucdb coverage/tdpr_isolation.ucdb coverage/tdpr_ei.ucdb coverage/tdpr_retry.ucdb coverage/tdpr_random_25.ucdb coverage/tdpr_random_73.ucdb coverage/tdpr_random_76.ucdb
+vcover ranktest -concise -plansection / -rankfile 1.rank coverage/testplan.ucdb coverage/tdpr_simple.ucdb coverage/tdpr_readback.ucdb coverage/tdpr_demo.ucdb coverage/tdpr_isolation.ucdb coverage/tdpr_ei.ucdb coverage/tdpr_retry.ucdb coverage/tdpr_random_25.ucdb coverage/tdpr_random_73.ucdb coverage/tdpr_random_76.ucdb coverage/tdpr_random_92.ucdb
+
+
+
+
+vcover ranktest -concise -plansection / -rankfile 1.rank coverage/testplan.ucdb coverage/tdpr_simple.ucdb coverage/tdpr_readback.ucdb coverage/tdpr_demo.ucdb coverage/tdpr_isolation.ucdb coverage/tdpr_ei.ucdb coverage/tdpr_retry.ucdb
+# 
+# Ranking based on minimum number of tests.
+# Applying tag commands...
+# Ranking testplan path: "/testplan".
+# Ranking 6 test(s).
+# 
+# 1 coverage/tdpr_demo.ucdb (TEST_DPR_DEMO, metric 80.26)
+# 2 coverage/tdpr_retry.ucdb (TEST_DPR_RETRY, metric 85.47)
+# 3 coverage/tdpr_isolation.ucdb (TEST_DPR_ISOLATION, metric 88.89)
+# 4 coverage/tdpr_ei.ucdb (TEST_DPR_EI, metric 91.77)
+# 5 coverage/tdpr_simple.ucdb (TEST_DPR_SIMPLE, metric 94.64)
+# 6 coverage/tdpr_readback.ucdb (TEST_DPR_READBACK, metric 97.02)
+# All 6 input files have been ranked.
+# 
+# Ranking summary:
+# 	Total CPU time = 1.53
+# 	Total SIM time = 400006000.00 ps
+
+vcover ranktest -concise -plansection / -rankfile 1.rank coverage/testplan.ucdb coverage/tdpr_simple.ucdb coverage/tdpr_readback.ucdb coverage/tdpr_demo.ucdb coverage/tdpr_isolation.ucdb coverage/tdpr_ei.ucdb coverage/tdpr_retry.ucdb coverage/tdpr_random_25.ucdb
+# 
+# Ranking based on minimum number of tests.
+# Applying tag commands...
+# Ranking testplan path: "/testplan".
+# Ranking 7 test(s).
+# 
+# 1 coverage/tdpr_demo.ucdb (TEST_DPR_DEMO, metric 80.26)
+# 2 coverage/tdpr_random_25.ucdb (TEST_DPR_RANDOM_25, metric 87.24)
+# 3 coverage/tdpr_simple.ucdb (TEST_DPR_SIMPLE, metric 90.11)
+# 4 coverage/tdpr_ei.ucdb (TEST_DPR_EI, metric 92.74)
+# 5 coverage/tdpr_readback.ucdb (TEST_DPR_READBACK, metric 95.12)
+# 6 coverage/tdpr_isolation.ucdb (TEST_DPR_ISOLATION, metric 97.50)
+# 7 coverage/tdpr_retry.ucdb (TEST_DPR_RETRY, metric 99.88)
+# All 7 input files have been ranked.
+# 
+# Ranking summary:
+# 	Total CPU time = 5.44
+# 	Total SIM time = 1200007000.00 ps
+
+vcover ranktest -concise -plansection / -rankfile 1.rank coverage/testplan.ucdb coverage/tdpr_simple.ucdb coverage/tdpr_readback.ucdb coverage/tdpr_demo.ucdb coverage/tdpr_isolation.ucdb coverage/tdpr_ei.ucdb coverage/tdpr_retry.ucdb coverage/tdpr_random_25.ucdb coverage/tdpr_random_73.ucdb
+# 
+# Ranking based on minimum number of tests.
+# Applying tag commands...
+# Ranking testplan path: "/testplan".
+# Ranking 8 test(s).
+# 
+# 1 coverage/tdpr_demo.ucdb (TEST_DPR_DEMO, metric 80.26)
+# 2 coverage/tdpr_random_73.ucdb (TEST_DPR_RANDOM_73, metric 87.35)
+# 3 coverage/tdpr_simple.ucdb (TEST_DPR_SIMPLE, metric 90.22)
+# 4 coverage/tdpr_ei.ucdb (TEST_DPR_EI, metric 92.85)
+# 5 coverage/tdpr_readback.ucdb (TEST_DPR_READBACK, metric 95.23)
+# 6 coverage/tdpr_isolation.ucdb (TEST_DPR_ISOLATION, metric 97.61)
+# 7 coverage/tdpr_retry.ucdb (TEST_DPR_RETRY, metric 100.00)
+# No further improvement to coverage.
+# 
+# Ranking summary:
+# 	Total CPU time = 5.72
+# 	Total SIM time = 1200007000.00 ps
+# 	Non-contributing Tests = coverage/tdpr_random_25.ucdb
+
+vcover ranktest -concise -plansection / -rankfile 1.rank coverage/testplan.ucdb coverage/tdpr_simple.ucdb coverage/tdpr_readback.ucdb coverage/tdpr_demo.ucdb coverage/tdpr_isolation.ucdb coverage/tdpr_ei.ucdb coverage/tdpr_retry.ucdb coverage/tdpr_random_25.ucdb coverage/tdpr_random_73.ucdb coverage/tdpr_random_76.ucdb
+# 
+# Ranking based on minimum number of tests.
+# Applying tag commands...
+# Ranking testplan path: "/testplan".
+# Ranking 9 test(s).
+# 
+# 1 coverage/tdpr_demo.ucdb (TEST_DPR_DEMO, metric 80.26)
+# 2 coverage/tdpr_random_73.ucdb (TEST_DPR_RANDOM_73, metric 87.35)
+# 3 coverage/tdpr_simple.ucdb (TEST_DPR_SIMPLE, metric 90.22)
+# 4 coverage/tdpr_ei.ucdb (TEST_DPR_EI, metric 92.85)
+# 5 coverage/tdpr_readback.ucdb (TEST_DPR_READBACK, metric 95.23)
+# 6 coverage/tdpr_isolation.ucdb (TEST_DPR_ISOLATION, metric 97.61)
+# 7 coverage/tdpr_retry.ucdb (TEST_DPR_RETRY, metric 100.00)
+# No further improvement to coverage.
+# 
+# Ranking summary:
+# 	Total CPU time = 5.72
+# 	Total SIM time = 1200007000.00 ps
+# 	Non-contributing Tests = coverage/tdpr_random_76.ucdb coverage/tdpr_random_25.ucdb
+
+vcover ranktest -concise -plansection / -rankfile 1.rank coverage/testplan.ucdb coverage/tdpr_simple.ucdb coverage/tdpr_readback.ucdb coverage/tdpr_demo.ucdb coverage/tdpr_isolation.ucdb coverage/tdpr_ei.ucdb coverage/tdpr_retry.ucdb coverage/tdpr_random_25.ucdb coverage/tdpr_random_73.ucdb coverage/tdpr_random_76.ucdb coverage/tdpr_random_92.ucdb
+# 
+# Ranking based on minimum number of tests.
+# Applying tag commands...
+# Ranking testplan path: "/testplan".
+# Ranking 10 test(s).
+# 
+# 1 coverage/tdpr_demo.ucdb (TEST_DPR_DEMO, metric 80.26)
+# 2 coverage/tdpr_random_73.ucdb (TEST_DPR_RANDOM_73, metric 87.35)
+# 3 coverage/tdpr_simple.ucdb (TEST_DPR_SIMPLE, metric 90.22)
+# 4 coverage/tdpr_ei.ucdb (TEST_DPR_EI, metric 92.85)
+# 5 coverage/tdpr_readback.ucdb (TEST_DPR_READBACK, metric 95.23)
+# 6 coverage/tdpr_isolation.ucdb (TEST_DPR_ISOLATION, metric 97.61)
+# 7 coverage/tdpr_retry.ucdb (TEST_DPR_RETRY, metric 100.00)
+# No further improvement to coverage.
+# 
+# Ranking summary:
+# 	Total CPU time = 5.72
+# 	Total SIM time = 1200007000.00 ps
+# 	Non-contributing Tests = coverage/tdpr_random_92.ucdb coverage/tdpr_random_76.ucdb coverage/tdpr_random_25.ucdb

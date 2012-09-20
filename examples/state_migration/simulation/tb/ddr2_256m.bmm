@@ -1,0 +1,14 @@
+
+///////////////////////////////////////////////////////////////////////////
+// DDR2 Memory Address Space (256MB)
+///////////////////////////////////////////////////////////////////////////
+
+ADDRESS_BLOCK DDR2_memory MEMORY [0x00000000:0x0FFFFFFF]
+  BUS_BLOCK
+    board/ddr2_3    [63:48]  OUTPUT = ddr2_sdram_0_3.mem;
+    board/ddr2_2    [47:32]  OUTPUT = ddr2_sdram_0_2.mem;
+    board/ddr2_1    [31:16]  OUTPUT = ddr2_sdram_0_1.mem;
+    board/ddr2_0    [15:0]   OUTPUT = ddr2_sdram_0_0.mem;
+  END_BUS_BLOCK;
+END_ADDRESS_BLOCK;
+

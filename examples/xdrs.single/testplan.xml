@@ -1,0 +1,571 @@
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <Author>darronm</Author>
+  <LastAuthor>glk</LastAuthor>
+  <Created>2006-10-02T07:59:43Z</Created>
+  <LastSaved>2011-11-12T05:38:14Z</LastSaved>
+  <Company>Mentor Graphics (Ireland) Ltd.</Company>
+  <Version>11.5606</Version>
+ </DocumentProperties>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>9060</WindowHeight>
+  <WindowWidth>11355</WindowWidth>
+  <WindowTopX>480</WindowTopX>
+  <WindowTopY>90</WindowTopY>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders/>
+   <Font x:Family="Swiss"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s21">
+   <Borders/>
+   <Font ss:FontName="Verdana" x:Family="Swiss"/>
+   <Interior/>
+  </Style>
+  <Style ss:ID="s22">
+   <Borders/>
+   <Font ss:FontName="Verdana" x:Family="Swiss" ss:Size="16" ss:Bold="1"
+    ss:Underline="Single"/>
+   <Interior/>
+  </Style>
+  <Style ss:ID="s23">
+   <Alignment ss:Vertical="Bottom" ss:WrapText="1"/>
+   <Borders/>
+   <Font ss:FontName="Verdana" x:Family="Swiss"/>
+   <Interior/>
+  </Style>
+  <Style ss:ID="s24">
+   <Borders/>
+   <Font ss:FontName="Verdana" x:Family="Swiss"/>
+   <Interior ss:Color="#808080" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s25">
+   <Borders/>
+   <Font ss:FontName="Verdana" x:Family="Swiss" ss:Size="14" ss:Bold="1"/>
+   <Interior ss:Color="#808080" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s26">
+   <Alignment ss:Vertical="Bottom" ss:WrapText="1"/>
+   <Borders/>
+   <Font ss:FontName="Verdana" x:Family="Swiss" ss:Size="14" ss:Bold="1"/>
+   <Interior ss:Color="#808080" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s27">
+   <Borders/>
+   <Font ss:FontName="Verdana" x:Family="Swiss"/>
+   <Interior ss:Color="#FFFF99" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s28">
+   <Alignment ss:Vertical="Top"/>
+   <Borders/>
+   <Font ss:FontName="Verdana" x:Family="Swiss"/>
+   <Interior ss:Color="#FFFF99" ss:Pattern="Solid"/>
+   <NumberFormat ss:Format="@"/>
+  </Style>
+  <Style ss:ID="s29">
+   <Alignment ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders/>
+   <Font ss:FontName="Verdana" x:Family="Swiss"/>
+   <Interior ss:Color="#FFFF99" ss:Pattern="Solid"/>
+   <NumberFormat/>
+  </Style>
+  <Style ss:ID="s30">
+   <Alignment ss:Vertical="Top"/>
+   <Borders/>
+   <Font ss:FontName="Verdana" x:Family="Swiss"/>
+   <Interior/>
+   <NumberFormat ss:Format="@"/>
+  </Style>
+  <Style ss:ID="s31">
+   <Alignment ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders/>
+   <Font ss:FontName="Verdana" x:Family="Swiss"/>
+   <Interior/>
+   <NumberFormat/>
+  </Style>
+  <Style ss:ID="s32">
+   <Alignment ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders/>
+   <Font ss:FontName="Verdana" x:Family="Swiss"/>
+   <Interior ss:Color="#FFFF99" ss:Pattern="Solid"/>
+   <NumberFormat ss:Format="@"/>
+  </Style>
+  <Style ss:ID="s33">
+   <Alignment ss:Vertical="Top"/>
+   <Borders/>
+   <Font ss:FontName="Verdana" x:Family="Swiss" ss:Bold="1"/>
+   <Interior/>
+   <NumberFormat ss:Format="@"/>
+  </Style>
+  <Style ss:ID="s34">
+   <Alignment ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders/>
+   <Font ss:FontName="Verdana" x:Family="Swiss" ss:Bold="1"/>
+   <Interior/>
+   <NumberFormat/>
+  </Style>
+  <Style ss:ID="s35">
+   <Alignment ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders/>
+   <Font ss:FontName="Verdana" x:Family="Swiss"/>
+   <Interior/>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="Sheet1">
+  <Table ss:ExpandedColumnCount="7" ss:ExpandedRowCount="51" x:FullColumns="1"
+   x:FullRows="1" ss:StyleID="s21">
+   <Column ss:StyleID="s21" ss:AutoFitWidth="0" ss:Width="66"/>
+   <Column ss:StyleID="s21" ss:AutoFitWidth="0" ss:Width="138"/>
+   <Column ss:StyleID="s21" ss:AutoFitWidth="0" ss:Width="289.5"/>
+   <Column ss:StyleID="s21" ss:AutoFitWidth="0" ss:Width="241.5"/>
+   <Column ss:StyleID="s21" ss:AutoFitWidth="0" ss:Width="69.75" ss:Span="1"/>
+   <Column ss:Index="7" ss:StyleID="s21" ss:AutoFitWidth="0" ss:Width="45.75"/>
+   <Row ss:AutoFitHeight="0" ss:Height="19.5">
+    <Cell ss:StyleID="s22"><Data ss:Type="String">Verification Plan For XDRS</Data></Cell>
+    <Cell ss:StyleID="s22"/>
+    <Cell ss:Index="4" ss:StyleID="s23"/>
+   </Row>
+   <Row>
+    <Cell ss:Index="4" ss:StyleID="s23"/>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="18" ss:StyleID="s24">
+    <Cell ss:StyleID="s25"><Data ss:Type="String">Section</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">Title</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">Description</Data></Cell>
+    <Cell ss:StyleID="s26"><Data ss:Type="String">Link</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">Type</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">Weight</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">Goal</Data></Cell>
+   </Row>
+   <Row ss:StyleID="s27">
+    <Cell ss:StyleID="s28"><Data ss:Type="String">1</Data></Cell>
+    <Cell ss:StyleID="s29"><Data ss:Type="String">All_Code_Coverage</Data></Cell>
+    <Cell ss:StyleID="s29"/>
+    <Cell ss:StyleID="s29"/>
+    <Cell ss:StyleID="s29"/>
+    <Cell ss:StyleID="s29"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s29"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s30"><Data ss:Type="String">1.1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Branch_Coverage</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Branch Coverage</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">/xdrs/region_0/* /xdrs/icapi_0/*</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Branch</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s30"><Data ss:Type="String">1.2</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Condition_Coverage</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Condition Coverage</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">/xdrs/region_0/* /xdrs/icapi_0/*</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Condition</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s30"><Data ss:Type="String">1.3</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Expression_Coverage</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Expression Coverage</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">/xdrs/region_0/* /xdrs/icapi_0/*</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Expression</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s30"><Data ss:Type="String">1.4</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">FSM_Coverage</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">FSM Coverage</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">/xdrs/region_0/* /xdrs/icapi_0/*</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">FSM</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row ss:Index="10" ss:StyleID="s27">
+    <Cell ss:StyleID="s28"><Data ss:Type="String">2</Data></Cell>
+    <Cell ss:StyleID="s29"><Data ss:Type="String">All_Assertions</Data></Cell>
+    <Cell ss:StyleID="s29"/>
+    <Cell ss:StyleID="s29"/>
+    <Cell ss:StyleID="s29"/>
+    <Cell ss:StyleID="s29"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s29"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s30"><Data ss:Type="String">2.1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Assertions</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Assertions within the design</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">assert_*</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Assertion</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row ss:Index="13" ss:StyleID="s27">
+    <Cell ss:StyleID="s28"><Data ss:Type="String">3</Data></Cell>
+    <Cell ss:StyleID="s29"><Data ss:Type="String">Directed_Tests</Data></Cell>
+    <Cell ss:StyleID="s29"><Data ss:Type="String">This section details the directed tests.</Data></Cell>
+    <Cell ss:StyleID="s29"/>
+    <Cell ss:StyleID="s29"/>
+    <Cell ss:StyleID="s29"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s29"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25.5">
+    <Cell ss:StyleID="s30"><Data ss:Type="String">3.1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">TEST_DPR_SIMPLE</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Simple DPR. Swapping modules in/out when the module is IDLE/busy. Shared bitstream traffic with the application</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">TEST_DPR_SIMPLE</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Test</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="38.25">
+    <Cell ss:StyleID="s30"><Data ss:Type="String">3.2</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">TEST_DPR_ISOLATION</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Tests the isolation of the RM undergoing reconfiguration. Isolates the undefined outputs from the RR. Isolates the communication attempts from the static part.</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">TEST_DPR_ISOLATION</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Test</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25.5">
+    <Cell ss:StyleID="s30"><Data ss:Type="String">3.3</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">TEST_DPR_EI</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Tests the initialization of the RM after reconfiguration. A reset should clear the errors injected to the RM.</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">TEST_DPR_EI</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Test</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25.5">
+    <Cell ss:StyleID="s30"><Data ss:Type="String">3.4</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">TEST_DPR_READBACK</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">State saving and restoration. Restoring with/without mask, a typical save, modify, restore process. </Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">TEST_DPR_READBACK</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Test</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25.5">
+    <Cell ss:StyleID="s30"><Data ss:Type="String">3.5</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">TEST_DPR_RETRY</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Computational cores can not always commit the results to the static part. Sometimes they have to retry.</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">TEST_DPR_RETRY</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Test</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s30"><Data ss:Type="String">3.6</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">TEST_DPR_DEMO</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">For demonstration</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">TEST_DPR_DEMO</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Test</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row ss:Index="21" ss:StyleID="s27">
+    <Cell ss:StyleID="s28"><Data ss:Type="String">4</Data></Cell>
+    <Cell ss:StyleID="s32"><Data ss:Type="String">ICAPI</Data></Cell>
+    <Cell ss:StyleID="s29"><Data ss:Type="String">The ICAP-Interface module</Data></Cell>
+    <Cell ss:StyleID="s29"/>
+    <Cell ss:StyleID="s29"/>
+    <Cell ss:StyleID="s29"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s29"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s30"><Data ss:Type="String">4.1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Instance_Coverage</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Average Code Coverage for the ICAP-Interface module</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">/xdrs/icapi_0</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Instance</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s33"><Data ss:Type="String">4.2</Data></Cell>
+    <Cell ss:StyleID="s34"><Data ss:Type="String">Bitstream_WR_RD</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Bitstream transferred successfully to/from the ICAP port</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">assert_icapi_*_cdata</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Assertion</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="38.25">
+    <Cell ss:StyleID="s33"><Data ss:Type="String">4.3</Data></Cell>
+    <Cell ss:StyleID="s34"><Data ss:Type="String">Bitstream_ADDR_SIZE</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">All bitstream data have been successfully transfferred</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">assert_icapi_baddr_bsize assert_icapi_cdata_start assert_icapi_cdata_done</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Assertion</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25.5">
+    <Cell ss:StyleID="s33"><Data ss:Type="String">4.4</Data></Cell>
+    <Cell ss:StyleID="s34"><Data ss:Type="String">Operation_Mode</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Write/Readback configuration data</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">cvg_icapi_mode::mode cvg_icapi_mode::mode_transition</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">CoverPoint</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s30"><Data ss:Type="String">4.5</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">ICAPI_IF</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">The icapi interface operates correctly</Data></Cell>
+    <Cell><Data ss:Type="String">assert_icapi_if_sequence</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Assertion</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s30"><Data ss:Type="String">4.6</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">XBUS_IF</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">The xbus interface operates correctly</Data></Cell>
+    <Cell><Data ss:Type="String">assert_xbus_arbiter assert_xbus_master</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Assertion</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row ss:Index="29" ss:StyleID="s27">
+    <Cell ss:StyleID="s28"><Data ss:Type="String">5</Data></Cell>
+    <Cell ss:StyleID="s32"><Data ss:Type="String">Isolation</Data></Cell>
+    <Cell ss:StyleID="s29"><Data ss:Type="String">The Isolation mechanism</Data></Cell>
+    <Cell ss:StyleID="s29"/>
+    <Cell ss:StyleID="s29"/>
+    <Cell ss:StyleID="s29"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s29"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s30"><Data ss:Type="String">5.1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Instance_Coverage</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Average Code Coverage for the isolator module</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">/xdrs/isol_0</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Instance</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s33"><Data ss:Type="String">5.2</Data></Cell>
+    <Cell ss:StyleID="s34"><Data ss:Type="String">Isolate_Stable</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Spurious outputs are isolated during reconfiguration</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">assert_isolator_stable</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Assertion</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25.5">
+    <Cell ss:StyleID="s33"><Data ss:Type="String">5.3</Data></Cell>
+    <Cell ss:StyleID="s34"><Data ss:Type="String">Cancel_RM_Attempts</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Communication attempts initated by the reconfigurable module are correctly cancelled during reconfiguration</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">cov_isolator_cancel_rm</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Directive</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25.5">
+    <Cell ss:StyleID="s33"><Data ss:Type="String">5.4</Data></Cell>
+    <Cell ss:StyleID="s34"><Data ss:Type="String">Cancel_Static_Attempts</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Communication attempts initated by the static part are correctly cancelled during reconfiguration</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">cov_isolator_cancel_static</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Directive</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row ss:Index="35" ss:StyleID="s27">
+    <Cell ss:StyleID="s28"><Data ss:Type="String">6</Data></Cell>
+    <Cell ss:StyleID="s32"><Data ss:Type="String">Computational_Cores</Data></Cell>
+    <Cell ss:StyleID="s29"><Data ss:Type="String">Computational Cores</Data></Cell>
+    <Cell ss:StyleID="s29"/>
+    <Cell ss:StyleID="s29"/>
+    <Cell ss:StyleID="s29"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s29"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s30"><Data ss:Type="String">6.1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Instance_Coverage</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Average Code Coverage for computational cores</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">/xdrs/region_0/rm0 /xdrs/region_0/rm1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Instance</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="51">
+    <Cell ss:StyleID="s30"><Data ss:Type="String">6.2</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Producer_Consumer_IF</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">The procducer consumer interface operates correctly</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">assert_pc_if_0_sequence assert_pc_if_1_sequence assert_pc_if_0_data_hold assert_pc_if_1_data_hold</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Assertion</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25.5">
+    <Cell ss:StyleID="s30"><Data ss:Type="String">6.3</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Transfer_End_by_Rdy_Err</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">The procducer consumer interface terminates by either a ready or an error</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">cov_pc_if_0_ready cov_pc_if_1_ready cov_pc_if_0_error cov_pc_if_0_error</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Directive</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25.5">
+    <Cell ss:StyleID="s30"><Data ss:Type="String">6.4</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Computation_Results</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">The results are computed correctly</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">assert_maximum_operation assert_reverse_operation</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Assertion</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25.5">
+    <Cell ss:StyleID="s30"><Data ss:Type="String">6.5</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Oprands_Range</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">The first oprand is larger than, equal to or smaller than the second oprand (Only for the maximum module)</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">cvg_maximum_oprand:range;</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">CoverPoint</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25.5">
+    <Cell ss:StyleID="s33"><Data ss:Type="String">6.6</Data></Cell>
+    <Cell ss:StyleID="s34"><Data ss:Type="String">Recon_Ack_at_Idle</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Request of reconfiguration is paused until the on-going computaion has finished before reconfiguration</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">assert_maximum_cfg_ack assert_reverse_cfg_ack</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Assertion</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row ss:Height="25.5">
+    <Cell ss:StyleID="s33"><Data ss:Type="String">6.7</Data></Cell>
+    <Cell ss:StyleID="s34"><Data ss:Type="String">Recon_Ack_Scenario</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Request of reconfiguration is acknowledged just before the core starts computation</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">cov_maximum_cfg_ack cov_reverse_cfg_ack</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Directive</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row ss:Height="25.5">
+    <Cell ss:StyleID="s33"><Data ss:Type="String">6.8</Data></Cell>
+    <Cell ss:StyleID="s34"><Data ss:Type="String">Recon_Req_Scenario</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Request of reconfiguration occurs at all possible states</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">cvg_maximum_cfg_req::cfg; cvg_reverse_cfg_req::cfg</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">CoverPoint</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s33"><Data ss:Type="String">6.9</Data></Cell>
+    <Cell ss:StyleID="s34"><Data ss:Type="String">Activate_After</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Signals/FSMs are ressetted after reconfiguration</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">cov_maximum_reset_* cov_reverse_reset_*</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Directive</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25.5">
+    <Cell ss:StyleID="s30"><Data ss:Type="String">6.10</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Timeout_End_by_Rdy_Err</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">The timeout counter ends by either a ready or an error</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">cov_maximum_crdy cov_maximum_crdy cov_reverse_crdy cov_reverse_crdy</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Directive</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row ss:Index="47" ss:StyleID="s27">
+    <Cell ss:StyleID="s28"><Data ss:Type="String">7</Data></Cell>
+    <Cell ss:StyleID="s29"><Data ss:Type="String">Partial_Reconfiguration</Data></Cell>
+    <Cell ss:StyleID="s29"><Data ss:Type="String">Partial Reconfigurable of Computational Cores</Data></Cell>
+    <Cell ss:StyleID="s29"/>
+    <Cell ss:StyleID="s29"/>
+    <Cell ss:StyleID="s29"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s29"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s33"><Data ss:Type="String">7.1</Data></Cell>
+    <Cell ss:StyleID="s34"><Data ss:Type="String">Active_Module</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Each module has been reconfigured</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">cvg_my_region_drp:active_module;</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">CoverPoint</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s33"><Data ss:Type="String">7.2</Data></Cell>
+    <Cell ss:StyleID="s34"><Data ss:Type="String">Module_Transition</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Transition from each module to each other module</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">cvg_my_region_drp:module_transition;</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">CoverPoint</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25.5">
+    <Cell ss:StyleID="s33"><Data ss:Type="String">7.3</Data></Cell>
+    <Cell ss:StyleID="s34"><Data ss:Type="String">Reconfiguration_Sequence</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">The reconfiguration sequence (i.e., request, acknowledge, configure, rest) is correct</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">assert_recon_if_sequence</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Assertion</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="25.5">
+    <Cell ss:StyleID="s33"><Data ss:Type="String">7.4</Data></Cell>
+    <Cell ss:StyleID="s34"><Data ss:Type="String">Shared_Bitstream_Traffic</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">The bitstream traffic interleaves with application traffic</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">cov_xbus_arbiter_icapi_delayed</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Directive</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <Print>
+    <ValidPrinterInfo/>
+    <PaperSizeIndex>9</PaperSizeIndex>
+    <HorizontalResolution>600</HorizontalResolution>
+    <VerticalResolution>600</VerticalResolution>
+   </Print>
+   <Selected/>
+   <TopRowVisible>31</TopRowVisible>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveRow>41</ActiveRow>
+     <ActiveCol>3</ActiveCol>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+ <Worksheet ss:Name="Sheet2">
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveRow>3</ActiveRow>
+     <ActiveCol>1</ActiveCol>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+ <Worksheet ss:Name="Sheet3">
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+</Workbook>

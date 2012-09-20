@@ -1,0 +1,272 @@
+Only in xapp883/hw/Source/app: pcie_empty.v
+diff -u -r xapp883.bak/hw/Source/app/v6_pci_exp_64b_app.v xapp883/hw/Source/app/v6_pci_exp_64b_app.v
+--- xapp883.bak/hw/Source/app/v6_pci_exp_64b_app.v	2010-05-24 10:29:12.000000000 +1000
++++ xapp883/hw/Source/app/v6_pci_exp_64b_app.v	2012-01-28 16:32:11.531250000 +1100
+@@ -54,7 +54,10 @@
+ `define PCI_EXP_EP_DSN_1                         {{8'h1},`PCI_EXP_EP_OUI}
+ `define PCI_EXP_EP_DSN_2                         32'h00000001
+ 
+-module  pcie_app_v6
++// To use RESIM
++// ================================================
++// Change the module name from pcie_app_v6 to pcie_bmdma
++module  pcie_bmdma 
+ (
+ 
+   input                                          trn_clk,
+diff -u -r xapp883.bak/hw/Source/pr_loader/icap_mod.v xapp883/hw/Source/pr_loader/icap_mod.v
+--- xapp883.bak/hw/Source/pr_loader/icap_mod.v	2010-11-12 13:22:10.000000000 +1100
++++ xapp883/hw/Source/pr_loader/icap_mod.v	2012-01-28 16:35:24.218750000 +1100
+@@ -1,5 +1,4 @@
+-`timescale 1 ns / 1 ns
+-`include "config.v"
++
+ ///////////////////////////////////////////////////////////////////////////////
+ // © Copyright 2010 Xilinx, Inc. All rights reserved.
+ // This file contains confidential and proprietary information
+@@ -74,6 +73,8 @@
+ //
+ //////////////////////////////////////////////////////////////////////////////////
+ 
++`timescale 1 ns / 1 ns
++
+ module ICAP_mod(
+    BUSY,
+    O,
+@@ -112,7 +113,11 @@
+ 
+ 
+ 
+-         ICAP_VIRTEX6  #(
++// To use RESIM
++// ================================================
++// Use ICAP_VIRTEX6_WRAPPER instead of ICAP_VIRTEX6
++
++         ICAP_VIRTEX6_WRAPPER  #(
+             .ICAP_WIDTH ("X32")
+             )
+             ICAP_VIRTEX6_I (
+diff -u -r xapp883.bak/sim/MyTests.v xapp883/sim/MyTests.v
+--- xapp883.bak/sim/MyTests.v	2010-09-14 13:22:46.000000000 +1000
++++ xapp883/sim/MyTests.v	2012-01-28 17:20:39.843750000 +1100
+@@ -1,35 +1,23 @@
+-else if(testname == "MyTests_Configuration")
++else if(testname == "Demo_Test_Using_ReSim")
+ begin
+ 
+-    // This test performs a 32 bit write to a 32 bit Memory space and performs a read back
+-
+-    TSK_SIMULATION_TIMEOUT(30000); // max time allowed for a TLP to complete
+-
+-    TSK_SYSTEM_INITIALIZATION;
+-
+-    TSK_BAR_INIT;
+-    
+-$display("[%t] : PCIe configuration completed", $realtime);
+-
+-
+-//TSK_READ_CONFIG_REGS;
+-//TSK_TX_CLK_EAT(200);
+-
+-TSK_WRITE_CONFIG_REGS;
+-TSK_SEND_CONFIG_FILE;
+-TSK_TX_CLK_EAT(250);
+-//TSK_READ_DMA_REGS;
+-//TSK_TX_CLK_EAT(9000);
+-    TSK_SIMULATION_TIMEOUT(5000); 
+-TSK_READ_REGS;
+-TSK_TX_CLK_EAT(250);
+-//TSK_SETUP_DMA_READ_REGS; // data moving downstream
+-//TSK_TX_CLK_EAT(100);
+-TSK_SETUP_DMA_WRITE_REGS; // data moving upstream  
+-
+-TSK_SIMULATION_TIMEOUT(30000);
+-//TSK_READ_DMA_REGS;
+-			  
+-    $display("[%t] : Finished FPC reference design simulation", $realtime);
+-//    $finish;
++	TSK_SIMULATION_TIMEOUT(30000);
++	TSK_SYSTEM_INITIALIZATION;
++	TSK_BAR_INIT;
++	
++	$display("[%t] : PCIe configuration completed", $realtime);
++	
++	TSK_WRITE_CONFIG_REGS;
++	TSK_SEND_CONFIG_FILE(32'h100, 96); // Starting address in memory & size of bitstream
++	TSK_TX_CLK_EAT(500);
++	
++	TSK_SIMULATION_TIMEOUT(5000); 
++	TSK_READ_REGS;
++	TSK_TX_CLK_EAT(250);
++	
++	TSK_SETUP_DMA_WRITE_REGS;
++	TSK_SIMULATION_TIMEOUT(30000);
++	
++	$display("[%t] : Finished FPC reference design simulation", $realtime);
++	
+ end
+diff -u -r xapp883.bak/sim/board.v xapp883/sim/board.v
+--- xapp883.bak/sim/board.v	2010-06-09 10:42:26.000000000 +1000
++++ xapp883/sim/board.v	2012-01-28 16:40:32.500000000 +1100
+@@ -238,5 +238,10 @@
+ 
+ end
+ 
++// To use ReSim Sim-only-Layer Instance
++// =====================================
++// Instantiate the Simulation-only Layer
++
++  pcie_solayer i_sol(); 
+ 
+ endmodule // BOARD
+diff -u -r xapp883.bak/sim/dsport/pci_exp_usrapp_tx.v xapp883/sim/dsport/pci_exp_usrapp_tx.v
+--- xapp883.bak/sim/dsport/pci_exp_usrapp_tx.v	2010-04-30 17:13:52.000000000 +1000
++++ xapp883/sim/dsport/pci_exp_usrapp_tx.v	2012-01-28 17:15:47.187500000 +1100
+@@ -289,7 +289,7 @@
+   reg expect_finish_check;
+ 
+   initial begin
+-    if ($value$plusargs("TESTNAME=%s", testname))
++    if ($value$plusargs("PCIE_TESTNAME=%s", testname))
+       $display("Running test {%0s}......", testname);
+     else
+     begin
+@@ -3107,79 +3107,71 @@
+ end
+ endtask
+ 
+-task TSK_SEND_CONFIG_FILE;
+-begin
+-DATA_STORE[0] = 8'h53;
+-DATA_STORE[1] = 8'h54;
+-DATA_STORE[2] = 8'h52;
+-DATA_STORE[3] = 8'h54;
+-	TSK_TX_MEMORY_WRITE_32(DEFAULT_TAG, DEFAULT_TC, 10'd1, BAR_INIT_P_BAR[2][31:0]+8'h10, 4'h0, 4'hF, 1'b0);
+-	DEFAULT_TAG = DEFAULT_TAG + 1;	
+-DATA_STORE[0] = 8'h43;
+-DATA_STORE[1] = 8'h4F;
+-DATA_STORE[2] = 8'h4E;
+-DATA_STORE[3] = 8'h46;
+-	TSK_TX_MEMORY_WRITE_32(DEFAULT_TAG, DEFAULT_TC, 10'd1, BAR_INIT_P_BAR[2][31:0]+8'h10, 4'h0, 4'hF, 1'b0);
+-	DEFAULT_TAG = DEFAULT_TAG + 1;		
+-DATA_STORE[0] = 8'h50;
+-DATA_STORE[1] = 8'h43;
+-DATA_STORE[2] = 8'h49;
+-DATA_STORE[3] = 8'h65;
+-	TSK_TX_MEMORY_WRITE_32(DEFAULT_TAG, DEFAULT_TC, 10'd1, BAR_INIT_P_BAR[2][31:0]+8'h10, 4'h0, 4'hF, 1'b0);
+-	DEFAULT_TAG = DEFAULT_TAG + 1;		
+-
+-DATA_STORE[0] = 8'hAA;
+-DATA_STORE[1] = 8'h99;
+-DATA_STORE[2] = 8'h55;
+-DATA_STORE[3] = 8'h66;	
+-        TSK_TX_MEMORY_WRITE_32(DEFAULT_TAG, DEFAULT_TC, 10'd1, BAR_INIT_P_BAR[2][31:0]+8'h10, 4'h0, 4'hF, 1'b0);
+-	DEFAULT_TAG = DEFAULT_TAG + 1;	
++reg [31:0] sbtmem [0:65536];
+ 
+-for (j=0; j<2; j=j+1)
++task TSK_SEND_CONFIG_FILE;
++	input [31:0] addr;
++	input [31:0] size;
+ begin
+-TSK_TX_CLK_EAT(1000);	
+-	for (i=0;i<400;i=i+1)
+-	begin
+-DATA_STORE[0] = j;
+-DATA_STORE[1] = j;
+-DATA_STORE[2] = i;
+-DATA_STORE[3] = i;
+-//TSK_TX_CLK_EAT(8);	
+-	TSK_TX_MEMORY_WRITE_32(DEFAULT_TAG, DEFAULT_TC, 10'd1, BAR_INIT_P_BAR[2][31:0]+i, 4'h0, 4'hF, 1'b0);
+-	DEFAULT_TAG = DEFAULT_TAG + 1;	
++	
++	DATA_STORE[0] = 8'h53;
++	DATA_STORE[1] = 8'h54;
++	DATA_STORE[2] = 8'h52;
++	DATA_STORE[3] = 8'h54;
++		TSK_TX_MEMORY_WRITE_32(DEFAULT_TAG, DEFAULT_TC, 10'd1, BAR_INIT_P_BAR[2][31:0]+8'h10, 4'h0, 4'hF, 1'b0);
++		DEFAULT_TAG = DEFAULT_TAG + 1;
++	DATA_STORE[0] = 8'h43;
++	DATA_STORE[1] = 8'h4F;
++	DATA_STORE[2] = 8'h4E;
++	DATA_STORE[3] = 8'h46;
++		TSK_TX_MEMORY_WRITE_32(DEFAULT_TAG, DEFAULT_TC, 10'd1, BAR_INIT_P_BAR[2][31:0]+8'h10, 4'h0, 4'hF, 1'b0);
++		DEFAULT_TAG = DEFAULT_TAG + 1;
++	DATA_STORE[0] = 8'h50;
++	DATA_STORE[1] = 8'h43;
++	DATA_STORE[2] = 8'h49;
++	DATA_STORE[3] = 8'h65;
++		TSK_TX_MEMORY_WRITE_32(DEFAULT_TAG, DEFAULT_TC, 10'd1, BAR_INIT_P_BAR[2][31:0]+8'h10, 4'h0, 4'hF, 1'b0);
++		DEFAULT_TAG = DEFAULT_TAG + 1;
++	
++	TSK_TX_CLK_EAT(500);
++		
++	for (j=addr; j<addr+size; j=j+1) begin
++		
++		DATA_STORE[0] = sbtmem[j][31:24]; // MSB, e.g. 0xAA
++		DATA_STORE[1] = sbtmem[j][23:16];
++		DATA_STORE[2] = sbtmem[j][15:8];
++		DATA_STORE[3] = sbtmem[j][7:0];
++		
++		TSK_TX_MEMORY_WRITE_32(DEFAULT_TAG, DEFAULT_TC, 10'd1, BAR_INIT_P_BAR[2][31:0]+8'h10, 4'h0, 4'hF, 1'b0);
++		DEFAULT_TAG = DEFAULT_TAG + 1;
+ 	
+ 	end
+-end
+-//DESYNC
+-DATA_STORE[0] = 8'h00;
+-DATA_STORE[1] = 8'h00;
+-DATA_STORE[2] = 8'h00;
+-DATA_STORE[3] = 8'h0D;
+-	TSK_TX_MEMORY_WRITE_32(DEFAULT_TAG, DEFAULT_TC, 10'd1, BAR_INIT_P_BAR[2][31:0]+8'h10, 4'h0, 4'hF, 1'b0);
+-	DEFAULT_TAG = DEFAULT_TAG + 1;
+-TSK_TX_CLK_EAT(500);	
+-DATA_STORE[0] = 8'h45;
+-DATA_STORE[1] = 8'h4E;
+-DATA_STORE[2] = 8'h44;
+-DATA_STORE[3] = 8'h5F;
+-	TSK_TX_MEMORY_WRITE_32(DEFAULT_TAG, DEFAULT_TC, 10'd1, BAR_INIT_P_BAR[2][31:0]+8'h10, 4'h0, 4'hF, 1'b0);
+-	DEFAULT_TAG = DEFAULT_TAG + 1;	
+-DATA_STORE[0] = 8'h43;
+-DATA_STORE[1] = 8'h4F;
+-DATA_STORE[2] = 8'h4E;
+-DATA_STORE[3] = 8'h46;
+-	TSK_TX_MEMORY_WRITE_32(DEFAULT_TAG, DEFAULT_TC, 10'd1, BAR_INIT_P_BAR[2][31:0]+8'h10, 4'h0, 4'hF, 1'b0);
+-	DEFAULT_TAG = DEFAULT_TAG + 1;		
+-DATA_STORE[0] = 8'h50;
+-DATA_STORE[1] = 8'h43;
+-DATA_STORE[2] = 8'h49;
+-DATA_STORE[3] = 8'h65;
+-	TSK_TX_MEMORY_WRITE_32(DEFAULT_TAG, DEFAULT_TC, 10'd1, BAR_INIT_P_BAR[2][31:0]+8'h10, 4'h0, 4'hF, 1'b0);
+-	DEFAULT_TAG = DEFAULT_TAG + 1;		
++	
++	TSK_TX_CLK_EAT(500);
++	
++	DATA_STORE[0] = 8'h45;
++	DATA_STORE[1] = 8'h4E;
++	DATA_STORE[2] = 8'h44;
++	DATA_STORE[3] = 8'h5F;
++		TSK_TX_MEMORY_WRITE_32(DEFAULT_TAG, DEFAULT_TC, 10'd1, BAR_INIT_P_BAR[2][31:0]+8'h10, 4'h0, 4'hF, 1'b0);
++		DEFAULT_TAG = DEFAULT_TAG + 1;
++	DATA_STORE[0] = 8'h43;
++	DATA_STORE[1] = 8'h4F;
++	DATA_STORE[2] = 8'h4E;
++	DATA_STORE[3] = 8'h46;
++		TSK_TX_MEMORY_WRITE_32(DEFAULT_TAG, DEFAULT_TC, 10'd1, BAR_INIT_P_BAR[2][31:0]+8'h10, 4'h0, 4'hF, 1'b0);
++		DEFAULT_TAG = DEFAULT_TAG + 1;
++	DATA_STORE[0] = 8'h50;
++	DATA_STORE[1] = 8'h43;
++	DATA_STORE[2] = 8'h49;
++	DATA_STORE[3] = 8'h65;
++		TSK_TX_MEMORY_WRITE_32(DEFAULT_TAG, DEFAULT_TC, 10'd1, BAR_INIT_P_BAR[2][31:0]+8'h10, 4'h0, 4'hF, 1'b0);
++		DEFAULT_TAG = DEFAULT_TAG + 1;
++	
++	$display("[%t] : TSK_SEND_CONFIG_FILE completed", $realtime);
++	
+ end
+ endtask
+ 
+-
+-
+ endmodule // pci_exp_usrapp_tx
+ 

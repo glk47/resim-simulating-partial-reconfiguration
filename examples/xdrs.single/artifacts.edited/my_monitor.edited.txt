@@ -1,0 +1,104 @@
+/*******************************************************************************
+ * Copyright (c) 2012, Lingkan Gong
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without 
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ *  * Redistributions of source code must retain the above copyright notice, 
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice, 
+ *    this list of conditions and the following disclaimer in the documentation 
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of the copyright holder(s) nor the names of its
+ *    contributors may be used to endorse or promote products derived from this 
+ *    software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS BE LIABLE FOR ANY           
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+*******************************************************************************/
+
+`ifndef MY_MONITOR_SVH
+`define MY_MONITOR_SVH
+
+class my_monitor extends rsv_monitor#(virtual interface my_if);
+
+	// configuration table and parameters
+	`ovm_component_utils_begin(my_monitor)
+	`ovm_component_utils_end
+
+	// new - constructor
+	function new (string name, ovm_component parent);
+		super.new(name, parent);
+	endfunction : new
+
+	// Define your own tasks to collect transactions
+	// You should not change the name or the prototype of these tasks
+
+	extern virtual protected task collect_unload_transaction();
+	extern virtual protected task collect_activate_transaction();
+
+endclass : my_monitor
+
+task my_monitor::collect_unload_transaction();
+
+	rsv_unload_trans tr;
+	realtime req_time;
+	
+	forever begin
+	
+		// In this example, the "unloading" operation involves a "req, ack" handshake.
+		// In particular, the following code wait until the handshake sequence, and
+		// create a "rsv_unload_trans" transaction to the analysis port
+
+		@(negedge mon_vi.rc_reqn); req_time = $realtime;
+		@(posedge mon_vi.clk iff mon_vi.rc_ackn === 1'b0);
+
+		tr = new(req_time, "Current module unloaded", OVM_MEDIUM);
+		
+		`region_print_record_trans(get_parent(), tr);
+		`region_analysis_port_trans(get_parent(), tr.clone());
+		
+	end
+
+endtask : my_monitor::collect_unload_transaction
+
+task my_monitor::collect_activate_transaction();
+
+	rsv_activate_trans tr;
+	realtime reset_time;
+	
+	forever begin
+	
+		// In this example, the "activation" operation is simply a reset. 
+		// In particular, the following code wait until the de-assertion of 
+		// the reset signal, and create a "rsv_activate_trans" transaction
+		// to the analysis port
+
+		@(negedge mon_vi.rstn); reset_time = $realtime;
+		@(posedge mon_vi.rstn);
+
+		tr = new(reset_time, "New module activated", OVM_MEDIUM);
+		
+		`region_print_record_trans(get_parent(), tr);
+		`region_analysis_port_trans(get_parent(), tr.clone());
+		
+	end
+
+endtask : my_monitor::collect_activate_transaction
+
+`endif // MY_MONITOR_SVH
+
+
+

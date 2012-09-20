@@ -1,0 +1,6 @@
+run
+-p xc5vfx70tff1136-2 -ifmt mixed -iobuf no -keep_hierarchy no 
+-opt_mode speed -netlist_hierarchy as_optimized -opt_level 1 -hierarchy_separator _ 
+-top math_core
+-ifn ./xst_files.txt -ofmt ngc -ofn ./math_core.ngc -lso ./math_core.lso
+

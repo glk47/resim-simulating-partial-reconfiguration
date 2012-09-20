@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<Strategy Version="1" Minor="2">
+	<StratHandle Name="XPLB Defaults" Flow="ISE12">
+		<Desc>ngdbuild -bm</Desc>
+	</StratHandle>
+	<Step Id="ngdbuild">
+		<Option Id="MoreOptsStr">-sd ../../../../edk/netlist  -uc ../../../../edk/netlist/system.ucf</Option>
+		<Option Id="BmmFile">../../../../edk/netlist/system.bmm</Option>
+	</Step>
+	<Step Id="map">
+		<Option Id="ExtraEffEnum">0</Option>
+		<Option Id="EffortLvl11Enum">1</Option>
+	</Step>
+	<Step Id="par">
+		<Option Id="PlacerEff11Enum">1</Option>
+		<Option Id="RouterEff11Enum">1</Option>
+		<Option Id="OverallEff11Enum">1</Option>
+		<Option Id="ExtraEffEnum">0</Option>
+	</Step>
+	<Step Id="trce">
+	</Step>
+	<Step Id="xdl">
+	</Step>
+	<Step Id="bitgen">
+		<Option Id="MoreOptsStr">-d -l -m -g Binary:Yes</Option>
+	</Step>
+</Strategy>
+

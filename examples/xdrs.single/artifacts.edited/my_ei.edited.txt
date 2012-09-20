@@ -1,0 +1,165 @@
+/*******************************************************************************
+ * Copyright (c) 2012, Lingkan Gong
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without 
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ *  * Redistributions of source code must retain the above copyright notice, 
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice, 
+ *    this list of conditions and the following disclaimer in the documentation 
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of the copyright holder(s) nor the names of its
+ *    contributors may be used to endorse or promote products derived from this 
+ *    software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS BE LIABLE FOR ANY           
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+*******************************************************************************/
+
+`ifndef MY_EI_SVH
+`define MY_EI_SVH
+
+class my_ei extends rsv_error_injector#(virtual interface my_if);
+
+	// configuration table and parameters
+	`ovm_component_utils_begin(my_ei)
+	`ovm_component_utils_end
+
+	// new - constructor
+	function new (string name, ovm_component parent);
+		super.new(name, parent);
+	endfunction : new
+
+	// Define your own tasks to inject errors.
+	// You should not change the name or the prototype of these tasks.
+	// Possible injections include:
+	//
+	//     x, all-0, all-1, negate, random, no-change
+
+	extern virtual protected task inject_to_static_module();
+	extern virtual protected task inject_to_reconfigurable_module();
+	extern virtual protected task inject_to_internal_signals();
+
+	// TODO: user-defined local tasks
+	
+	extern task ei_reset_rm();
+	extern task ei_inject_to_rm(logic [31:0] ei_data);
+	
+	
+endclass : my_ei
+
+task my_ei::inject_to_static_module ();
+	// Default static error injection
+
+	rsv_ei_trans tr;
+	realtime ei_time;
+
+	// 0. enable the static error injection
+
+	ei_vi.sei_en = 1'b1;
+
+	// 1. use ei_vi.reconf_phase as a trigger to start error injection
+	// ei_vi.reconf_phase is asserted during reconfiguration 
+
+	@(posedge ei_vi.reconf_phase);
+
+	sei_vi.rc_ackn          = 'hx;
+	sei_vi.p_prdy           = 'hx;
+	sei_vi.p_data           = 'hx;
+	sei_vi.c_crdy           = 'hx;
+	sei_vi.c_cerr           = 'hx;
+
+	tr = new($realtime, "Starting X Injection", OVM_MEDIUM);
+	
+	`region_print_record_trans(get_parent(), tr);
+	`region_analysis_port_trans(get_parent(), tr.clone());
+
+endtask : my_ei::inject_to_static_module
+
+task my_ei::inject_to_reconfigurable_module ();
+	// User-defined dynamic error injection
+
+	// 0. enable the dynamic error injection
+	//    the real error sources are from the two user-defined tasks
+	//    ei_reset_rm(), ei_inject_to_rm()
+
+	ei_vi.dei_en = 1'b1;
+	
+endtask : my_ei::inject_to_reconfigurable_module
+
+task my_ei::inject_to_internal_signals ();
+	// User-defined internal error injection
+	
+	ei_vi.iei_en = 1'b1;
+	ei_vi.iei_sig_type = "x";    // none, zero OR. x
+	ei_vi.iei_mem_type = "rand"; // none, zero OR. rand
+	
+endtask : my_ei::inject_to_internal_signals
+
+task my_ei::ei_reset_rm ();
+	
+	// 1. drive default value to all input signals
+	dei_vi.clk   = 1'b1;
+	dei_vi.rstn  = 1'b1;
+	
+	dei_vi.p_crdy = 1'b0;
+	dei_vi.p_cerr = 1'b0;
+	dei_vi.c_prdy = 1'b0;
+	dei_vi.c_data = 32'h0;
+	
+	dei_vi.rc_reqn  = 1'b1;
+	
+	// 2. assert and release reset signal 
+	dei_vi.rstn = 1'b0; #1 dei_vi.rstn = 1'b1;
+	
+endtask : my_ei::ei_reset_rm
+
+task my_ei::ei_inject_to_rm (logic [31:0] ei_data);
+	
+	rsv_ei_trans tr;
+	realtime ei_time;
+	
+	// 1. spawn clocking thread 
+	fork : clock_2_rm_thread
+		forever begin
+			@(sei_vi.clk); dei_vi.clk = sei_vi.clk;
+		end
+	join_none
+	ei_time = $realtime;
+	
+	// 2. force the rm to read 1 data
+	repeat (4) @(posedge sei_vi.clk);
+	#1 dei_vi.c_prdy = 1'b1; dei_vi.c_data  = ei_data;
+	
+	@(posedge sei_vi.clk iff (dei_vi.c_crdy == 1'b1) );
+	#1 dei_vi.c_prdy = 1'b0; dei_vi.c_data  = 0;
+	
+	// 3. disable the clocking thread
+	repeat (4) @(posedge sei_vi.clk);
+	disable clock_2_rm_thread;
+	
+	// 4. finish and create a transaction
+	tr = new(ei_time, $psprintf("DEI: Random Injection, data= 0x%0h",ei_data), OVM_MEDIUM);
+	
+	`region_print_record_trans(get_parent(), tr);
+	`region_analysis_port_trans(get_parent(), tr.clone());
+
+endtask : my_ei::ei_inject_to_rm
+
+`endif // MY_EI_SVH
+
+
+

@@ -1,0 +1,93 @@
+/*******************************************************************************
+ * Copyright (c) 2012, Lingkan Gong
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without 
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ *  * Redistributions of source code must retain the above copyright notice, 
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice, 
+ *    this list of conditions and the following disclaimer in the documentation 
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of the copyright holder(s) nor the names of its
+ *    contributors may be used to endorse or promote products derived from this 
+ *    software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS BE LIABLE FOR ANY           
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+*******************************************************************************/
+
+`ifndef MATH_EI_SVH
+`define MATH_EI_SVH
+
+class math_ei extends rsv_error_injector#(virtual interface math_if);
+
+	// configuration table and parameters
+	`ovm_component_utils_begin(math_ei)
+	`ovm_component_utils_end
+
+	// new - constructor
+	function new (string name, ovm_component parent);
+		super.new(name, parent);
+	endfunction : new
+
+	// Define your own tasks to inject errors.
+	// You should not change the name or the prototype of these tasks.
+	// Possible injections include:
+	//
+	//     x, all-0, all-1, negate, random, no-change
+
+	extern virtual protected task inject_to_static_module();
+	extern virtual protected task inject_to_reconfigurable_module();
+	extern virtual protected task inject_to_internal_signals();
+
+endclass : math_ei
+
+task math_ei::inject_to_static_module ();
+	rsv_ei_trans tr;
+	realtime ei_time;
+
+	ei_vi.sei_en = 1'b1;
+	
+	@(posedge ei_vi.reconf_phase);
+
+	sei_vi.result           = $urandom;
+	sei_vi.statistic        = $urandom;
+
+	tr = new($realtime, "Starting Ramdom Injection", OVM_MEDIUM);
+	
+	`region_print_record_trans(get_parent(), tr);
+	`region_analysis_port_trans(get_parent(), tr.clone());
+
+endtask : math_ei::inject_to_static_module
+
+task math_ei::inject_to_reconfigurable_module ();
+
+	ei_vi.dei_en = 1'b0;
+
+endtask : math_ei::inject_to_reconfigurable_module
+
+task math_ei::inject_to_internal_signals ();
+
+	ei_vi.iei_en = 1'b1;
+	ei_vi.iei_sig_type = "x";    // none, zero OR. x
+	ei_vi.iei_mem_type = "rand"; // none, zero OR. rand
+	
+endtask : math_ei::inject_to_internal_signals
+
+`endif // MATH_EI_SVH
+
+
+

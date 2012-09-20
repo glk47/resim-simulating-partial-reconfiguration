@@ -1,0 +1,184 @@
+<?xml version="1.0"?>
+<Interface Version="1" Minor="1">
+	<Ifc Id="ROOT" Top="1">
+		<Bus Id="fpga_0_SysACE_MPD_pin">
+			<Port Id="15" Dir="INOUT"/>
+			<Port Id="14" Dir="INOUT"/>
+			<Port Id="13" Dir="INOUT"/>
+			<Port Id="12" Dir="INOUT"/>
+			<Port Id="11" Dir="INOUT"/>
+			<Port Id="10" Dir="INOUT"/>
+			<Port Id="9" Dir="INOUT"/>
+			<Port Id="8" Dir="INOUT"/>
+			<Port Id="7" Dir="INOUT"/>
+			<Port Id="6" Dir="INOUT"/>
+			<Port Id="5" Dir="INOUT"/>
+			<Port Id="4" Dir="INOUT"/>
+			<Port Id="3" Dir="INOUT"/>
+			<Port Id="2" Dir="INOUT"/>
+			<Port Id="1" Dir="INOUT"/>
+			<Port Id="0" Dir="INOUT"/>
+		</Bus>
+		<Bus Id="fpga_0_ddr2_sdram_DQS_N_pin">
+			<Port Id="7" Dir="INOUT"/>
+			<Port Id="6" Dir="INOUT"/>
+			<Port Id="5" Dir="INOUT"/>
+			<Port Id="4" Dir="INOUT"/>
+			<Port Id="3" Dir="INOUT"/>
+			<Port Id="2" Dir="INOUT"/>
+			<Port Id="1" Dir="INOUT"/>
+			<Port Id="0" Dir="INOUT"/>
+		</Bus>
+		<Bus Id="fpga_0_ddr2_sdram_DQ_pin">
+			<Port Id="63" Dir="INOUT"/>
+			<Port Id="62" Dir="INOUT"/>
+			<Port Id="61" Dir="INOUT"/>
+			<Port Id="60" Dir="INOUT"/>
+			<Port Id="59" Dir="INOUT"/>
+			<Port Id="58" Dir="INOUT"/>
+			<Port Id="57" Dir="INOUT"/>
+			<Port Id="56" Dir="INOUT"/>
+			<Port Id="55" Dir="INOUT"/>
+			<Port Id="54" Dir="INOUT"/>
+			<Port Id="53" Dir="INOUT"/>
+			<Port Id="52" Dir="INOUT"/>
+			<Port Id="51" Dir="INOUT"/>
+			<Port Id="50" Dir="INOUT"/>
+			<Port Id="49" Dir="INOUT"/>
+			<Port Id="48" Dir="INOUT"/>
+			<Port Id="47" Dir="INOUT"/>
+			<Port Id="46" Dir="INOUT"/>
+			<Port Id="45" Dir="INOUT"/>
+			<Port Id="44" Dir="INOUT"/>
+			<Port Id="43" Dir="INOUT"/>
+			<Port Id="42" Dir="INOUT"/>
+			<Port Id="41" Dir="INOUT"/>
+			<Port Id="40" Dir="INOUT"/>
+			<Port Id="39" Dir="INOUT"/>
+			<Port Id="38" Dir="INOUT"/>
+			<Port Id="37" Dir="INOUT"/>
+			<Port Id="36" Dir="INOUT"/>
+			<Port Id="35" Dir="INOUT"/>
+			<Port Id="34" Dir="INOUT"/>
+			<Port Id="33" Dir="INOUT"/>
+			<Port Id="32" Dir="INOUT"/>
+			<Port Id="31" Dir="INOUT"/>
+			<Port Id="30" Dir="INOUT"/>
+			<Port Id="29" Dir="INOUT"/>
+			<Port Id="28" Dir="INOUT"/>
+			<Port Id="27" Dir="INOUT"/>
+			<Port Id="26" Dir="INOUT"/>
+			<Port Id="25" Dir="INOUT"/>
+			<Port Id="24" Dir="INOUT"/>
+			<Port Id="23" Dir="INOUT"/>
+			<Port Id="22" Dir="INOUT"/>
+			<Port Id="21" Dir="INOUT"/>
+			<Port Id="20" Dir="INOUT"/>
+			<Port Id="19" Dir="INOUT"/>
+			<Port Id="18" Dir="INOUT"/>
+			<Port Id="17" Dir="INOUT"/>
+			<Port Id="16" Dir="INOUT"/>
+			<Port Id="15" Dir="INOUT"/>
+			<Port Id="14" Dir="INOUT"/>
+			<Port Id="13" Dir="INOUT"/>
+			<Port Id="12" Dir="INOUT"/>
+			<Port Id="11" Dir="INOUT"/>
+			<Port Id="10" Dir="INOUT"/>
+			<Port Id="9" Dir="INOUT"/>
+			<Port Id="8" Dir="INOUT"/>
+			<Port Id="7" Dir="INOUT"/>
+			<Port Id="6" Dir="INOUT"/>
+			<Port Id="5" Dir="INOUT"/>
+			<Port Id="4" Dir="INOUT"/>
+			<Port Id="3" Dir="INOUT"/>
+			<Port Id="2" Dir="INOUT"/>
+			<Port Id="1" Dir="INOUT"/>
+			<Port Id="0" Dir="INOUT"/>
+		</Bus>
+		<Bus Id="fpga_0_ddr2_sdram_DQS_pin">
+			<Port Id="7" Dir="INOUT"/>
+			<Port Id="6" Dir="INOUT"/>
+			<Port Id="5" Dir="INOUT"/>
+			<Port Id="4" Dir="INOUT"/>
+			<Port Id="3" Dir="INOUT"/>
+			<Port Id="2" Dir="INOUT"/>
+			<Port Id="1" Dir="INOUT"/>
+			<Port Id="0" Dir="INOUT"/>
+		</Bus>
+		<Bus Id="fpga_0_ddr2_sdram_CK_N_pin">
+			<Port Id="1" Dir="OUT"/>
+			<Port Id="0" Dir="OUT"/>
+		</Bus>
+		<Bus Id="fpga_0_ddr2_sdram_ODT_pin">
+			<Port Id="1" Dir="OUT"/>
+			<Port Id="0" Dir="OUT"/>
+		</Bus>
+		<Bus Id="fpga_0_ddr2_sdram_CK_pin">
+			<Port Id="1" Dir="OUT"/>
+			<Port Id="0" Dir="OUT"/>
+		</Bus>
+		<Bus Id="fpga_0_SysACE_MPA_pin">
+			<Port Id="6" Dir="OUT"/>
+			<Port Id="5" Dir="OUT"/>
+			<Port Id="4" Dir="OUT"/>
+			<Port Id="3" Dir="OUT"/>
+			<Port Id="2" Dir="OUT"/>
+			<Port Id="1" Dir="OUT"/>
+			<Port Id="0" Dir="OUT"/>
+		</Bus>
+		<Bus Id="fpga_0_ddr2_sdram_BA_pin">
+			<Port Id="1" Dir="OUT"/>
+			<Port Id="0" Dir="OUT"/>
+		</Bus>
+		<Bus Id="fpga_0_ddr2_sdram_DM_pin">
+			<Port Id="7" Dir="OUT"/>
+			<Port Id="6" Dir="OUT"/>
+			<Port Id="5" Dir="OUT"/>
+			<Port Id="4" Dir="OUT"/>
+			<Port Id="3" Dir="OUT"/>
+			<Port Id="2" Dir="OUT"/>
+			<Port Id="1" Dir="OUT"/>
+			<Port Id="0" Dir="OUT"/>
+		</Bus>
+		<Bus Id="fpga_0_ddr2_sdram_A_pin">
+			<Port Id="12" Dir="OUT"/>
+			<Port Id="11" Dir="OUT"/>
+			<Port Id="10" Dir="OUT"/>
+			<Port Id="9" Dir="OUT"/>
+			<Port Id="8" Dir="OUT"/>
+			<Port Id="7" Dir="OUT"/>
+			<Port Id="6" Dir="OUT"/>
+			<Port Id="5" Dir="OUT"/>
+			<Port Id="4" Dir="OUT"/>
+			<Port Id="3" Dir="OUT"/>
+			<Port Id="2" Dir="OUT"/>
+			<Port Id="1" Dir="OUT"/>
+			<Port Id="0" Dir="OUT"/>
+		</Bus>
+		<Port Id="fpga_0_SysACE_MPIRQ_pin" Dir="IN"/>
+		<Port Id="fpga_0_SysACE_WEN_pin" Dir="OUT"/>
+		<Port Id="fpga_0_ddr2_sdram_WE_N_pin" Dir="OUT"/>
+		<Port Id="fpga_0_RS232_Uart_0_RX_pin" Dir="IN"/>
+		<Port Id="fpga_0_ddr2_sdram_RAS_N_pin" Dir="OUT"/>
+		<Port Id="fpga_0_SysACE_OEN_pin" Dir="OUT"/>
+		<Port Id="fpga_0_ddr2_sdram_CKE_pin" Dir="OUT"/>
+		<Port Id="fpga_0_SysACE_CLK_pin" Dir="IN"/>
+		<Port Id="fpga_0_RS232_Uart_0_TX_pin" Dir="OUT"/>
+		<Port Id="fpga_0_ddr2_sdram_CS_N_pin" Dir="OUT"/>
+		<Port Id="fpga_0_sys_rst_pin" Dir="IN"/>
+		<Port Id="fpga_0_sys_clk_pin" Dir="IN"/>
+		<Port Id="fpga_0_ddr2_sdram_CAS_N_pin" Dir="OUT"/>
+		<Port Id="fpga_0_SysACE_CEN_pin" Dir="OUT"/>
+		<DiffPair Pos="fpga_0_ddr2_sdram_DQS_pin[7]" Neg="fpga_0_ddr2_sdram_DQS_N_pin[7]"/>
+		<DiffPair Pos="fpga_0_ddr2_sdram_DQS_pin[6]" Neg="fpga_0_ddr2_sdram_DQS_N_pin[6]"/>
+		<DiffPair Pos="fpga_0_ddr2_sdram_DQS_pin[5]" Neg="fpga_0_ddr2_sdram_DQS_N_pin[5]"/>
+		<DiffPair Pos="fpga_0_ddr2_sdram_DQS_pin[4]" Neg="fpga_0_ddr2_sdram_DQS_N_pin[4]"/>
+		<DiffPair Pos="fpga_0_ddr2_sdram_DQS_pin[3]" Neg="fpga_0_ddr2_sdram_DQS_N_pin[3]"/>
+		<DiffPair Pos="fpga_0_ddr2_sdram_DQS_pin[2]" Neg="fpga_0_ddr2_sdram_DQS_N_pin[2]"/>
+		<DiffPair Pos="fpga_0_ddr2_sdram_DQS_pin[1]" Neg="fpga_0_ddr2_sdram_DQS_N_pin[1]"/>
+		<DiffPair Pos="fpga_0_ddr2_sdram_DQS_pin[0]" Neg="fpga_0_ddr2_sdram_DQS_N_pin[0]"/>
+		<DiffPair Pos="fpga_0_ddr2_sdram_CK_pin[1]" Neg="fpga_0_ddr2_sdram_CK_N_pin[1]"/>
+		<DiffPair Pos="fpga_0_ddr2_sdram_CK_pin[0]" Neg="fpga_0_ddr2_sdram_CK_N_pin[0]"/>
+	</Ifc>
+</Interface>
+

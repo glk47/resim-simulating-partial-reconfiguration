@@ -1,0 +1,112 @@
+/*******************************************************************************
+ * Copyright (c) 2012, Lingkan Gong
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without 
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ *  * Redistributions of source code must retain the above copyright notice, 
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice, 
+ *    this list of conditions and the following disclaimer in the documentation 
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of the copyright holder(s) nor the names of its
+ *    contributors may be used to endorse or promote products derived from this 
+ *    software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+*******************************************************************************/
+
+`ifndef MATH_MONITOR_SVH
+`define MATH_MONITOR_SVH
+
+class math_monitor extends rsv_monitor#(virtual interface math_if);
+
+	// configuration table and parameters
+	`ovm_component_utils_begin(math_monitor)
+	`ovm_component_utils_end
+
+	// new - constructor
+	function new (string name, ovm_component parent);
+		super.new(name, parent);
+	endfunction : new
+
+	// Define your own tasks to collect transactions
+	// You should not change the name or the prototype of these tasks
+
+	extern virtual protected task collect_unload_transaction();
+	extern virtual protected task collect_activate_transaction();
+
+endclass : math_monitor
+
+task math_monitor::collect_unload_transaction();
+	// TODO: Implement your own collect_unload_transaction() task here
+	// The collect_unload_transaction() task typically inspects the signal
+	// transitions on the virtual interface and generate the collected
+	// "unloading" transactions towards the analysis port
+
+	rsv_unload_trans tr;
+	
+	forever begin
+		// TODO: waiting until a complete "unloading" operation is
+		// observed on the virtual interface (e.g. the "req, ack" handshakes)
+
+		// ... YOUR OWN CODE ...
+		// e.g. @(posedge mon_vi.clk); ...
+		break;
+
+		// After an unloading operation is detected, create a new
+		// transaction with the correct attribute(s) and write it to the
+		// analysis port (ap)
+
+		tr = new($realtime, "Current module unloaded");
+		
+		`region_print_record_trans(get_parent(), tr);
+		`region_analysis_port_trans(get_parent(), tr.clone());
+		
+	end
+
+endtask : math_monitor::collect_unload_transaction
+
+task math_monitor::collect_activate_transaction();
+
+	rsv_activate_trans tr;
+	realtime reset_time;
+	
+	#50_000;
+	
+	forever begin
+	
+		// For the math core, the "activation" operation is simply a reset. 
+		// In particular, the following code wait until the de-assertion of 
+		// the reset signal, and create a "rsv_activate_trans" transaction
+		// to the analysis port
+		
+		@(posedge mon_vi.rst); reset_time = $realtime;
+		@(negedge mon_vi.rst);
+
+		tr = new(reset_time, "module activated", OVM_MEDIUM);
+		
+		`region_print_record_trans(get_parent(), tr);
+		`region_analysis_port_trans(get_parent(), tr.clone());
+		
+	end
+
+endtask : math_monitor::collect_activate_transaction
+
+`endif // MATH_MONITOR_SVH
+
+
+

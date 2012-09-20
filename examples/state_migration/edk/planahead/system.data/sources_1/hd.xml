@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<PartialReconfig Version="1" Minor="5">
+	<PRInst Name="system" Top="TRUE" Reconfigurable="FALSE" PromotedLocation="$PROMOTEDIR/Xconfig_0">
+	</PRInst>
+	<PRInst Name="xps_math_0/xps_math_0/USER_LOGIC_I/math_core_i" CurrPRModule="maximum" Reconfigurable="TRUE">
+		<PRModule Name="math_core_bb" Blackbox="TRUE">
+		</PRModule>
+		<PRModule Name="adder" Source="math_core.edf" Netlist="$PDATADIR/../../netlist/math_core/adder/math_core.ngc" PromotedLocation="$PROMOTEDIR/Xconfig_1|$PROMOTEDIR/Xconfig_0">
+			<Constraints Source="math_core_i_adder.ucf" Original="$PDATADIR/../../netlist/math_core/adder/math_core_i_adder.ucf"/>
+		</PRModule>
+		<PRModule Name="maximum" Source="math_core.edf" Netlist="$PDATADIR/../../netlist/math_core/maximum/math_core.ngc">
+			<Constraints Source="math_core_i_maximum.ucf" Original="$PDATADIR/../../netlist/math_core/maximum/math_core_i_maximum.ucf"/>
+		</PRModule>
+	</PRInst>
+	<PRConfig Name="config_1" State="IMPLEMENTED">
+		<PRConfigInst PRInst="system" State="IMPORT" ImportLocation="$PROMOTEDIR/Xconfig_0">
+		</PRConfigInst>
+		<PRConfigInst PRInst="xps_math_0/xps_math_0/USER_LOGIC_I/math_core_i" PRModule="maximum" State="IMPLEMENT">
+		</PRConfigInst>
+	</PRConfig>
+	<PRConfig Name="config_0" State="PROMOTED" PromotedLocation="$PROMOTEDIR/Xconfig_0">
+		<PRConfigInst PRInst="system" State="IMPLEMENT">
+		</PRConfigInst>
+		<PRConfigInst PRInst="xps_math_0/xps_math_0/USER_LOGIC_I/math_core_i" PRModule="adder" State="IMPLEMENT">
+		</PRConfigInst>
+	</PRConfig>
+</PartialReconfig>
+

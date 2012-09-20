@@ -1,0 +1,72 @@
+profile report -structural
+profile report -du
+
+# QuestaSim  vsim 6.5g Simulator 2011.06 Jun  4 2011
+# Platform: win32
+# Structural profile generated Tue Jul 31 15:50:27 2012
+# Number of samples: 56     Net memory allocated: 1571437
+# Number of samples in user code: 47 (84%)
+# Cutoff percentage:  0%
+# Keep unknown: 0
+# Collapse sections: 0
+# Collect callstacks: 0
+# Memory trim height: 0
+# Keep free: 1
+# Profile data: vsimk (ModelSim kernel)
+# 
+#                                                 PERFORMANCE                :                   MEMORY
+# Name                         Under(raw)  In(raw)  Under(%)  In(%)  %Parent     Under(b)      In(b)     Under(%)  In(%)  %Parent
+# ----                         ----------  -------  --------  -----  -------   -----------  -----------  --------  -----  -------
+# xdrs  *                             29        0      51.8    0.0      ...             0            0       0.0    0.0      ...
+#   region_0  *                       25       25      44.6   44.6     86.2             0            0       0.0    0.0      ...
+#   icapi_0  *                         1        0       1.8    0.0      3.4             0            0       0.0    0.0      ...
+#     icap_0  *                        1        1       1.8    1.8    100.0             0            0       0.0    0.0      ...
+#   sol_0  *                           1        1       1.8    1.8      3.4             0            0       0.0    0.0      ...
+#   mem_0  *                           1        1       1.8    1.8      3.4             0            0       0.0    0.0      ...
+#   mgr_0  *                           1        1       1.8    1.8      3.4             0            0       0.0    0.0      ...
+# ovm_pkg  *                          12        0      21.4    0.0      ...             0            0       0.0    0.0      ...
+#   ovm_root  *                       12        0      21.4    0.0    100.0             0            0       0.0    0.0      ...
+#     m_do_phase  *                    9        9      16.1   16.1     75.0             0            0       0.0    0.0      ...
+#     run_test  *                      3        3       5.4    5.4     25.0             0            0       0.0    0.0      ...
+# rsv_solyr_pkg  *                     5        0       8.9    0.0      ...             0            0       0.0    0.0      ...
+#   rsv_monitor  *                     3        0       5.4    0.0     60.0             0            0       0.0    0.0      ...
+#     rsv_monitor__1  *                3        0       5.4    0.0    100.0             0            0       0.0    0.0      ...
+#       print_record_trans  *          3        3       5.4    5.4    100.0             0            0       0.0    0.0      ...
+#   rsv_icap_virtex  *                 2        0       3.6    0.0     40.0             0            0       0.0    0.0      ...
+#     run  *                           2        2       3.6    3.6    100.0             0            0       0.0    0.0      ...
+# <NoContext>  *                       1        1       1.8    1.8      ...       1571437      1571437     100.0  100.0      ...
+# 
+# QuestaSim  vsim 6.5g Simulator 2011.06 Jun  4 2011
+# Platform: win32
+# Ranked profile generated Tue Jul 31 15:50:27 2012
+# Number of samples: 56     Net memory allocated: 1571437
+# Number of samples in user code: 47 (84%)
+# Cutoff percentage:  0%
+# Keep unknown: 0
+# Collapse sections: 0
+# Collect callstacks: 0
+# Memory trim height: 0
+# Keep free: 1
+# Profile data: vsimk (ModelSim kernel)
+# 
+#                                          PERFORMANCE       :                   MEMORY
+# Name                  Under(raw)  In(raw)  Under(%)  In(%)     Under(b)      In(b)     Under(%)  In(%)
+# ----                  ----------  -------  --------  -----   -----------  -----------  --------  -----
+# my_region                    25       25      44.6   44.6             0            0       0.0    0.0
+# ovm_pkg                       9        9      16.1   16.1             0            0       0.0    0.0
+# ovm_pkg                       3        3       5.4    5.4             0            0       0.0    0.0
+# rsv_solyr_pkg                 3        3       5.4    5.4             0            0       0.0    0.0
+# rsv_solyr_pkg                 2        2       3.6    3.6             0            0       0.0    0.0
+# <NoContext>                   1        1       1.8    1.8       1571437      1571437     100.0  100.0
+# ICAP_VIRTEX4_WRAPPER          1        1       1.8    1.8             0            0       0.0    0.0
+# manager                       1        1       1.8    1.8             0            0       0.0    0.0
+# memctrl                       1        1       1.8    1.8             0            0       0.0    0.0
+# my_solyr                      1        1       1.8    1.8             0            0       0.0    0.0
+# xdrs                         29        0      51.8    0.0             0            0       0.0    0.0
+# ovm_pkg                      12        0      21.4    0.0             0            0       0.0    0.0
+# ovm_pkg                      12        0      21.4    0.0             0            0       0.0    0.0
+# rsv_solyr_pkg                 5        0       8.9    0.0             0            0       0.0    0.0
+# rsv_solyr_pkg                 3        0       5.4    0.0             0            0       0.0    0.0
+# rsv_solyr_pkg                 3        0       5.4    0.0             0            0       0.0    0.0
+# rsv_solyr_pkg                 2        0       3.6    0.0             0            0       0.0    0.0
+# icapi                         1        0       1.8    0.0             0            0       0.0    0.0

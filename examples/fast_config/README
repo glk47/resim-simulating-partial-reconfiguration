@@ -1,0 +1,108 @@
+/*******************************************************************************   
+ * Copyright (c) 2012, Lingkan Gong                                                
+ * All rights reserved.                                                            
+ *                                                                                 
+ * Redistribution and use in source and binary forms, with or without              
+ * modification, are permitted provided that the following conditions are met:     
+ *                                                                                 
+ *  * Redistributions of source code must retain the above copyright notice,       
+ *    this list of conditions and the following disclaimer.                        
+ *                                                                                 
+ *  * Redistributions in binary form must reproduce the above copyright notice,    
+ *    this list of conditions and the following disclaimer in the documentation    
+ *    and/or other materials provided with the distribution.                       
+ *                                                                                 
+ *  * Neither the name of the copyright holder(s) nor the names of its             
+ *    contributors may be used to endorse or promote products derived from this    
+ *    software without specific prior written permission.                          
+ *                                                                                 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED   
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE          
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS BE LIABLE FOR ANY           
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES      
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;    
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND     
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT      
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS   
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                    
+ *                                                                                 
+*******************************************************************************/   
+
+This example demonstrates using ReSim in a reference design released by Xilinx.
+It is strongely recommended that the readers run the original design (XAPP883)
+before running this example. 
+
+TO Run the "Fast PCIe Configuration" example:
+
+1. Download the "Fast Configuration through PCIe" refernece design 
+   
+    1.1 Go to Xilinx website and download XAPP883
+    1.2 Extract and copy the design files to ./xapp883
+   
+2 Generate the PCIe endpoint logic 
+    (These steps are required by XAPP883, please refer to XAPP883 for how to generate
+    the PCIe endpoint and the parameters for the PCIe endpoint)
+    
+    2.1 Use coregen to generate the PCIe endpoint logic 
+    2.2 Copy the endpoint source code to ./xapp883/hw/Source/PCIe_x8_gen1/source
+    2.3 Use the files in the custom folder to overwrite the same files in 
+        ./xapp883/hw/Source/PCIe_x8_gen1/source
+   
+3. Integrate ReSim into the reference design 
+    (These steps are required by ReSim)
+    
+    3.1 Create a "settings.do" file in the working folder
+    This file is required to setup directory pathes
+    
+        set RSV_HOME "C:/DPR_TOOLS/ReSim"
+        set OVM_HOME "C:/ModelSim6.5g/verilog_src/ovm-2.1.1"
+    
+        source "$RSV_HOME/scripts/resim.do"
+        
+    3.2 Run auto_generation.tcl
+    3.3 Read ./artifacts/pcie_solayer_todolist.txt 
+        The "todolist" file explians the basic steps involved to use ReSim
+    
+    3.4 Start bash (cygwin, mingw, or xilinx-bash) and cd to working directory
+    3.5 Apply the patch 
+    
+        bash> patch -p0 -i board_patch.txt
+    
+        You can read the patch file to see the changes involved in order to
+        integrate ReSim into an existing simulation environment
+    
+    3.6 Start ModelSim in the working directory.
+     
+        ModelSim> do simulate_mti.do
+    
+4. If successful, you can see the following information in the ModelSim console: 
+
+...
+# [34978.046ns] : TSK_PARSE_FRAME on Transmit
+# OVM_INFO @ 35477.778ns: solyr.rr0.mon [ReSim] [DURING_PH @ 35447.778ns] SBT_OP::WCFG, rrid= 0x00, rmid= 0x01, module= pcie_app_v6.pcie_bmdma
+# [35558.066ns] : TSK_PARSE_FRAME on Transmit
+...
+# [37558.046ns] : TSK_PARSE_FRAME on Transmit
+# [37590.046ns] : TSK_PARSE_FRAME on Transmit
+# OVM_INFO @ 37857.806ns: solyr.cp [ReSim] Configuration reaches end of current Reconfigurable Region
+# [39602.076ns] : TSK_PARSE_FRAME on Transmit
+# [39614.077ns] : TSK_PARSE_FRAME on Transmit
+# [39626.074ns] : TSK_PARSE_FRAME on Transmit
+# [39626.074ns] : TSK_SEND_CONFIG_FILE completed
+# [41638.066ns] : TSK_PARSE_FRAME on Transmit
+
+5. For in deepth explanation of ReSim library, please refer to the following publications:
+
+    * Lingkan Gong, Oliver Diessel, "Modeling Dynamically Reconfigurable Systems 
+      for Simulation-based Functional Verification", Sym. on Field-Prog. Cust. 
+      Compt. Machines (FCCM), 2011, pp. 9-16
+      
+    * Lingkan Gong, Oliver Diessel, "ReSim: A Reusable Library for RTL Simulation
+      of Dynamic Partial Reconfiguration", IEEE Int. Conf. on Field-Prog. Technology 
+      (FPT), 2011, pp. 1-8, BEST PAPER CANDIDATE
+    
+    * Lingkan Gong, Oliver Diessel, "Functionally Verifying State Saving and 
+      Restoration in Dynamically Reconfigurable Systems", ACM/SIGDA Int. Sym. on 
+      Field-Prog. Gate Arrays (FPGA) , 2012, pp. 241-244
+      

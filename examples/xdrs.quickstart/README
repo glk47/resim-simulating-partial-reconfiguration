@@ -1,0 +1,136 @@
+/*******************************************************************************   
+ * Copyright (c) 2012, Lingkan Gong                                                
+ * All rights reserved.                                                            
+ *                                                                                 
+ * Redistribution and use in source and binary forms, with or without              
+ * modification, are permitted provided that the following conditions are met:     
+ *                                                                                 
+ *  * Redistributions of source code must retain the above copyright notice,       
+ *    this list of conditions and the following disclaimer.                        
+ *                                                                                 
+ *  * Redistributions in binary form must reproduce the above copyright notice,    
+ *    this list of conditions and the following disclaimer in the documentation    
+ *    and/or other materials provided with the distribution.                       
+ *                                                                                 
+ *  * Neither the name of the copyright holder(s) nor the names of its             
+ *    contributors may be used to endorse or promote products derived from this    
+ *    software without specific prior written permission.                          
+ *                                                                                 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED   
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE          
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS BE LIABLE FOR ANY           
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES      
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;    
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND     
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT      
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS   
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                    
+ *                                                                                 
+*******************************************************************************/   
+
+This example demonstrates using ReSim in an in-house design, the XDRS demonstration
+platform. To focus on verification issues, the design is simplified. In particular,
+the reconfigurable modules and the configuration controller are coded using 
+synthesizable RTL style whereas the static part of the design is modeled using 
+cycle-accurate behavioral code. This example illustrates the MINIMAL user effort 
+required to use ReSim. 
+
+TO Run the "XDRS.QUICKSTART" example:
+
+1. Understand the XDRS design 
+    
+    1.1 The XDRS application. 
+    
+        The XDRS runs a producer-consumer application, in which the Producer-Consumer 
+        module (prodcons.sv) communicates with the RMs (maximum.v && reverse.v)
+        to perform mathematical computation. Upon reconfiguration is requested, 
+        both RMs block the request until they finish the current data processing 
+        opertation (intern_sync.v filter_sync.v).
+    
+    1.2 Dynamic partial reconfiguration 
+    
+        Reconfiguration is managed by the configuration manager (manager.sv), 
+        the configuration controller (icapi.v) and the Isolation module (isolator.v).
+        
+        BEFORE_RECON: Reconfiguration requests are blocked until the RM becomes idle. 
+        DURING_RECON: The Isolation module drives default values to the static region.
+        AFTER_RECON: The newly configured module is reset to the IDLE state.
+    
+    1.3 System backplane (memory and bus)
+    
+        Both bitstream data and application data (i.e., data accessed by RMs) 
+        are stored in the same memory (memctrl.sv). During reconfiguration, 
+        a bus abiter (xbuscore.v) schedules the two traffic streams, in which 
+        the application traffic has a higher priority. 
+        
+    1.4 Test(s)
+    
+        Tests are all under ./xtests directory and the tests are "included"
+        by the top-level testbench (xdrs.sv). In this example, the test 
+        (tdpr_quick_start.sv) performs two reconfiguration operations.
+    
+2 Give it a go: Generate simulation-only artifacts -> Run simulation
+    
+    2.1 Create a "settings.do" file in the working folder
+    This file is required to setup directory pathes
+    
+        set RSV_HOME "C:/DPR_TOOLS/ReSim"
+        set OVM_HOME "C:/ModelSim6.5g/verilog_src/ovm-2.1.1"
+    
+        source "$RSV_HOME/scripts/resim.do"
+        
+    2.2 Run auto_generation.tcl
+    
+        This automatically generates simulation-only artifacts that should 
+        be included in the simulation testbench. The designers need to create 
+        such Tcl script for their projects.
+    
+    2.3 Read ./artifacts/my_solyr_todolist.txt 
+    
+        This file explains steps required to use the generated artifacts. 
+        The designer need to do step 1,2,3,4 at minimal in order to use ReSim. 
+        For this example, all these steps have already been done. 
+        
+    2.4 Start ModelSim in the working directory.
+     
+        ModelSim> do simulate_mti.do
+    
+3. If successful, you can see the following information in the ModelSim console: 
+
+...
+# ----------------------------------------------------------------
+# OVM-2.1.1
+# (C) 2007-2009 Mentor Graphics Corporation
+# (C) 2007-2009 Cadence Design Systems, Inc.
+# ----------------------------------------------------------------
+# [RESIM-SKT] Registering Simulator Kernel Thread (SKT): /xdrs/region_0/rm0 
+# [RESIM-SKT] Registering Simulator Kernel Thread (SKT): /xdrs/region_0/rm1 
+# OVM_INFO @ 0.000ns: reporter [RNTST] Running test ...
+# OVM_WARNING D:/My_Designs/UNSW_DRS/ReSim/src/rsv_scoreboard.svh(74) @ 0.000ns: solyr.scb [ReSim] Using the default scoreboard
+# OVM_WARNING D:/My_Designs/UNSW_DRS/ReSim/src/rsv_monitor.svh(100) @ 0.000ns: solyr.rr0.mon [ReSim] Using the default monitor
+# OVM_WARNING D:/My_Designs/UNSW_DRS/ReSim/src/rsv_monitor.svh(104) @ 0.000ns: solyr.rr0.mon [ReSim] Using the default monitor
+# OVM_WARNING D:/My_Designs/UNSW_DRS/ReSim/src/rsv_error_injector.svh(97) @ 0.000ns: solyr.rr0.ei [ReSim] Using the default error injector
+# OVM_WARNING D:/My_Designs/UNSW_DRS/ReSim/src/rsv_error_injector.svh(101) @ 0.000ns: solyr.rr0.ei [ReSim] Using the default error injector
+# OVM_WARNING D:/My_Designs/UNSW_DRS/ReSim/src/rsv_error_injector.svh(105) @ 0.000ns: solyr.rr0.ei [ReSim] Using the default error injector
+...
+# OVM_INFO @ 20750.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 20675.000ns] SBT_OP::WCFG, rrid= 0x00, rmid= 0x01, module= xdrs.region_0.rm1(reverse)
+# [RESIM-SKT] Invoking iei thread: rsv_iei_hdl_state /xdrs/region_0 rm0 
+
+4. For in deepth explanation of ReSim library, please refer to the following publications:
+
+    * Lingkan Gong, Oliver Diessel, "Modeling Dynamically Reconfigurable Systems 
+      for Simulation-based Functional Verification", Sym. on Field-Prog. Cust. 
+      Compt. Machines (FCCM), 2011, pp. 9-16
+      
+    * Lingkan Gong, Oliver Diessel, "ReSim: A Reusable Library for RTL Simulation
+      of Dynamic Partial Reconfiguration", IEEE Int. Conf. on Field-Prog. Technology 
+      (FPT), 2011, pp. 1-8, BEST PAPER CANDIDATE
+    
+    * Lingkan Gong, Oliver Diessel, "Functionally Verifying State Saving and 
+      Restoration in Dynamically Reconfigurable Systems", ACM/SIGDA Int. Sym. on 
+      Field-Prog. Gate Arrays (FPGA) , 2012, pp. 241-244
+      
+
+
+

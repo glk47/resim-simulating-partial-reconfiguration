@@ -1,0 +1,217 @@
+/*******************************************************************************   
+ * Copyright (c) 2012, Lingkan Gong                                                
+ * All rights reserved.                                                            
+ *                                                                                 
+ * Redistribution and use in source and binary forms, with or without              
+ * modification, are permitted provided that the following conditions are met:     
+ *                                                                                 
+ *  * Redistributions of source code must retain the above copyright notice,       
+ *    this list of conditions and the following disclaimer.                        
+ *                                                                                 
+ *  * Redistributions in binary form must reproduce the above copyright notice,    
+ *    this list of conditions and the following disclaimer in the documentation    
+ *    and/or other materials provided with the distribution.                       
+ *                                                                                 
+ *  * Neither the name of the copyright holder(s) nor the names of its             
+ *    contributors may be used to endorse or promote products derived from this    
+ *    software without specific prior written permission.                          
+ *                                                                                 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED   
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE          
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS BE LIABLE FOR ANY           
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES      
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;    
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND     
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT      
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS   
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                    
+ *                                                                                 
+*******************************************************************************/   
+
+This example demonstrates using ReSim in simulating a microprocessor-based design
+created by EDK. The design is referenced from UG744 whereas the simulation 
+environment is referenced from XAPP1111. It is strongely recommended that the 
+readers run UG744 and XAPP1111 before running this example. 
+
+TO Run the "STATE_MIGRATION" example:
+
+1. Understand the STATE_MIGRATION design 
+    
+    1.1 The STATE_MIGRATION design is similar to UG744. The main difference include
+    
+        The use of an in-house reconfiguration controller as opposed to the XHWICAP
+        core released by Xilinx. 
+        
+        The design targets a ML507 board. Therefore, it uses PowerPC as the 
+        microprocessor as opposed to MicroBlaze. 
+        
+        Apart from partial reconfiguration, the design also reads design state (i.e.,
+        BRAM, FF values) via the ICAP port.
+
+2. Pre-compiled software/hardware
+    
+    2.1 You can find the pre-compiled bitstream in ./edk/images/....
+        You can find the pre-compiled software executable in 
+        ./sdk/tapp_dpr_0/Debug/tapp_dpr_0_fpga.elf
+    
+    2.2 Go to step 6 to run pre-compiled software/hardware
+        
+3. Run simulation
+    
+    3.1 Go to ./edk directory and create a "state_migration_incl.make" file. 
+    This file sets the paths which are used by the makefile. 
+    
+        XILINX_HOME=C:/Xilinx/12.4/ISE_DS/ISE
+        XLIB_HOME=C:/Xilinx/12.4/Users/xlib/mti_se/6.5g/nt
+        
+    3.2 Start Xilinx Bash Shell, change to ./edk directory and run makefile
+    
+        bash> cd C:/DPR_TOOLS/ReSim/examples/state_migration/edk
+        bash> make -f state_migration.make sim
+    
+        This generates the simulation files in ./simulation/behavioral
+        
+        *** NOTE *** 
+        The makefile calls xilinx binary utilities (e.g. simgen). To do so, you can
+        either start Xilinx Bash Shell, or manually setup environment variables 
+        so as to locate Xilinx binary utilities. 
+    
+        *** NOTE *** 
+        The directory structure of this example is not the same as the default
+        layout of EDK projects. 
+        
+        *** NOTE *** 
+        It is recommended to run EDK in batch mode so as to get more "predictable" 
+        results. The GUI may unexpectedly change project settings. 
+        
+        *** NOTE *** 
+        This example has only been tested with EDK 12.4. 
+        
+    3.3 Create a "settings.do" file in ./simulation folder
+    This file is required to setup directory pathes
+    (Note, this file also need to set pathes to Xilinx directories)
+    
+        set RSV_HOME "C:/DPR_TOOLS/ReSim"
+        set OVM_HOME "C:/ModelSim6.5g/verilog_src/ovm-2.1.1"
+        
+        set XILINX_HOME "C:/Xilinx/12.4/ISE_DS/ISE"
+        set XLIB_HOME "C:/Xilinx/12.4/Users/xlib/mti_se/6.5g/nt"
+
+        source "$RSV_HOME/scripts/resim.do"
+        
+    3.4 Copy the data2mem utility to ./simulation/tb
+        Copy the edit_mem.pl utility to ./simulation/tb
+    
+        Both utilities are used to convert binary elf files (compiled software) to 
+        text format recognized by ModelSim. Both utilities can be found in XAPP1111. 
+        
+    3.5 Run auto_generation.tcl
+    3.6 Read ./artifacts/my_solyr_todolist.txt 
+    
+    3.7 Start ModelSim in the working directory.
+     
+        ModelSim> do simulate_mti.do
+        
+        Apart from partial reconfiguration, ReSim also mimics the process of reading
+        the ICAP port. For example, in this example the software reads ID_CODE from 
+        ICAP port. In simulation, ReSim returns the "ID_CODE" as "0xc1b2011"
+   
+        *** NOTE *** 
+        The simulation runs the pre-compiled software binary. 
+        (./sdk/tapp_dpr_0/Debug/tapp_dpr_0_sim.elf). 
+        
+        
+4. Implement the design
+    
+    4.1 Start Xilinx Bash Shell, change to ./edk directory and run makefile
+     
+        bash> cd C:/DPR_TOOLS/ReSim/examples/state_migration/edk
+        bash> make -f state_migration.make netlist
+        
+        This runs the synthesis of all ip cores and the two RMs.
+     
+    4.2 Use the planahead project in ./edk/planahead to implement the design. 
+        
+        *** NOTE *** 
+        State saving needs to locate the FF bit on the FPGA fabric. Such location
+        infomation can be found in the logic allocation file (*.ll) generated 
+        by the bitgen utility. At the moment, these locations are hard coded in
+        the application software (./sdk/tapp_dpr_0/src/logic_allocation.h).
+        
+        It is desirable that such location do not change so that the software 
+        do not have to be updated after each implementation run. Therefore in
+        this example, the FF placement is locked down in the ucf files 
+        (./edk/netlist/math_core/adder/math_core_i_adder.ucf and xxxxxx/math_core_i_maximum.ucf). 
+        
+        On the other hand, locking logic allocation may "fail" the P&R of the design. 
+        If the implementation fails, the designers has to remove the constraints
+        in the ucf files, and update the logic_allocation.h defined in the software.
+        
+        *** NOTE *** 
+        To use partial reconfiguration in EDK, the designer need to specify planahead
+        to generate a "*.bmm" file in the NGDBUILD process. This step is illustrated
+        in UG744. 
+        
+        *** NOTE *** 
+        Please add the following options in the bitgen step of implmentation. 
+        
+        -d -l -m -g Binary:Yes
+       
+5. Work on software 
+
+    5.1 Export to SDK
+        
+        bash> cd C:/DPR_TOOLS/ReSim/examples/state_migration/edk
+        bash> make -f state_migration.make sdk
+        
+    5.2 Create SDK project
+    5.3 Choose compilation target (ReSim or Virtex5)
+    
+        In ./edk/tapp_dpr_0/src/fpga_family.h, change the compilation target
+        to the desired one. For example: 
+        
+#define XHI_FAMILY      XHI_DEV_RESIM   //// Using ReSim
+#define XHI_FPGA_IDCODE XHI_RESIM_1_00A //// Using ReSim
+    
+#define XHI_FAMILY      XHI_DEV_FAMILY_V5   //// Using ML507
+#define XHI_FPGA_IDCODE XHI_XC5VFX70T       //// Using ML507
+
+    5.4 Compile the software
+     
+6. Run on FPGA 
+    
+    6.1 Copy the generated partial bitstream to SD Flash
+    
+        FLASH_DISK:/ML507/george/adder.bin
+        FLASH_DISK:/ML507/george/maximum.bin
+        
+        *** NOTE *** 
+        The path is hard coded in the software and can be changed if desired. 
+    
+        *** NOTE *** 
+        The software do not process the bitstream header so you need to copy
+        the bin file instead of the bit file. To generate the bin file, please 
+        add the following options in the bitgen step of implmentation. 
+        
+        -d -l -m -g Binary:Yes
+        
+    6.2 Download the design and the software in SDK. 
+        You need a "*.bmm" file in order to download software correctly. 
+
+    6.3 Enjoy
+
+7. For in deepth explanation of ReSim library, please refer to the following publications:
+
+    * Lingkan Gong, Oliver Diessel, "Modeling Dynamically Reconfigurable Systems 
+      for Simulation-based Functional Verification", Sym. on Field-Prog. Cust. 
+      Compt. Machines (FCCM), 2011, pp. 9-16
+      
+    * Lingkan Gong, Oliver Diessel, "ReSim: A Reusable Library for RTL Simulation
+      of Dynamic Partial Reconfiguration", IEEE Int. Conf. on Field-Prog. Technology 
+      (FPT), 2011, pp. 1-8, BEST PAPER CANDIDATE
+    
+    * Lingkan Gong, Oliver Diessel, "Functionally Verifying State Saving and 
+      Restoration in Dynamically Reconfigurable Systems", ACM/SIGDA Int. Sym. on 
+      Field-Prog. Gate Arrays (FPGA) , 2012, pp. 241-244
+      
