@@ -31,7 +31,7 @@ vlog +acc +incdir+./artifacts+$RSV_HOME/src+$OVM_HOME/src -L mtiReSim "./artifac
 vlog +acc +incdir+./artifacts+$RSV_HOME/src+$OVM_HOME/src -L mtiReSim "./artifacts/my_solyr.sv"
 
 # TEST_DPR_DEMO
-vlog +acc +incdir+./artifacts+$RSV_HOME/src+$OVM_HOME/src+./xtests -L mtiReSim +define+TEST_DPR_DEMO "./xdrs/xdrs.sv"
+vlog +acc +incdir+./artifacts+$RSV_HOME/src+$OVM_HOME/src+./xtests -L mtiReSim +define+TEST_DPR_R "./xdrs/xdrs.sv"
 
 # load simulation
 vsim -t ps -assertdebug -sv_seed 0 -permit_unmatched_virtual_intf -L mtiReSim xdrs
@@ -98,15 +98,9 @@ profile on -p
 profile on -m
 
 run 10ns
-ReSim::rsv_register_state_spy /xdrs/region_0 rm0 "./artifacts/spy/my_region_maximum.sll" "./artifacts/sbt/my_region_maximum.sbt"
-ReSim::rsv_register_state_spy /xdrs/region_0 rm1 "./artifacts/spy/my_region_reverse.sll" "./artifacts/sbt/my_region_reverse.sbt"
-
 add wave -noupdate -expand -group mgr //solyr/rr0/mon/usr_trans
 add wave -noupdate -expand -group icap -expand //solyr/rr0/mon/sbt_trans
-
 run -all
-ReSim::rsv_unregister_state_spy /xdrs/region_0 rm0
-ReSim::rsv_unregister_state_spy /xdrs/region_0 rm1
 
 profile report -structural
 profile report -du

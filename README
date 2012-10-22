@@ -53,9 +53,8 @@ AFTER reconfiguration.
 3. Running examples
     
     The library includes 3 examples: XDRS, Fast PCIe configuration, and State Migration. 
-    The XDRS example further include two versions: XDRS.QUICKSTART XDRS.SINGLE
-    
-    It is recommended that you run these examples in the following order:
+    The XDRS example further include three versions: XDRS.QUICKSTART XDRS.SINGLE 
+    XDRS.MULTIPLE. It is recommended that you run these examples in the following order:
     
         XDRS.QUICKSTART: 
             This example demonstrates the minimal effort to use ReSim.
@@ -64,7 +63,11 @@ AFTER reconfiguration.
             This example demonstrates the advanced concepts of ReSim. The concepts
             include, modifying artifacts for test-specific purposes (e.g. monitor, 
             error injection), using coverage-driven verification on DRS designs. 
-        
+            
+        XDRS.MULTIPLE 
+            This example demonstrates the use of ReSim on designs that have multiple 
+            reconfigurable regions.
+            
         Fast PCIe configuration:
             This example demonstrates the use of ReSim on a Xilinx reference design.
         
