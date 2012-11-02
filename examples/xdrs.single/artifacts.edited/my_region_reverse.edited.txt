@@ -8,7 +8,7 @@
 //     bitwith = 4. Note that in sll file, signal_path start from the top of the 
 //     reconfigurable region, thus the full path of the state_c signal is:
 //     
-//         $HIERACHICAL_PATH_TO_RECONFIGURABLE_REGION/state_c. 
+//         $HIERACHICAL_PATH_TO_RECONFIGURABLE_REGION/rm1/state_c. 
 //
 
 0x00010000 32 4 state_c
@@ -20,7 +20,7 @@
 //     bitwith = 2. This signal is stored "next" to the state_c signal. The full 
 //     path of the sync_0/state_c signal is 
 //     
-//         $HIERACHICAL_PATH_TO_RECONFIGURABLE_REGION/sync_0/state_c. 
+//         $HIERACHICAL_PATH_TO_RECONFIGURABLE_REGION/rm1/sync_0/state_c. 
 //
 
 0x00010000 36 2 sync_0/state_c

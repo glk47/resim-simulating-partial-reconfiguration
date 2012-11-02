@@ -47,9 +47,9 @@ proc ReSim::rsv_load_spy_buffer { rr_ rm_ } {
 	
 }
 
-proc ReSim::rsv_iei_hdl_state { rr_ rm_ } {
+proc ReSim::rsv_iei_hdl_state { rr_ rm_ {iei_sig_type "none"} {iei_mem_type "none"} } {
 	set rr_ /[regsub -all -- {[\.]} "${rr_}" {/}]
-	echo "\[RESIM-SKT\] Invoking iei thread: rsv_iei_hdl_state $rr_ $rm_"
+	echo "\[RESIM-SKT\] Invoking iei thread: rsv_iei_hdl_state $rr_ $rm_ $iei_sig_type $iei_mem_type"
 	
 	# Internal Error Injection (IEI): 
 	#
@@ -60,8 +60,6 @@ proc ReSim::rsv_iei_hdl_state { rr_ rm_ } {
 	# 2. "force" all hdl signals with undefined xxx
 	# 3. "catch" all possible failures (e.g., errors in "find")
 	
-	set iei_en [examine -radix hex $rr_/eif/iei_en];
-	set iei_sig_type [examine -radix hex $rr_/eif/iei_sig_type];
 	if { $iei_sig_type == "zero" } {
 		set iei_sig_type "16#0"
 	} elseif { $iei_sig_type == "x" } {
@@ -70,7 +68,6 @@ proc ReSim::rsv_iei_hdl_state { rr_ rm_ } {
 		set iei_sig_type "none"
 	}
 	
-	set iei_mem_type [examine -radix hex $rr_/eif/iei_mem_type];
 	if { $iei_mem_type == "zero" } {
 		set iei_mem_type "value"
 	} elseif { $iei_mem_type == "rand" } {
@@ -79,7 +76,7 @@ proc ReSim::rsv_iei_hdl_state { rr_ rm_ } {
 		set iei_mem_type "none"
 	}
 	
-	if { $iei_en == 1 && $iei_sig_type != "none" } {
+	if { $iei_sig_type != "none" } {
 		foreach sig [find signals -recursive $rr_/$rm_/*] {
 			
 			## Forcing signals is dangerous. The simulator sometimes crashes if 
@@ -107,11 +104,23 @@ proc ReSim::rsv_iei_hdl_state { rr_ rm_ } {
 			#### 
 			#### if { $msg != "" } { puts "\[RESIM-SKT\] $msg ($sig)" }
 		}
+		
+		## Version 4. 
+		##     foreach sig [find signals -in $rr_/$rm_/*] {
+		##          catch { force -deposit $sig $iei_sig_type } msg
+		##     }
+		##
+		##     // Whether or not to inject to RM inputs?
+		##     // "force -deposit x" may not be able to un-forced properly
+		##     // 
+		##     // WAR: the target signal can drive with "x" before driving some other values
+		##     // However, it is too tricy to be introduced to users.
+		
 	}
 	
 	# 4-6. walk through and "force" all memory cells in the module
 	
-	if { $iei_en == 1 && $iei_mem_type != "none" } {
+	if { $iei_mem_type != "none" } {
 	
 		set memory_list [split [mem list -r $rr_/$rm_/*] "\n"]
 		set num_of_memory [expr [llength $memory_list] -1]

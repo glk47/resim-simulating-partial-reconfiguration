@@ -66,6 +66,12 @@
 			mgr_0.reconfigure_module(8'b0010_0000, `RM_2_0_ADDR, (`RM_2_0_SIZE+`SBT_HEADER_SIZE));
 		end join_none
 		
+		#12_000
+
+		fork begin
+			mgr_0.reconfigure_module(8'b0010_0001, `RM_2_1_ADDR, (`RM_2_1_SIZE+`SBT_HEADER_SIZE));
+		end join_none
+		
 	end
 	
 `endif
@@ -77,39 +83,25 @@
 # (C) 2007-2009 Mentor Graphics Corporation
 # (C) 2007-2009 Cadence Design Systems, Inc.
 # ----------------------------------------------------------------
+# [RESIM-SKT] Registering Simulator Kernel Thread (SKT): /xdrs/region_0/gen_rr/gen_0/math_0/rm0 
+# [RESIM-SKT] Registering Simulator Kernel Thread (SKT): /xdrs/region_0/gen_rr/gen_0/math_0/rm1 
+# [RESIM-SKT] Registering Simulator Kernel Thread (SKT): /xdrs/region_1/gen_rr/gen_1/math_1/rm0 
+# [RESIM-SKT] Registering Simulator Kernel Thread (SKT): /xdrs/region_1/gen_rr/gen_1/math_1/rm1 
+# [RESIM-SKT] Registering Simulator Kernel Thread (SKT): /xdrs/region_2/gen_rr/gen_2/lpfilter_2/rm0 
+# [RESIM-SKT] Registering Simulator Kernel Thread (SKT): /xdrs/region_2/gen_rr/gen_2/lpfilter_2/rm1 
 # OVM_INFO @ 0.000ns: reporter [RNTST] Running test ...
-# OVM_WARNING D:/My_Designs/UNSW_DRS/ReSim/src/rsv_monitor.svh(98) @ 0.000ns: solyr.rr2.mon [ReSim] Using the default monitor
-# OVM_WARNING D:/My_Designs/UNSW_DRS/ReSim/src/rsv_monitor.svh(102) @ 0.000ns: solyr.rr2.mon [ReSim] Using the default monitor
-# OVM_WARNING D:/My_Designs/UNSW_DRS/ReSim/src/rsv_monitor.svh(98) @ 0.000ns: solyr.rr1.mon [ReSim] Using the default monitor
-# OVM_WARNING D:/My_Designs/UNSW_DRS/ReSim/src/rsv_monitor.svh(102) @ 0.000ns: solyr.rr1.mon [ReSim] Using the default monitor
-# OVM_WARNING D:/My_Designs/UNSW_DRS/ReSim/src/rsv_monitor.svh(98) @ 0.000ns: solyr.rr0.mon [ReSim] Using the default monitor
-# OVM_WARNING D:/My_Designs/UNSW_DRS/ReSim/src/rsv_monitor.svh(102) @ 0.000ns: solyr.rr0.mon [ReSim] Using the default monitor
 # OVM_INFO @ 1.000ns: reporter [XDRS] Running test: TEST_DPR_STREAMING
-# OVM_INFO @ 5.000ns: solyr.rr2.mon [ReSim] [DURING_PH @ 5.000ns] USR_OP::ErrInjection, Starting X Injection
-# OVM_INFO @ 5.000ns: solyr.rr1.mon [ReSim] [DURING_PH @ 5.000ns] USR_OP::ErrInjection, Starting X Injection
-# OVM_INFO @ 5.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 5.000ns] USR_OP::ErrInjection, Starting X Injection
-# [SKT] Registering Simulator Kernel Thread (SKT): /xdrs/region_0/gen_rr/gen_0/math_0/rm0 
-# [SKT] Registering Simulator Kernel Thread (SKT): /xdrs/region_0/gen_rr/gen_0/math_0/rm1 
-# [SKT] Registering Simulator Kernel Thread (SKT): /xdrs/region_1/gen_rr/gen_1/math_1/rm0 
-# [SKT] Registering Simulator Kernel Thread (SKT): /xdrs/region_1/gen_rr/gen_1/math_1/rm1 
-# [SKT] Registering Simulator Kernel Thread (SKT): /xdrs/region_2/gen_rr/gen_2/lpfilter_2/rm0 
-# [SKT] Registering Simulator Kernel Thread (SKT): /xdrs/region_2/gen_rr/gen_2/lpfilter_2/rm1 
 # OVM_INFO @ 18005.000ns: reporter [MANAGER] Reconfigure module: rrid:2 rmid:1
-# OVM_INFO @ 26190.000ns: solyr.rr2.mon [ReSim] [DURING_PH @ 26105.000ns] SBT_OP::WCFG, rrid= 0x02, rmid= 0x01, module= lpfilter_2_rr.lpfilter
-# [SKT] Reconfigurable Module swapped in: /xdrs/region_2/gen_rr/gen_2/lpfilter_2/rm1 
-# [SKT] Reconfigurable Module swapped out: /xdrs/region_2/gen_rr/gen_2/lpfilter_2/rm0 
+# OVM_INFO @ 26190.000ns: solyr.rr2.mon [ReSim] [SBT_OP::WCFG @ DURING_PH] rrid= 0x02, rmid= 0x01, module= xdrs.region_2.gen_rr.gen_2.lpfilter_2.rm1(lpfilter)
+# [RESIM-SKT] Invoking iei thread: rsv_iei_hdl_state /xdrs/region_2/gen_rr/gen_2/lpfilter_2 rm0 x zero 
 # OVM_INFO @ 28635.000ns: reporter [MANAGER] Reconfiguration DONE
 # OVM_INFO @ 40505.000ns: reporter [MANAGER] Reconfigure module: rrid:2 rmid:0
-# OVM_INFO @ 41650.000ns: solyr.rr2.mon [ReSim] [DURING_PH @ 41565.000ns] SBT_OP::WCFG, rrid= 0x02, rmid= 0x00, module= lpfilter_2_rr.lpfilter
-# [SKT] Reconfigurable Module swapped out: /xdrs/region_2/gen_rr/gen_2/lpfilter_2/rm1 
-# [SKT] Reconfigurable Module swapped in: /xdrs/region_2/gen_rr/gen_2/lpfilter_2/rm0 
-# OVM_INFO @ 44095.000ns: reporter [MANAGER] Reconfiguration DONE
-# Break in Module xdrs at ./xtests/tdpr_streaming.sv line 9
-# [SKT] Un-registering Simulator Kernel Thread (SKT): /xdrs/region_0/gen_rr/gen_0/math_0/rm0 
-# [SKT] Un-registering Simulator Kernel Thread (SKT): /xdrs/region_0/gen_rr/gen_0/math_0/rm1 
-# [SKT] Un-registering Simulator Kernel Thread (SKT): /xdrs/region_1/gen_rr/gen_1/math_1/rm0 
-# [SKT] Un-registering Simulator Kernel Thread (SKT): /xdrs/region_1/gen_rr/gen_1/math_1/rm1 
-# [SKT] Un-registering Simulator Kernel Thread (SKT): /xdrs/region_2/gen_rr/gen_2/lpfilter_2/rm0 
-# [SKT] Un-registering Simulator Kernel Thread (SKT): /xdrs/region_2/gen_rr/gen_2/lpfilter_2/rm1 
+# OVM_INFO @ 41670.000ns: solyr.rr2.mon [ReSim] [SBT_OP::WCFG @ DURING_PH] rrid= 0x02, rmid= 0x00, module= xdrs.region_2.gen_rr.gen_2.lpfilter_2.rm0(lpfilter)
+# [RESIM-SKT] Invoking iei thread: rsv_iei_hdl_state /xdrs/region_2/gen_rr/gen_2/lpfilter_2 rm1 x zero 
+# OVM_INFO @ 44115.000ns: reporter [MANAGER] Reconfiguration DONE
+# OVM_INFO @ 52505.000ns: reporter [MANAGER] Reconfigure module: rrid:2 rmid:1
+# OVM_INFO @ 60690.000ns: solyr.rr2.mon [ReSim] [SBT_OP::WCFG @ DURING_PH] rrid= 0x02, rmid= 0x01, module= xdrs.region_2.gen_rr.gen_2.lpfilter_2.rm1(lpfilter)
+# [RESIM-SKT] Invoking iei thread: rsv_iei_hdl_state /xdrs/region_2/gen_rr/gen_2/lpfilter_2 rm0 x zero 
+# OVM_INFO @ 63135.000ns: reporter [MANAGER] Reconfiguration DONE
 
 */

@@ -42,7 +42,7 @@ vlog +acc +incdir+./artifacts+$RSV_HOME/src+$OVM_HOME/src -L mtiReSim "./artifac
 # run all tests and collect coverage data.txt
 
 set alldirecteditems [list \
-	"TEST_DPR_DEMO" "TEST_DPR_SIMPLE" "TEST_DPR_READBACK" "TEST_DPR_EI" "TEST_DPR_ISOLATION" "TEST_DPR_RETRY" \
+	"TEST_DPR_DEMO" "TEST_DPR_SIMPLE" "TEST_DPR_READBACK" "TEST_DPR_ISOLATION" "TEST_DPR_RETRY" \
 ]
 set allrandomitems [list \
 	[list "TEST_DPR_RANDOM" 76] \

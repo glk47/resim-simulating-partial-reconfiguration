@@ -23,9 +23,8 @@ rsv_add_port "my_if" "c_cerr"     out
 rsv_add_port "my_if" "c_data"     in  32
 
 # Create reconfigurable regions and add modules to it. The region can have
-# an optional error injector and an optional monitor. In this example, the
-# region use "my_if" portmap, contains 4 configuration frames, and uses 
-# a monitor ("my_monitor") and an error injector ("my_ei")
+# an optional error injector. In this example, the region use "my_if" portmap, 
+# contains 4 configuration frames, and uses an the "my_ei_edited" error injector
 #
 # For modules that use non-default parameters, pass the real parameters 
 # as the last argument of "rsv_add_module" in the format of a string.
@@ -34,7 +33,7 @@ rsv_add_port "my_if" "c_data"     in  32
 # "reverse" module. ReSim only support positional association for passing 
 # module parameters. 
 
-rsv_create_region "my_region" "my_if" 4 "my_monitor" "my_ei"
+rsv_create_region "my_region" "my_if" 4 "" "my_ei_edited"
 
 rsv_add_module "my_region" "maximum" "#(48)"
 rsv_add_module "my_region" "reverse" "#(24,24)"
@@ -70,10 +69,11 @@ rsv_add_2_memory "zbt" "./artifacts/sbt/my_region_rm1.sbt" 0x200
 
 namespace forget ReSim::*
 
-# Copy backup to the generated files
+# Copy backup files to overwite the generated files. The backup files are modified
+# based on the corresponding generated files. Such modifications adapt the generated 
+# artifacts for design/test specific needs. 
 
-file copy -force "./artifacts.edited/my_monitor.edited.txt" "./artifacts/my_monitor.svh"
-file copy -force "./artifacts.edited/my_ei.edited.txt" "./artifacts/my_ei.svh"
+file copy -force "./artifacts.edited/my_ei.edited.txt" "./artifacts/my_ei_edited.svh"
 
 file copy -force "./artifacts.edited/my_region_maximum.edited.txt" "./artifacts/spy/my_region_rm0.sll"
 file copy -force "./artifacts.edited/my_region_reverse.edited.txt" "./artifacts/spy/my_region_rm1.sll"

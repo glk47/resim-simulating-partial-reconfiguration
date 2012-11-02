@@ -43,5 +43,3 @@ add wave -hex /xdrs/region_0/rm1/assert_reverse_operation
 
 ## atv log -asserts -enable /xdrs/icapi_0/assert_icapi_wr_cdata
 ## atv log -asserts -enable /xdrs/icapi_0/assert_icapi_rd_cdata
-
-

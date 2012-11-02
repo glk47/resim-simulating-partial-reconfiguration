@@ -56,11 +56,11 @@ class rsv_scoreboard#(int NUM_RR = 1) extends rsv_scoreboard_base#(NUM_RR);
 	// run()
 	//---------------------------------------------------------------------
 	
-	// The run task get transaction (from the analysis fifo) and performs coverag
-	// analysis according to the incoming traffic
+	// The run task get transaction (from the analysis fifo) and performs coverage
+	// analysis according to the information exctracted from the transaction
 
 	virtual task run();
-		rsv_trans tr;
+		rsv_sbt_trans tr;
 		
 		initialize_coverage();
 		
@@ -74,7 +74,7 @@ class rsv_scoreboard#(int NUM_RR = 1) extends rsv_scoreboard_base#(NUM_RR);
 		`ovm_warning("ReSim", "Using the default scoreboard")
 	endtask : initialize_coverage
 	
-	virtual protected task collect_coverage(rsv_trans tr);
+	virtual protected task collect_coverage(rsv_sbt_trans tr);
 		begin end
 	endtask : collect_coverage
 

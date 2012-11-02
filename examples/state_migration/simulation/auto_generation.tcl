@@ -17,11 +17,10 @@ rsv_add_port "math_if" "result"     out 32
 rsv_add_port "math_if" "statistic"  out 32
 
 # Create reconfigurable regions and add modules to it. The region can have
-# an optional error injector and an optional monitor. In this example, the
-# region use "math_if" portmap, contains 4 configuration frames, and uses 
-# a monitor ("math_monitor") and an error injector ("math_ei")
+# an optional error injector. In this example, the region use "math_if" portmap, 
+# contains 4 configuration frames, and uses an error injector ("math_ei")
 
-rsv_create_region "math_core" "math_if" 4 "math_monitor" "math_ei"
+rsv_create_region "math_core" "math_if" 4 "" "math_ei"
 
 rsv_add_module "math_core" "adder"   ""
 rsv_add_module "math_core" "maximum" ""
@@ -61,8 +60,6 @@ namespace forget ReSim::*
 
 # Copy backup to the generated files
 
-file copy -force "./artifacts.edited/math_monitor.edited.txt" "./artifacts/math_monitor.svh"
 file copy -force "./artifacts.edited/math_ei.edited.txt" "./artifacts/math_ei.svh"
-
 file copy -force "./artifacts.edited/math_core_adder.edited.txt" "./artifacts/spy/math_core_rm0.sll"
 file copy -force "./artifacts.edited/math_core_maximum.edited.txt" "./artifacts/spy/math_core_rm1.sll"

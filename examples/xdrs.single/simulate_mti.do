@@ -30,7 +30,7 @@ vlog +acc +incdir+./artifacts+$RSV_HOME/src+$OVM_HOME/src -L mtiReSim "./artifac
 vlog +acc +incdir+./artifacts+$RSV_HOME/src+$OVM_HOME/src -L mtiReSim "./artifacts/my_region.sv"
 vlog +acc +incdir+./artifacts+$RSV_HOME/src+$OVM_HOME/src -L mtiReSim "./artifacts/my_solyr.sv"
 
-# TEST_DPR_DEMO TEST_DPR_SIMPLE TEST_DPR_READBACK TEST_DPR_EI TEST_DPR_ISOLATION TEST_DPR_RETRY TEST_DPR_RANDOM
+# TEST_DPR_DEMO TEST_DPR_SIMPLE TEST_DPR_READBACK TEST_DPR_ISOLATION TEST_DPR_RETRY TEST_DPR_RANDOM
 vlog +acc +incdir+./artifacts+$RSV_HOME/src+$OVM_HOME/src+./xtests -L mtiReSim +define+TEST_DPR_DEMO "./xdrs/xdrs.sv"
 
 # load simulation
@@ -42,15 +42,13 @@ mem load -infile ./artifacts/sbt/zbt_bank0.rb.txt -format hex /xdrs/mem_0/zbtmem
 
 do debug.do
 
-# start simulation & state spy
+# start simulation
 onfinish stop; onbreak {resume}
 
 profile on -p
 profile on -m
 
 run 10ns
-
-add wave -noupdate -expand -group mgr //solyr/rr0/mon/usr_trans
 add wave -noupdate -expand -group icap -expand //solyr/rr0/mon/sbt_trans
 
 run -all

@@ -49,13 +49,18 @@ mem load -infile ./artifacts/sbt/zbt_bank0.rb.txt -format hex /xdrs/mem_0/zbtmem
 
 do debug.do
 
-# start simulation & state spy
+# start simulation
 onfinish stop; onbreak {resume}
 
-run 10ns
+profile on -p
+profile on -m
 
+run 10ns
 add wave -noupdate -expand -group icap -expand //solyr/rr0/mon/sbt_trans
 add wave -noupdate -expand -group icap -expand //solyr/rr1/mon/sbt_trans
 add wave -noupdate -expand -group icap -expand //solyr/rr2/mon/sbt_trans
 
 run -all
+
+profile report -structural
+profile report -du

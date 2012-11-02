@@ -56,160 +56,158 @@
 # [RESIM-SKT] Registering Simulator Kernel Thread (SKT): /xdrs/region_0/rm0 
 # [RESIM-SKT] Registering Simulator Kernel Thread (SKT): /xdrs/region_0/rm1 
 # OVM_INFO @ 0.000ns: reporter [RNTST] Running test ...
-# [RESIM-SKT] Invoking iei thread: rsv_iei_hdl_state /xdrs/region_0 rm1 
 # OVM_INFO @ 1.000ns: reporter [XDRS] Running test: TEST_DPR_READBACK
-# OVM_INFO @ 35.000ns: solyr.rr0.mon [ReSim] [AFTER_PH @ 0.000ns] USR_OP::Activating, New module activated
 # OVM_INFO @ 8065.000ns: reporter [PRODUCER] Producing the 0th data: 0xa4a5a6a7
 # OVM_INFO @ 8115.000ns: reporter [PRODUCER] Producing the 1th data: 0xa0a1a2a3
 # OVM_INFO @ 8185.000ns: reporter [CONSUMER] Consuming the 0th data: 0xa4a5a6a7
 # OVM_INFO @ 10025.000ns: reporter [MANAGER] Write ICAP (DMA): a:0x520 s:0xc
-# OVM_INFO @ 10100.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 10095.000ns] SBT_OP::SYNC
+# OVM_INFO @ 10100.000ns: solyr.rr0.mon [ReSim] [SBT_OP::SYNC @ DURING_PH] rrid= 0x00
 # [RESIM-SKT] Invoking gcapture thread: rsv_gcapture_hdl_state /xdrs/region_0 rm0 
-# OVM_INFO @ 10730.003ns: solyr.rr0.mon [ReSim] [DURING_PH @ 10655.000ns] SBT_OP::GCAPTURE, rrid= 0x00
+# OVM_INFO @ 10730.002ns: solyr.rr0.mon [ReSim] [SBT_OP::GCAPTURE @ DURING_PH] rrid= 0x00 (SPY)
 # OVM_INFO @ 10875.000ns: reporter [MANAGER] Read/Write ICAP DONE
 # OVM_INFO @ 10895.000ns: reporter [MANAGER] Write ICAP (DMA): a:0x420 s:0xc
-# OVM_INFO @ 11740.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 11665.000ns] SBT_OP::RCFG, rrid= 0x00, rmid= 0x00, module= xdrs.region_0.rm0(maximum)
+# OVM_INFO @ 11740.000ns: solyr.rr0.mon [ReSim] [SBT_OP::RCFG @ DURING_PH] rrid= 0x00, rmid= 0x00, module= xdrs.region_0.rm0(maximum)
 # OVM_INFO @ 11745.000ns: reporter [MANAGER] Read/Write ICAP DONE
 # OVM_INFO @ 11765.000ns: reporter [MANAGER] Read ICAP (DMA): a:0x800 s:0x10
-# OVM_INFO @ 11820.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 11815.000ns] SBT_OP::RSPY, rrid= 0x00, rmid= 0x00, mna= 0x0000, wofft= 0x0, cdata= 0x0a8f3d14
-# OVM_INFO @ 11900.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 11895.000ns] SBT_OP::RSPY, rrid= 0x00, rmid= 0x00, mna= 0x0000, wofft= 0x1, cdata= 0xa4a5a6a7
-# OVM_INFO @ 12010.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 12005.000ns] SBT_OP::RSPY, rrid= 0x00, rmid= 0x00, mna= 0x0000, wofft= 0x2, cdata= 0x0a1a2a3f
-# OVM_INFO @ 12090.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 12085.000ns] SBT_OP::RSPY, rrid= 0x00, rmid= 0x00, mna= 0x0000, wofft= 0x3, cdata= 0x0000000a
-# OVM_INFO @ 12180.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 12175.000ns] SBT_OP::RSPY, rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x0, cdata= 0x11c342c5
-# OVM_INFO @ 12260.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 12255.000ns] SBT_OP::RSPY, rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x1, cdata= 0xa4a5a6a7
-# OVM_INFO @ 12360.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 12355.000ns] SBT_OP::RSPY, rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x2, cdata= 0x00000001
-# OVM_INFO @ 12460.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 12455.000ns] SBT_OP::RSPY, rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x3, cdata= 0x00000000
-# OVM_INFO @ 12540.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 12535.000ns] SBT_OP::RSPY, rrid= 0x00, rmid= 0x00, mna= 0x0002, wofft= 0x0, cdata= 0xa9452802
-# OVM_INFO @ 12640.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 12635.000ns] SBT_OP::RSPY, rrid= 0x00, rmid= 0x00, mna= 0x0002, wofft= 0x1, cdata= 0xa0a1a2a3
-# OVM_INFO @ 12720.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 12715.000ns] SBT_OP::RSPY, rrid= 0x00, rmid= 0x00, mna= 0x0002, wofft= 0x2, cdata= 0x00000002
-# OVM_INFO @ 12810.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 12805.000ns] SBT_OP::RSPY, rrid= 0x00, rmid= 0x00, mna= 0x0002, wofft= 0x3, cdata= 0x00000000
-# OVM_INFO @ 12900.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 12895.000ns] SBT_OP::RSPY, rrid= 0x00, rmid= 0x00, mna= 0x0003, wofft= 0x0, cdata= 0xc891b51b
-# OVM_INFO @ 13010.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 13005.000ns] SBT_OP::RSPY, rrid= 0x00, rmid= 0x00, mna= 0x0003, wofft= 0x1, cdata= 0x00000000
-# OVM_INFO @ 13110.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 13105.000ns] SBT_OP::RSPY, rrid= 0x00, rmid= 0x00, mna= 0x0003, wofft= 0x2, cdata= 0x00000000
-# OVM_INFO @ 13210.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 13205.000ns] SBT_OP::RSPY, rrid= 0x00, rmid= 0x00, mna= 0x0003, wofft= 0x3, cdata= 0x00000000
-# OVM_INFO @ 13210.000ns: solyr.cc [ReSim] SBT_INFO: End of current Reconfigurable Region
-# OVM_INFO @ 13265.000ns: reporter [MANAGER] Read/Write ICAP DONE
-# OVM_INFO @ 13285.000ns: reporter [MANAGER] Write ICAP (DMA): a:0x500 s:0xc
-# OVM_INFO @ 13990.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 13915.000ns] SBT_OP::DESYNC
-# OVM_INFO @ 14135.000ns: reporter [MANAGER] Read/Write ICAP DONE
-# OVM_INFO @ 14205.000ns: reporter [MEMORYTRAFFIC] Writing data @ 0x801 : 0x88442211
-# OVM_INFO @ 14275.000ns: reporter [MEMORYTRAFFIC] Writing data @ 0x802 : 0xff117733
-# OVM_INFO @ 14345.000ns: reporter [MEMORYTRAFFIC] Writing data @ 0x806 : 0xc3c3a5a5
-# OVM_INFO @ 14415.000ns: reporter [MEMORYTRAFFIC] Writing data @ 0x807 : 0x1f1f2e2e
+# OVM_INFO @ 11820.000ns: solyr.rr0.mon [ReSim] [SBT_OP::RSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0000, wofft= 0x0, cdata= 0xf9a49830
+# OVM_INFO @ 11930.000ns: solyr.rr0.mon [ReSim] [SBT_OP::RSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0000, wofft= 0x1, cdata= 0xa4a5a6a7
+# OVM_INFO @ 12010.000ns: solyr.rr0.mon [ReSim] [SBT_OP::RSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0000, wofft= 0x2, cdata= 0x0a1a2a3f
+# OVM_INFO @ 12110.000ns: solyr.rr0.mon [ReSim] [SBT_OP::RSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0000, wofft= 0x3, cdata= 0x0000000a
+# OVM_INFO @ 12220.000ns: solyr.rr0.mon [ReSim] [SBT_OP::RSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x0, cdata= 0x8c885715
+# OVM_INFO @ 12300.000ns: solyr.rr0.mon [ReSim] [SBT_OP::RSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x1, cdata= 0xa4a5a6a7
+# OVM_INFO @ 12380.000ns: solyr.rr0.mon [ReSim] [SBT_OP::RSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x2, cdata= 0x00000001
+# OVM_INFO @ 12460.000ns: solyr.rr0.mon [ReSim] [SBT_OP::RSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x3, cdata= 0x00000000
+# OVM_INFO @ 12560.000ns: solyr.rr0.mon [ReSim] [SBT_OP::RSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0002, wofft= 0x0, cdata= 0x515e0df1
+# OVM_INFO @ 12660.000ns: solyr.rr0.mon [ReSim] [SBT_OP::RSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0002, wofft= 0x1, cdata= 0xa0a1a2a3
+# OVM_INFO @ 12750.000ns: solyr.rr0.mon [ReSim] [SBT_OP::RSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0002, wofft= 0x2, cdata= 0x00000002
+# OVM_INFO @ 12860.000ns: solyr.rr0.mon [ReSim] [SBT_OP::RSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0002, wofft= 0x3, cdata= 0x00000000
+# OVM_INFO @ 12960.000ns: solyr.rr0.mon [ReSim] [SBT_OP::RSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0003, wofft= 0x0, cdata= 0x7322e5fd
+# OVM_INFO @ 13060.000ns: solyr.rr0.mon [ReSim] [SBT_OP::RSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0003, wofft= 0x1, cdata= 0x00000000
+# OVM_INFO @ 13150.000ns: solyr.rr0.mon [ReSim] [SBT_OP::RSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0003, wofft= 0x2, cdata= 0x00000000
+# OVM_INFO @ 13260.000ns: solyr.rr0.mon [ReSim] [SBT_OP::RSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0003, wofft= 0x3, cdata= 0x00000000
+# OVM_INFO @ 13260.000ns: solyr.cc [ReSim] SBT_INFO: End of current Reconfigurable Region
+# OVM_INFO @ 13315.000ns: reporter [MANAGER] Read/Write ICAP DONE
+# OVM_INFO @ 13335.000ns: reporter [MANAGER] Write ICAP (DMA): a:0x500 s:0xc
+# OVM_INFO @ 14040.000ns: solyr.rr0.mon [ReSim] [SBT_OP::DESYNC @ DURING_PH] rrid= 0x00
+# OVM_INFO @ 14185.000ns: reporter [MANAGER] Read/Write ICAP DONE
+# OVM_INFO @ 14255.000ns: reporter [MEMORYTRAFFIC] Writing data @ 0x801 : 0x88442211
+# OVM_INFO @ 14325.000ns: reporter [MEMORYTRAFFIC] Writing data @ 0x802 : 0xff117733
+# OVM_INFO @ 14395.000ns: reporter [MEMORYTRAFFIC] Writing data @ 0x806 : 0xc3c3a5a5
+# OVM_INFO @ 14465.000ns: reporter [MEMORYTRAFFIC] Writing data @ 0x807 : 0x1f1f2e2e
 # OVM_INFO @ 18065.000ns: reporter [PRODUCER] Producing the 2th data: 0xb0b1b2b3
 # OVM_INFO @ 18115.000ns: reporter [PRODUCER] Producing the 3th data: 0xb4b5b6b7
 # OVM_INFO @ 18185.000ns: reporter [CONSUMER] Consuming the 1th data: 0xb4b5b6b7
 # OVM_INFO @ 20025.000ns: reporter [MANAGER] Write ICAP (DMA): a:0x560 s:0xc
-# OVM_INFO @ 20100.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 20095.000ns] SBT_OP::SYNC
-# OVM_INFO @ 20590.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 20515.000ns] SBT_OP::WCFG, rrid= 0x00, rmid= 0xff, module= RR0.mask
-# OVM_INFO @ 20660.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 20655.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0xff, mna= 0x0000, wofft= 0x0, cdata= 0x00000000
-# OVM_INFO @ 20730.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 20725.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0xff, mna= 0x0000, wofft= 0x1, cdata= 0x00000000
-# OVM_INFO @ 20800.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 20795.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0xff, mna= 0x0000, wofft= 0x2, cdata= 0x00000000
-# OVM_INFO @ 20870.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 20865.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0xff, mna= 0x0000, wofft= 0x3, cdata= 0x00002000
+# OVM_INFO @ 20100.000ns: solyr.rr0.mon [ReSim] [SBT_OP::SYNC @ DURING_PH] rrid= 0x00
+# OVM_INFO @ 20590.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WCFG @ DURING_PH] rrid= 0x00, module= RR0.mask
+# OVM_INFO @ 20660.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, mna= 0x0000, wofft= 0x0, cdata= 0x00000000
+# OVM_INFO @ 20730.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, mna= 0x0000, wofft= 0x1, cdata= 0x00000000
+# OVM_INFO @ 20800.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, mna= 0x0000, wofft= 0x2, cdata= 0x00000000
+# OVM_INFO @ 20870.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, mna= 0x0000, wofft= 0x3, cdata= 0x00002000
 # OVM_INFO @ 20870.000ns: solyr.cc [ReSim] SBT_INFO: End of current Reconfigurable Region
 # OVM_INFO @ 20875.000ns: reporter [MANAGER] Read/Write ICAP DONE
 # OVM_INFO @ 20895.000ns: reporter [MANAGER] Write ICAP (DMA): a:0x400 s:0xc
-# OVM_INFO @ 21740.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 21665.000ns] SBT_OP::WCFG, rrid= 0x00, rmid= 0x00, module= xdrs.region_0.rm0(maximum)
+# OVM_INFO @ 21740.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WCFG @ DURING_PH] rrid= 0x00, rmid= 0x00, module= xdrs.region_0.rm0(maximum)
 # OVM_INFO @ 21745.000ns: reporter [MANAGER] Read/Write ICAP DONE
 # OVM_INFO @ 21765.000ns: reporter [MANAGER] Write ICAP (DMA): a:0x800 s:0x10
-# OVM_INFO @ 21840.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 21835.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0x00, mna= 0x0000, wofft= 0x0, cdata= 0x0a8f3d14
-# OVM_INFO @ 21910.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 21905.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0x00, mna= 0x0000, wofft= 0x1, cdata= 0x88442211
-# OVM_INFO @ 21980.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 21975.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0x00, mna= 0x0000, wofft= 0x2, cdata= 0xff117733
-# OVM_INFO @ 22050.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 22045.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0x00, mna= 0x0000, wofft= 0x3, cdata= 0x0000000a
-# OVM_INFO @ 22120.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 22115.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x0, cdata= 0x11c342c5
-# OVM_INFO @ 22190.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 22185.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x1, cdata= 0xa4a5a6a7
-# OVM_INFO @ 22260.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 22255.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x2, cdata= 0xc3c3a5a5
-# OVM_INFO @ 22330.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 22325.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x3, cdata= 0x1f1f2e2e
-# OVM_INFO @ 22400.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 22395.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0x00, mna= 0x0002, wofft= 0x0, cdata= 0xa9452802
-# OVM_INFO @ 22470.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 22465.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0x00, mna= 0x0002, wofft= 0x1, cdata= 0xa0a1a2a3
-# OVM_INFO @ 22540.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 22535.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0x00, mna= 0x0002, wofft= 0x2, cdata= 0x00000002
-# OVM_INFO @ 22610.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 22605.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0x00, mna= 0x0002, wofft= 0x3, cdata= 0x00000000
-# OVM_INFO @ 22680.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 22675.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0x00, mna= 0x0003, wofft= 0x0, cdata= 0xc891b51b
-# OVM_INFO @ 22750.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 22745.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0x00, mna= 0x0003, wofft= 0x1, cdata= 0x00000000
-# OVM_INFO @ 22820.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 22815.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0x00, mna= 0x0003, wofft= 0x2, cdata= 0x00000000
-# OVM_INFO @ 22890.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 22885.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0x00, mna= 0x0003, wofft= 0x3, cdata= 0x00000000
+# OVM_INFO @ 21840.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0000, wofft= 0x0, cdata= 0xf9a49830
+# OVM_INFO @ 21910.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0000, wofft= 0x1, cdata= 0x88442211
+# OVM_INFO @ 21980.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0000, wofft= 0x2, cdata= 0xff117733
+# OVM_INFO @ 22050.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0000, wofft= 0x3, cdata= 0x0000000a
+# OVM_INFO @ 22120.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x0, cdata= 0x8c885715
+# OVM_INFO @ 22190.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x1, cdata= 0xa4a5a6a7
+# OVM_INFO @ 22260.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x2, cdata= 0xc3c3a5a5
+# OVM_INFO @ 22330.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x3, cdata= 0x1f1f2e2e
+# OVM_INFO @ 22400.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0002, wofft= 0x0, cdata= 0x515e0df1
+# OVM_INFO @ 22470.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0002, wofft= 0x1, cdata= 0xa0a1a2a3
+# OVM_INFO @ 22540.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0002, wofft= 0x2, cdata= 0x00000002
+# OVM_INFO @ 22610.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0002, wofft= 0x3, cdata= 0x00000000
+# OVM_INFO @ 22680.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0003, wofft= 0x0, cdata= 0x7322e5fd
+# OVM_INFO @ 22750.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0003, wofft= 0x1, cdata= 0x00000000
+# OVM_INFO @ 22820.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0003, wofft= 0x2, cdata= 0x00000000
+# OVM_INFO @ 22890.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0003, wofft= 0x3, cdata= 0x00000000
 # OVM_INFO @ 22890.000ns: solyr.cc [ReSim] SBT_INFO: End of current Reconfigurable Region
 # OVM_INFO @ 22895.000ns: reporter [MANAGER] Read/Write ICAP DONE
 # OVM_INFO @ 22915.000ns: reporter [MANAGER] Write ICAP (DMA): a:0x540 s:0xc
-# OVM_INFO @ 23620.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 23545.000ns] SBT_OP::GRESTORE, rrid= 0x00
+# OVM_INFO @ 23620.000ns: solyr.rr0.mon [ReSim] [SBT_OP::GRESTORE @ DURING_PH] rrid= 0x00 (SPY)
 # OVM_INFO @ 23765.000ns: reporter [MANAGER] Read/Write ICAP DONE
 # OVM_INFO @ 23785.000ns: reporter [MANAGER] Write ICAP (DMA): a:0x500 s:0xc
-# OVM_INFO @ 24490.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 24415.000ns] SBT_OP::DESYNC
+# OVM_INFO @ 24490.000ns: solyr.rr0.mon [ReSim] [SBT_OP::DESYNC @ DURING_PH] rrid= 0x00
 # OVM_INFO @ 24635.000ns: reporter [MANAGER] Read/Write ICAP DONE
 # OVM_INFO @ 30025.000ns: reporter [MANAGER] Write ICAP (DMA): a:0x580 s:0xc
-# OVM_INFO @ 30100.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 30095.000ns] SBT_OP::SYNC
-# OVM_INFO @ 30590.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 30515.000ns] SBT_OP::WCFG, rrid= 0x00, rmid= 0xff, module= RR0.mask
-# OVM_INFO @ 30660.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 30655.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0xff, mna= 0x0000, wofft= 0x0, cdata= 0x00000000
-# OVM_INFO @ 30730.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 30725.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0xff, mna= 0x0000, wofft= 0x1, cdata= 0x00000000
-# OVM_INFO @ 30800.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 30795.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0xff, mna= 0x0000, wofft= 0x2, cdata= 0x00000000
-# OVM_INFO @ 30870.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 30865.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0xff, mna= 0x0000, wofft= 0x3, cdata= 0x00000000
+# OVM_INFO @ 30100.000ns: solyr.rr0.mon [ReSim] [SBT_OP::SYNC @ DURING_PH] rrid= 0x00
+# OVM_INFO @ 30590.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WCFG @ DURING_PH] rrid= 0x00, module= RR0.mask
+# OVM_INFO @ 30660.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, mna= 0x0000, wofft= 0x0, cdata= 0x00000000
+# OVM_INFO @ 30730.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, mna= 0x0000, wofft= 0x1, cdata= 0x00000000
+# OVM_INFO @ 30800.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, mna= 0x0000, wofft= 0x2, cdata= 0x00000000
+# OVM_INFO @ 30870.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, mna= 0x0000, wofft= 0x3, cdata= 0x00000000
 # OVM_INFO @ 30870.000ns: solyr.cc [ReSim] SBT_INFO: End of current Reconfigurable Region
 # OVM_INFO @ 30875.000ns: reporter [MANAGER] Read/Write ICAP DONE
 # OVM_INFO @ 30895.000ns: reporter [MANAGER] Write ICAP (DMA): a:0x540 s:0xc
 # [RESIM-SKT] Invoking grestore thread: rsv_grestore_hdl_state /xdrs/region_0 rm0 
-# OVM_INFO @ 31600.003ns: solyr.rr0.mon [ReSim] [DURING_PH @ 31525.000ns] SBT_OP::GRESTORE, rrid= 0x00
+# OVM_INFO @ 31600.002ns: solyr.rr0.mon [ReSim] [SBT_OP::GRESTORE @ DURING_PH] rrid= 0x00 (SPY)
 # OVM_INFO @ 31745.000ns: reporter [MANAGER] Read/Write ICAP DONE
 # OVM_INFO @ 31765.000ns: reporter [MANAGER] Write ICAP (DMA): a:0x500 s:0xc
 # OVM_INFO @ 31775.000ns: reporter [CONSUMER] Consuming the 2th data: 0xaff11773
-# OVM_INFO @ 32470.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 32395.000ns] SBT_OP::DESYNC
+# OVM_INFO @ 32470.000ns: solyr.rr0.mon [ReSim] [SBT_OP::DESYNC @ DURING_PH] rrid= 0x00
 # OVM_INFO @ 32615.000ns: reporter [MANAGER] Read/Write ICAP DONE
 # OVM_INFO @ 38065.000ns: reporter [PRODUCER] Producing the 4th data: 0xc0c1c2c3
 # OVM_INFO @ 38115.000ns: reporter [PRODUCER] Producing the 5th data: 0xc4c5c6c7
 # OVM_INFO @ 38165.000ns: reporter [CONSUMER] Consuming the 3th data: 0xc4c5c6c7
 # OVM_INFO @ 40025.000ns: reporter [MANAGER] Write ICAP (DMA): a:0x580 s:0xc
-# OVM_INFO @ 40100.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 40095.000ns] SBT_OP::SYNC
-# OVM_INFO @ 40590.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 40515.000ns] SBT_OP::WCFG, rrid= 0x00, rmid= 0xff, module= RR0.mask
-# OVM_INFO @ 40660.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 40655.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0xff, mna= 0x0000, wofft= 0x0, cdata= 0x00000000
-# OVM_INFO @ 40730.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 40725.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0xff, mna= 0x0000, wofft= 0x1, cdata= 0x00000000
-# OVM_INFO @ 40800.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 40795.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0xff, mna= 0x0000, wofft= 0x2, cdata= 0x00000000
-# OVM_INFO @ 40870.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 40865.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0xff, mna= 0x0000, wofft= 0x3, cdata= 0x00000000
+# OVM_INFO @ 40100.000ns: solyr.rr0.mon [ReSim] [SBT_OP::SYNC @ DURING_PH] rrid= 0x00
+# OVM_INFO @ 40590.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WCFG @ DURING_PH] rrid= 0x00, module= RR0.mask
+# OVM_INFO @ 40660.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, mna= 0x0000, wofft= 0x0, cdata= 0x00000000
+# OVM_INFO @ 40730.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, mna= 0x0000, wofft= 0x1, cdata= 0x00000000
+# OVM_INFO @ 40800.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, mna= 0x0000, wofft= 0x2, cdata= 0x00000000
+# OVM_INFO @ 40870.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, mna= 0x0000, wofft= 0x3, cdata= 0x00000000
 # OVM_INFO @ 40870.000ns: solyr.cc [ReSim] SBT_INFO: End of current Reconfigurable Region
 # OVM_INFO @ 40875.000ns: reporter [MANAGER] Read/Write ICAP DONE
 # OVM_INFO @ 40905.000ns: reporter [MANAGER] Write ICAP (DMA): a:0x520 s:0xc
 # [RESIM-SKT] Invoking gcapture thread: rsv_gcapture_hdl_state /xdrs/region_0 rm0 
-# OVM_INFO @ 41610.003ns: solyr.rr0.mon [ReSim] [DURING_PH @ 41535.000ns] SBT_OP::GCAPTURE, rrid= 0x00
+# OVM_INFO @ 41610.002ns: solyr.rr0.mon [ReSim] [SBT_OP::GCAPTURE @ DURING_PH] rrid= 0x00 (SPY)
 # OVM_INFO @ 41755.000ns: reporter [MANAGER] Read/Write ICAP DONE
 # OVM_INFO @ 41775.000ns: reporter [MANAGER] Write ICAP (DMA): a:0x500 s:0xc
-# OVM_INFO @ 42480.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 42405.000ns] SBT_OP::DESYNC
+# OVM_INFO @ 42480.000ns: solyr.rr0.mon [ReSim] [SBT_OP::DESYNC @ DURING_PH] rrid= 0x00
 # OVM_INFO @ 42625.000ns: reporter [MANAGER] Read/Write ICAP DONE
 # OVM_INFO @ 42695.000ns: reporter [MEMORYTRAFFIC] Writing data @ 0x427 : 0x00000001
 # OVM_INFO @ 42765.000ns: reporter [MEMORYTRAFFIC] Writing data @ 0x42b : 0x50000004
 # OVM_INFO @ 42785.000ns: reporter [MANAGER] Write ICAP (DMA): a:0x420 s:0xc
-# OVM_INFO @ 42860.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 42855.000ns] SBT_OP::SYNC
-# OVM_INFO @ 43630.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 43555.000ns] SBT_OP::RCFG, rrid= 0x00, rmid= 0x00, module= xdrs.region_0.rm0(maximum)
+# OVM_INFO @ 42860.000ns: solyr.rr0.mon [ReSim] [SBT_OP::SYNC @ DURING_PH] rrid= 0x00
+# OVM_INFO @ 43630.000ns: solyr.rr0.mon [ReSim] [SBT_OP::RCFG @ DURING_PH] rrid= 0x00, rmid= 0x00, module= xdrs.region_0.rm0(maximum)
 # OVM_INFO @ 43635.000ns: reporter [MANAGER] Read/Write ICAP DONE
 # OVM_INFO @ 43655.000ns: reporter [MANAGER] Read ICAP (DMA): a:0x800 s:0x4
-# OVM_INFO @ 43720.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 43715.000ns] SBT_OP::RSPY, rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x0, cdata= 0x11c342c5
-# OVM_INFO @ 43810.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 43805.000ns] SBT_OP::RSPY, rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x1, cdata= 0xc4c5c6c7
-# OVM_INFO @ 43890.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 43885.000ns] SBT_OP::RSPY, rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x2, cdata= 0xc3c3a5a7
-# OVM_INFO @ 43990.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 43985.000ns] SBT_OP::RSPY, rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x3, cdata= 0x1f1f2e2e
-# OVM_INFO @ 44045.000ns: reporter [MANAGER] Read/Write ICAP DONE
-# OVM_INFO @ 44115.000ns: reporter [MEMORYTRAFFIC] Writing data @ 0x801 : 0xfedcba98
-# OVM_INFO @ 44185.000ns: reporter [MEMORYTRAFFIC] Writing data @ 0x802 : 0x76543210
-# OVM_INFO @ 44255.000ns: reporter [MEMORYTRAFFIC] Writing data @ 0x407 : 0x00000001
-# OVM_INFO @ 44325.000ns: reporter [MEMORYTRAFFIC] Writing data @ 0x40b : 0x50000004
-# OVM_INFO @ 44345.000ns: reporter [MANAGER] Write ICAP (DMA): a:0x400 s:0xc
-# OVM_INFO @ 45190.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 45115.000ns] SBT_OP::WCFG, rrid= 0x00, rmid= 0x00, module= xdrs.region_0.rm0(maximum)
-# OVM_INFO @ 45195.000ns: reporter [MANAGER] Read/Write ICAP DONE
-# OVM_INFO @ 45215.000ns: reporter [MANAGER] Write ICAP (DMA): a:0x800 s:0x4
-# OVM_INFO @ 45290.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 45285.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x0, cdata= 0x11c342c5
-# OVM_INFO @ 45360.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 45355.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x1, cdata= 0xfedcba98
-# OVM_INFO @ 45430.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 45425.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x2, cdata= 0x76543210
-# OVM_INFO @ 45500.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 45495.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x3, cdata= 0x1f1f2e2e
-# OVM_INFO @ 45505.000ns: reporter [MANAGER] Read/Write ICAP DONE
-# OVM_INFO @ 45525.000ns: reporter [MANAGER] Write ICAP (DMA): a:0x540 s:0xc
+# OVM_INFO @ 43720.000ns: solyr.rr0.mon [ReSim] [SBT_OP::RSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x0, cdata= 0x8c885715
+# OVM_INFO @ 43820.000ns: solyr.rr0.mon [ReSim] [SBT_OP::RSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x1, cdata= 0xc4c5c6c7
+# OVM_INFO @ 43910.000ns: solyr.rr0.mon [ReSim] [SBT_OP::RSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x2, cdata= 0xc3c3a5a7
+# OVM_INFO @ 44010.000ns: solyr.rr0.mon [ReSim] [SBT_OP::RSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x3, cdata= 0x1f1f2e2e
+# OVM_INFO @ 44065.000ns: reporter [MANAGER] Read/Write ICAP DONE
+# OVM_INFO @ 44135.000ns: reporter [MEMORYTRAFFIC] Writing data @ 0x801 : 0xfedcba98
+# OVM_INFO @ 44205.000ns: reporter [MEMORYTRAFFIC] Writing data @ 0x802 : 0x76543210
+# OVM_INFO @ 44275.000ns: reporter [MEMORYTRAFFIC] Writing data @ 0x407 : 0x00000001
+# OVM_INFO @ 44345.000ns: reporter [MEMORYTRAFFIC] Writing data @ 0x40b : 0x50000004
+# OVM_INFO @ 44365.000ns: reporter [MANAGER] Write ICAP (DMA): a:0x400 s:0xc
+# OVM_INFO @ 45210.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WCFG @ DURING_PH] rrid= 0x00, rmid= 0x00, module= xdrs.region_0.rm0(maximum)
+# OVM_INFO @ 45215.000ns: reporter [MANAGER] Read/Write ICAP DONE
+# OVM_INFO @ 45235.000ns: reporter [MANAGER] Write ICAP (DMA): a:0x800 s:0x4
+# OVM_INFO @ 45310.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x0, cdata= 0x8c885715
+# OVM_INFO @ 45380.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x1, cdata= 0xfedcba98
+# OVM_INFO @ 45450.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x2, cdata= 0x76543210
+# OVM_INFO @ 45520.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, rmid= 0x00, mna= 0x0001, wofft= 0x3, cdata= 0x1f1f2e2e
+# OVM_INFO @ 45525.000ns: reporter [MANAGER] Read/Write ICAP DONE
+# OVM_INFO @ 45545.000ns: reporter [MANAGER] Write ICAP (DMA): a:0x540 s:0xc
 # [RESIM-SKT] Invoking grestore thread: rsv_grestore_hdl_state /xdrs/region_0 rm0 
-# OVM_INFO @ 46230.003ns: solyr.rr0.mon [ReSim] [DURING_PH @ 46155.000ns] SBT_OP::GRESTORE, rrid= 0x00
-# OVM_INFO @ 46375.000ns: reporter [MANAGER] Read/Write ICAP DONE
-# OVM_INFO @ 46405.000ns: reporter [MANAGER] Write ICAP (DMA): a:0x560 s:0xc
-# OVM_INFO @ 46970.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 46895.000ns] SBT_OP::WCFG, rrid= 0x00, rmid= 0xff, module= RR0.mask
-# OVM_INFO @ 47040.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 47035.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0xff, mna= 0x0000, wofft= 0x0, cdata= 0x00000000
-# OVM_INFO @ 47110.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 47105.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0xff, mna= 0x0000, wofft= 0x1, cdata= 0x00000000
-# OVM_INFO @ 47180.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 47175.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0xff, mna= 0x0000, wofft= 0x2, cdata= 0x00000000
-# OVM_INFO @ 47250.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 47245.000ns] SBT_OP::WSPY, rrid= 0x00, rmid= 0xff, mna= 0x0000, wofft= 0x3, cdata= 0x00002000
-# OVM_INFO @ 47250.000ns: solyr.cc [ReSim] SBT_INFO: End of current Reconfigurable Region
-# OVM_INFO @ 47255.000ns: reporter [MANAGER] Read/Write ICAP DONE
-# OVM_INFO @ 47275.000ns: reporter [MANAGER] Write ICAP (DMA): a:0x500 s:0xc
-# OVM_INFO @ 47980.000ns: solyr.rr0.mon [ReSim] [DURING_PH @ 47905.000ns] SBT_OP::DESYNC
-# OVM_INFO @ 48125.000ns: reporter [MANAGER] Read/Write ICAP DONE
+# OVM_INFO @ 46250.002ns: solyr.rr0.mon [ReSim] [SBT_OP::GRESTORE @ DURING_PH] rrid= 0x00 (SPY)
+# OVM_INFO @ 46395.000ns: reporter [MANAGER] Read/Write ICAP DONE
+# OVM_INFO @ 46425.000ns: reporter [MANAGER] Write ICAP (DMA): a:0x560 s:0xc
+# OVM_INFO @ 46990.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WCFG @ DURING_PH] rrid= 0x00, module= RR0.mask
+# OVM_INFO @ 47060.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, mna= 0x0000, wofft= 0x0, cdata= 0x00000000
+# OVM_INFO @ 47130.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, mna= 0x0000, wofft= 0x1, cdata= 0x00000000
+# OVM_INFO @ 47200.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, mna= 0x0000, wofft= 0x2, cdata= 0x00000000
+# OVM_INFO @ 47270.000ns: solyr.rr0.mon [ReSim] [SBT_OP::WSPY @ DURING_PH] rrid= 0x00, mna= 0x0000, wofft= 0x3, cdata= 0x00002000
+# OVM_INFO @ 47270.000ns: solyr.cc [ReSim] SBT_INFO: End of current Reconfigurable Region
+# OVM_INFO @ 47275.000ns: reporter [MANAGER] Read/Write ICAP DONE
+# OVM_INFO @ 47295.000ns: reporter [MANAGER] Write ICAP (DMA): a:0x500 s:0xc
+# OVM_INFO @ 48000.000ns: solyr.rr0.mon [ReSim] [SBT_OP::DESYNC @ DURING_PH] rrid= 0x00
+# OVM_INFO @ 48145.000ns: reporter [MANAGER] Read/Write ICAP DONE
 # Break in Module xdrs at ./xtests/tdpr_readback.sv line 8

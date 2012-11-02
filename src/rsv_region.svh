@@ -75,7 +75,8 @@ class rsv_region extends rsv_region_base;
 		// with user-defined derived classes as desired.
 		// 
 		// Typically, users should parameterize the derived classes with design-specific
-		// information (e.g., RR boundary signals, RR size, etc...).
+		// information (e.g., RR boundary signals, RR size, etc...) and override the 
+		// base classes with the derived classes
 
 		pc  = rsv_portal_controller_base::type_id::create("pc", this);
 		ss  = rsv_state_spy_base::type_id::create("ss", this);
@@ -88,25 +89,27 @@ class rsv_region extends rsv_region_base;
 	// run()
 	//---------------------------------------------------------------------
 	
-	// The run task read rsv_trans from the port, and calls the member functions
-	// of pc & ss to process the transaction (e.g., module selection, state
-	// saving and restoration). It also calls the member function of the monitor
-	// for transaction visualization. 
+	// The run task read rsv_sbt_trans from the port, and calls the member functions
+	// of pc, ei, ss to process the transaction (e.g., module selection, error 
+	// injection, state saving and restoration). It also calls the member function 
+	// of the monitor for transaction visualization. 
 	// 
 	// Finially, it writes the processed transaction to the analysis port, through
 	// which the scoreboard perfroms further analysis (e.g. coverage collection)
 	
 	virtual task run();
-		rsv_trans tr;
+		rsv_sbt_trans tr;
 		
-		rsv_cfg_trans  cfg_tr;
-		rsv_spy_trans  spy_tr;
+		rsv_cfg_trans  tr_0;
+		rsv_ei_trans   tr_1;
+		rsv_spy_trans  tr_2;
 		
 		forever begin
 			get_p.get(tr);
 	
-			if ( $cast( cfg_tr, tr ) ) begin pc.select_module_phase(cfg_tr); end
-			if ( $cast( spy_tr, tr ) ) begin ss.save_restore_state(spy_tr); end
+			if ( $cast( tr_0, tr ) ) begin pc.select_module_phase(tr_0); end
+			if ( $cast( tr_1, tr ) ) begin ei.inject_errors(tr_1); end
+			if ( $cast( tr_2, tr ) ) begin ss.save_restore_state(tr_2); end
 			
 			mon.print_record_trans(tr);
 

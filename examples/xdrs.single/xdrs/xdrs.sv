@@ -315,7 +315,6 @@ module xdrs
 	`include "tdpr_demo.sv"
 	`include "tdpr_simple.sv"
 	`include "tdpr_readback.sv"
-	`include "tdpr_ei.sv"
 	`include "tdpr_isolation.sv"
 	`include "tdpr_retry.sv"
 	`include "tdpr_random.sv"

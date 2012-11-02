@@ -23,16 +23,15 @@ rsv_add_port "my_if" "c_cerr"     out
 rsv_add_port "my_if" "c_data"     in  32
 
 # Create reconfigurable regions and add modules to it. The region can have
-# an optional error injector and an optional monitor. As a quick start, we do
-# not use any of those optional components and set the corresponding arguments
-# as null string ""
+# an optional error injector. As a quick start, we use a default error 
+# injector ("my_ei"). 
 #
 # For modules that use non-default parameters, pass the real parameters 
 # as the last argument of "rsv_add_module" in the format of a string.
 # As a quick start, we use the default parameters so just pass a null string
 # to the "rsv_add_module" API. 
 
-rsv_create_region "my_region" "my_if" 4 "" ""
+rsv_create_region "my_region" "my_if" 4 "" "my_ei"
 
 rsv_add_module "my_region" "maximum" ""
 rsv_add_module "my_region" "reverse" ""

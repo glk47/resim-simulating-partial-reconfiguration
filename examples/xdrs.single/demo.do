@@ -1,11 +1,15 @@
 
 .main clear; quit -sim; do settings.do;
 
-# create libraries
+# Create libraries
+#===============================
+
 if { [file exists work] } { vdel -lib work -all }; vlib work;
 if { [file exists mtiReSim] } { vdel -lib mtiReSim -all }; vlib mtiReSim;
 
-# compile xdrs
+# Compile XDRS
+#===============================
+
 vlog +acc +cover=sbfec -coverexcludedefault -sv "./xdrs/cores/reverse.v"
 vlog +acc +cover=sbfec -coverexcludedefault -sv "./xdrs/cores/maximum.v"
 vlog +acc +cover=sbfec -coverexcludedefault -sv "./xdrs/cores/intern_sync.v"
@@ -19,19 +23,71 @@ vlog +acc +incdir+$OVM_HOME/src "./xdrs/manager.sv"
 vlog +acc +incdir+$OVM_HOME/src "./xdrs/memctrl.sv"
 vlog +acc "./xdrs/xbuscore.v"
 
-# compile ReSim
+# Generate artifacts
+#===============================
+
+# Call ReSim APIs to automatically generate the artifacts
+
+if { 1 } {
+
+	ReSim::rsv_create_portmap "my_if" "clk"
+	
+	ReSim::rsv_add_port "my_if" "rstn"       in
+	ReSim::rsv_add_port "my_if" "rc_reqn"    in
+	ReSim::rsv_add_port "my_if" "rc_ackn"    out
+	ReSim::rsv_add_port "my_if" "p_prdy"     out
+	ReSim::rsv_add_port "my_if" "p_crdy"     in
+	ReSim::rsv_add_port "my_if" "p_cerr"     in
+	ReSim::rsv_add_port "my_if" "p_data"     out 32
+	ReSim::rsv_add_port "my_if" "c_prdy"     in
+	ReSim::rsv_add_port "my_if" "c_crdy"     out
+	ReSim::rsv_add_port "my_if" "c_cerr"     out
+	ReSim::rsv_add_port "my_if" "c_data"     in  32
+	
+	ReSim::rsv_create_region "my_region" "my_if" 4 "" "my_ei_edited"
+	
+	ReSim::rsv_add_module "my_region" "maximum" "#(48)"
+	ReSim::rsv_add_module "my_region" "reverse" "#(24,24)"
+	
+	ReSim::rsv_create_solyr "my_solyr" VIRTEX4 "my_scb"
+	ReSim::rsv_add_region   "my_solyr" "my_region"
+	ReSim::rsv_gen_solyr    "my_solyr"
+	
+	ReSim::rsv_create_memory "zbt" 4 1 be
+	
+	ReSim::rsv_add_2_memory "zbt" "./artifacts/sbt/my_region_rm0.sbt" 0x100
+	ReSim::rsv_add_2_memory "zbt" "./artifacts/sbt/my_region_rm1.sbt" 0x200
+	
+	ReSim::rsv_cleanup
+}
+
+# Copy backup files to overwite the generated files. The backup files are modified
+# based on the corresponding generated files. Such modifications adapt the generated 
+# artifacts for design/test specific needs. 
+
+if { 1 } {
+	file copy -force "./artifacts.edited/my_ei.edited.txt" "./artifacts/my_ei_edited.svh"
+	file copy -force "./artifacts.edited/my_region_maximum.edited.txt" "./artifacts/spy/my_region_rm0.sll"
+	file copy -force "./artifacts.edited/my_region_reverse.edited.txt" "./artifacts/spy/my_region_rm1.sll"
+	file copy -force "./artifacts.edited/zbt_bank0.rb.txt" "./artifacts/sbt/zbt_bank0.rb.txt"
+}
+
+# Compile artifacts
+#===============================
+
 vlog -work mtiReSim +acc "$RSV_HOME/src/rsv_ifs.sv"
 vlog -work mtiReSim +acc +incdir+$RSV_HOME/src+$OVM_HOME/src "$RSV_HOME/src/rsv_solyr_pkg.svp"
 vlog -work mtiReSim +acc "./artifacts/usr_ifs.sv"
 vlog -work mtiReSim +acc +incdir+./artifacts+$RSV_HOME/src+$OVM_HOME/src "./artifacts/usr_solyr_pkg.svp"
 
-# compile artifacts
 vlog +acc +incdir+./artifacts+$RSV_HOME/src+$OVM_HOME/src -L mtiReSim "./artifacts/icap_virtex_wrapper.sv"
 vlog +acc +incdir+./artifacts+$RSV_HOME/src+$OVM_HOME/src -L mtiReSim "./artifacts/my_region.sv"
 vlog +acc +incdir+./artifacts+$RSV_HOME/src+$OVM_HOME/src -L mtiReSim "./artifacts/my_solyr.sv"
 
-# TEST_DPR_DEMO
-vlog +acc +incdir+./artifacts+$RSV_HOME/src+$OVM_HOME/src+./xtests -L mtiReSim +define+TEST_DPR_R "./xdrs/xdrs.sv"
+# Compile and run the demo test
+#===============================
+
+vlog +acc +incdir+./artifacts+$RSV_HOME/src+$OVM_HOME/src+./xtests -L mtiReSim +define+TEST_DPR_DEMO "./xdrs/xdrs.sv"
 
 # load simulation
 vsim -t ps -assertdebug -sv_seed 0 -permit_unmatched_virtual_intf -L mtiReSim xdrs
@@ -91,15 +147,15 @@ add wave -noupdate -expand -group module_B(rev) -expand -group inter -radix asci
 add wave -noupdate -expand -group module_B(rev) -expand -group inter -radix hex /xdrs/region_0/rm1/data1
 add wave -noupdate -expand -group module_B(rev) -expand -group inter -radix hex /xdrs/region_0/rm1/data2
 
-# start simulation & state spy
+# start simulation
 onfinish stop; onbreak {resume}
 
 profile on -p
 profile on -m
 
 run 10ns
-add wave -noupdate -expand -group mgr //solyr/rr0/mon/usr_trans
 add wave -noupdate -expand -group icap -expand //solyr/rr0/mon/sbt_trans
+
 run -all
 
 profile report -structural

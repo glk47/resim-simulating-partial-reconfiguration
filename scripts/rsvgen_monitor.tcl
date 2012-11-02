@@ -13,71 +13,19 @@ class ${mon_} extends rsv_monitor#(virtual interface $ri_);
 		super.new(name, parent);
 	endfunction : new
 
-	// Define your own tasks to collect transactions
+	// Define your own tasks to visualize the SBT transactions
 	// You should not change the name or the prototype of these tasks
 
-	extern virtual protected task collect_unload_transaction();
-	extern virtual protected task collect_activate_transaction();
+	extern virtual task print_record_trans(rsv_sbt_trans tr);
 
 endclass : ${mon_}
 
-task ${mon_}::collect_unload_transaction();
-	// TODO: Implement your own collect_unload_transaction() task here
-	// The collect_unload_transaction() task typically inspects the signal
-	// transitions on the virtual interface and generate the collected
-	// \"unloading\" transactions towards the analysis port
+task ${mon_}::print_record_trans(rsv_sbt_trans tr);
+	// TODO: Implement your own print_record_trans() task here
+	// The print_record_trans() task typically interprets and prints
+	// the SBT transaction. 
 
-	rsv_unload_trans tr;
-	
-	forever begin
-		// TODO: waiting until a complete \"unloading\" operation is
-		// observed on the virtual interface (e.g. the \"req, ack\" handshakes)
-
-		// ... YOUR OWN CODE ...
-		// e.g. @(posedge mon_vi.clk); ...
-		break;
-
-		// After an unloading operation is detected, create a new
-		// transaction with the correct attribute(s) and write it to the
-		// analysis port (ap)
-
-		tr = new(\$realtime, \"Current module unloaded\", OVM_MEDIUM);
-		
-		`region_print_record_trans(get_parent(), tr);
-		`region_analysis_port_trans(get_parent(), tr.clone());
-		
-	end
-
-endtask : ${mon_}::collect_unload_transaction
-
-task ${mon_}::collect_activate_transaction();
-	// TODO: Implement your own collect_activate_transaction() task here
-	// The collect_activate_transaction() task typically inspects the signal
-	// transitions on the virtual interface and generate the collected
-	// \"activation\" transactions towards the analysis port
-
-	rsv_activate_trans tr;
-	
-	forever begin
-		// TODO: waiting until a complete \"activation\" operation is
-		// observed on the virtual interface (e.g. asserting the \"reset\" signal)
-
-		// ... YOUR OWN CODE ...
-		// e.g. @(posedge mon_vi.clk); ... 
-		break;
-
-		// After an activation operation is detected, create a new
-		// transaction with the correct attribute(s) and write it to the
-		// analysis port (ap)
-
-		tr = new(\$realtime, \"New module activated\", OVM_MEDIUM);
-		
-		`region_print_record_trans(get_parent(), tr);
-		`region_analysis_port_trans(get_parent(), tr.clone());
-		
-	end
-
-endtask : ${mon_}::collect_activate_transaction
+endtask : ${mon_}::print_record_trans
 
 `endif // [string toupper ${mon_}]_SVH
 

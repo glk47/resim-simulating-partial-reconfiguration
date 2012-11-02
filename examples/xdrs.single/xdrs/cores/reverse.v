@@ -227,9 +227,9 @@ module reverse
 	// Reset property:
 	// when reset, internal signals should go to default values (to test just a few)
 	
-	cov_reverse_reset_0 : cover property (@(posedge clk) (~rstn) |-> (($past(state_c) != S_IDLE) ##0 (state_c == S_IDLE)));
-	cov_reverse_reset_1 : cover property (@(posedge clk) (~rstn) |-> (($past(data1) != 'b0) ##0 (data1 == 'b0)));
-	cov_reverse_reset_2 : cover property (@(posedge clk) (~rstn) |-> (($past(data2) != 'b0) ##0 (data2 == 'b0)));
+	cov_reverse_reset_0 : cover property (@(posedge clk) (~rstn) |-> (($past(state_c) !== S_IDLE) ##0 (state_c === S_IDLE)));
+	cov_reverse_reset_1 : cover property (@(posedge clk) (~rstn) |-> (($past(data1) !== 'h0) ##0 (data1 === 'h0)));
+	cov_reverse_reset_2 : cover property (@(posedge clk) (~rstn) |-> (($past(data2) !== 'h0) ##0 (data2 === 'h0)));
 	
 	// Corner case: 
 	// drive ready or error at the last cycle of time out

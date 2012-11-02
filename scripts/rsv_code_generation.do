@@ -263,16 +263,15 @@ proc ReSim::rsv_print_x_injection { ri_ op_ } {
 		append str "\tjoin_none\n\n"
 	}
 	
-	foreach my_port $portmap_a($ri_.pm) {
-		set nm_ [lindex $my_port 0]; set io_ [lindex $my_port 1];
-		if { $io_ == "in"  && $op_ == "dei" && $nm_ != $clk_ } {append str [format "\tdei_vi.%-16s = 'hx;\n" $nm_]}
-		if { $io_ == "out" && $op_ == "sei" && $nm_ != $clk_ } {append str [format "\tsei_vi.%-16s = 'hx;\n" $nm_]}
+	if { $clk_ != "" && $op_ == "sei" } { 
+		append str "\t// Drive undefined X values to all output signals\n"
+		append str "\t// of the reconfigurable module.\n\n"
 	}
 	
-	if { $clk_ != "" && $op_ == "sei" } { 
-		append str "\n\ttr = new(\$realtime, \"Starting X Injection\", OVM_MEDIUM);\n"
-		append str "\n\t`region_print_record_trans(get_parent(), tr);"
-		append str "\n\t`region_analysis_port_trans(get_parent(), tr.clone());"
+	foreach my_port $portmap_a($ri_.pm) {
+		set nm_ [lindex $my_port 0]; set io_ [lindex $my_port 1];
+		if { $io_ == "in"  && $op_ == "dei" && $nm_ != $clk_ } {append str [format "\tdei_vi.%-16s <= 'hx;\n" $nm_]}
+		if { $io_ == "out" && $op_ == "sei" && $nm_ != $clk_ } {append str [format "\tsei_vi.%-16s <= 'hx;\n" $nm_]}
 	}
 	
 	return $str
@@ -302,9 +301,11 @@ proc ReSim::rsv_print_region_slrmo { rr_ nm_ gm_ sgnt_ i ri_ args } {
 	return "\t\t8'h${i}: begin rm_rif.sig_ = rm${i}_rif.sig_; end \\"
 }
 proc ReSim::rsv_print_region_ieia { rr_ nm_ gm_ sgnt_ i ri_ args } {
+	## TO BE REMOVED
 	return "\twire rm${i}_activated = (pif.active_module_id == 8'h${i});"
 }
 proc ReSim::rsv_print_region_ieib { rr_ nm_ gm_ sgnt_ i ri_ args } {
+	## TO BE REMOVED
 	return "\talways @(negedge rm${i}_activated) if(\$time!=0) `rsv_execute_tcl(interp, \$psprintf(\"ReSim::rsv_iei_hdl_state %m rm${i}\"))";
 }
 proc ReSim::rsv_print_region_module { rr_ nm_ gm_ sgnt_ i ri_ args } {
@@ -371,7 +372,7 @@ proc ReSim::rsv_print_fpga_rr_cvsig { vf_ rr_ i args } {
 	return "\tint unsigned rr${i}_cur = 0; // RMid of the current active module in RR${i}"
 }
 proc ReSim::rsv_print_fpga_rr_cvspl { vf_ rr_ i args } {
-	return "\t\tif(cfg_tr.rrid==${i}) rr${i}_cur = cfg_tr.rmid;"
+	return "\t\tif(tr.rrid==${i}) rr${i}_cur = tr.rmid;"
 }
 proc ReSim::rsv_print_fpga_rr_cvp { vf_ rr_ i args } {
 	variable region_a

@@ -46,9 +46,9 @@ class rsv_solyr#(int NUM_RR = 1) extends ovm_env;
 	rsv_region rr[NUM_RR];
 	rsv_scoreboard_base#(NUM_RR) scb;
 	
-	tlm_fifo #(rsv_cdata_trans) sbt_fifo;    // configuration bitstream
-	tlm_fifo #(rsv_trans) rr_fifo[NUM_RR];   // configuration transactions
-	tlm_analysis_fifo #(rsv_trans) scb_fifo; // scoreboard transactions
+	tlm_fifo #(rsv_cdata_trans) cdata_fifo;      // ICAP <-> SBT Parser
+	tlm_fifo #(rsv_sbt_trans) rr_fifo[NUM_RR];   // SBT Parser <-> Reconfigurable Region
+	tlm_analysis_fifo #(rsv_sbt_trans) scb_fifo; // Reconfigurable Region <-> Scoreboard
 	
 	//---------------------------------------------------------------------
 	// configuration table and parameter(s)
@@ -64,7 +64,7 @@ class rsv_solyr#(int NUM_RR = 1) extends ovm_env;
 	function new (string name, ovm_component parent);
 		super.new(name, parent);
 		
-		sbt_fifo = new("sbt_fifo", this);
+		cdata_fifo = new("cdata_fifo", this);
 		for (int i=0; i < NUM_RR; i++) begin
 			rr_fifo[i]  = new($psprintf("rr_fifo_%0d", i), this);
 		end
@@ -87,8 +87,8 @@ class rsv_solyr#(int NUM_RR = 1) extends ovm_env;
 	virtual function void connect();
 		super.connect();
 
-		cp.put_p.connect(sbt_fifo.put_export);
-		cc.get_p.connect(sbt_fifo.get_peek_export);
+		cp.put_p.connect(cdata_fifo.put_export);
+		cc.get_p.connect(cdata_fifo.get_peek_export);
 		
 		for (int i=0; i < NUM_RR; i++) begin
 			cc.put_p[i].connect(rr_fifo[i].put_export);

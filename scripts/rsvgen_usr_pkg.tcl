@@ -6,6 +6,7 @@ package usr_solyr_pkg;
 	timeprecision 1ps;
 
 	import ovm_pkg::*;
+	import mti_fli::*;
 	import rsv_solyr_pkg::*;
 
 	`include \"ovm_macros.svh\"

@@ -125,7 +125,7 @@
   </Style>
  </Styles>
  <Worksheet ss:Name="Sheet1">
-  <Table ss:ExpandedColumnCount="7" ss:ExpandedRowCount="51" x:FullColumns="1"
+  <Table ss:ExpandedColumnCount="7" ss:ExpandedRowCount="50" x:FullColumns="1"
    x:FullRows="1" ss:StyleID="s21">
    <Column ss:StyleID="s21" ss:AutoFitWidth="0" ss:Width="66"/>
    <Column ss:StyleID="s21" ss:AutoFitWidth="0" ss:Width="138"/>
@@ -242,15 +242,6 @@
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="25.5">
     <Cell ss:StyleID="s30"><Data ss:Type="String">3.3</Data></Cell>
-    <Cell ss:StyleID="s31"><Data ss:Type="String">TEST_DPR_EI</Data></Cell>
-    <Cell ss:StyleID="s31"><Data ss:Type="String">Tests the initialization of the RM after reconfiguration. A reset should clear the errors injected to the RM.</Data></Cell>
-    <Cell ss:StyleID="s31"><Data ss:Type="String">TEST_DPR_EI</Data></Cell>
-    <Cell ss:StyleID="s31"><Data ss:Type="String">Test</Data></Cell>
-    <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
-    <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
-   </Row>
-   <Row ss:AutoFitHeight="0" ss:Height="25.5">
-    <Cell ss:StyleID="s30"><Data ss:Type="String">3.4</Data></Cell>
     <Cell ss:StyleID="s31"><Data ss:Type="String">TEST_DPR_READBACK</Data></Cell>
     <Cell ss:StyleID="s31"><Data ss:Type="String">State saving and restoration. Restoring with/without mask, a typical save, modify, restore process. </Data></Cell>
     <Cell ss:StyleID="s31"><Data ss:Type="String">TEST_DPR_READBACK</Data></Cell>
@@ -259,7 +250,7 @@
     <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="25.5">
-    <Cell ss:StyleID="s30"><Data ss:Type="String">3.5</Data></Cell>
+    <Cell ss:StyleID="s30"><Data ss:Type="String">3.4</Data></Cell>
     <Cell ss:StyleID="s31"><Data ss:Type="String">TEST_DPR_RETRY</Data></Cell>
     <Cell ss:StyleID="s31"><Data ss:Type="String">Computational cores can not always commit the results to the static part. Sometimes they have to retry.</Data></Cell>
     <Cell ss:StyleID="s31"><Data ss:Type="String">TEST_DPR_RETRY</Data></Cell>
@@ -268,7 +259,7 @@
     <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
    </Row>
    <Row>
-    <Cell ss:StyleID="s30"><Data ss:Type="String">3.6</Data></Cell>
+    <Cell ss:StyleID="s30"><Data ss:Type="String">3.5</Data></Cell>
     <Cell ss:StyleID="s31"><Data ss:Type="String">TEST_DPR_DEMO</Data></Cell>
     <Cell ss:StyleID="s31"><Data ss:Type="String">For demonstration</Data></Cell>
     <Cell ss:StyleID="s31"><Data ss:Type="String">TEST_DPR_DEMO</Data></Cell>
@@ -276,7 +267,7 @@
     <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
     <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
    </Row>
-   <Row ss:Index="21" ss:StyleID="s27">
+   <Row ss:Index="20" ss:StyleID="s27">
     <Cell ss:StyleID="s28"><Data ss:Type="String">4</Data></Cell>
     <Cell ss:StyleID="s32"><Data ss:Type="String">ICAPI</Data></Cell>
     <Cell ss:StyleID="s29"><Data ss:Type="String">The ICAP-Interface module</Data></Cell>
@@ -339,7 +330,7 @@
     <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
     <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
    </Row>
-   <Row ss:Index="29" ss:StyleID="s27">
+   <Row ss:Index="28" ss:StyleID="s27">
     <Cell ss:StyleID="s28"><Data ss:Type="String">5</Data></Cell>
     <Cell ss:StyleID="s32"><Data ss:Type="String">Isolation</Data></Cell>
     <Cell ss:StyleID="s29"><Data ss:Type="String">The Isolation mechanism</Data></Cell>
@@ -384,7 +375,7 @@
     <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
     <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
    </Row>
-   <Row ss:Index="35" ss:StyleID="s27">
+   <Row ss:Index="34" ss:StyleID="s27">
     <Cell ss:StyleID="s28"><Data ss:Type="String">6</Data></Cell>
     <Cell ss:StyleID="s32"><Data ss:Type="String">Computational_Cores</Data></Cell>
     <Cell ss:StyleID="s29"><Data ss:Type="String">Computational Cores</Data></Cell>
@@ -447,7 +438,7 @@
     <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
     <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
    </Row>
-   <Row ss:Height="25.5">
+   <Row ss:AutoFitHeight="0" ss:Height="25.5">
     <Cell ss:StyleID="s33"><Data ss:Type="String">6.7</Data></Cell>
     <Cell ss:StyleID="s34"><Data ss:Type="String">Recon_Ack_Scenario</Data></Cell>
     <Cell ss:StyleID="s31"><Data ss:Type="String">Request of reconfiguration is acknowledged just before the core starts computation</Data></Cell>
@@ -456,7 +447,7 @@
     <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
     <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
    </Row>
-   <Row ss:Height="25.5">
+   <Row ss:AutoFitHeight="0" ss:Height="25.5">
     <Cell ss:StyleID="s33"><Data ss:Type="String">6.8</Data></Cell>
     <Cell ss:StyleID="s34"><Data ss:Type="String">Recon_Req_Scenario</Data></Cell>
     <Cell ss:StyleID="s31"><Data ss:Type="String">Request of reconfiguration occurs at all possible states</Data></Cell>
@@ -483,7 +474,7 @@
     <Cell ss:StyleID="s31"><Data ss:Type="Number">1</Data></Cell>
     <Cell ss:StyleID="s31"><Data ss:Type="Number">100</Data></Cell>
    </Row>
-   <Row ss:Index="47" ss:StyleID="s27">
+   <Row ss:Index="46" ss:StyleID="s27">
     <Cell ss:StyleID="s28"><Data ss:Type="String">7</Data></Cell>
     <Cell ss:StyleID="s29"><Data ss:Type="String">Partial_Reconfiguration</Data></Cell>
     <Cell ss:StyleID="s29"><Data ss:Type="String">Partial Reconfigurable of Computational Cores</Data></Cell>
@@ -537,12 +528,12 @@
     <VerticalResolution>600</VerticalResolution>
    </Print>
    <Selected/>
-   <TopRowVisible>31</TopRowVisible>
+   <TopRowVisible>1</TopRowVisible>
    <Panes>
     <Pane>
      <Number>3</Number>
-     <ActiveRow>41</ActiveRow>
-     <ActiveCol>3</ActiveCol>
+     <ActiveRow>16</ActiveRow>
+     <ActiveCol>1</ActiveCol>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>

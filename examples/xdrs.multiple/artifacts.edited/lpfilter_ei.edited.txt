@@ -32,7 +32,7 @@
 `ifndef LPFILTER_EI_SVH
 `define LPFILTER_EI_SVH
 
-class lpfilter_ei extends rsv_error_injector#(virtual interface region_if);
+class lpfilter_ei extends rsv_error_injector#(virtual interface my_if);
 
 	// configuration table and parameters
 	`ovm_component_utils_begin(lpfilter_ei)
@@ -49,114 +49,74 @@ class lpfilter_ei extends rsv_error_injector#(virtual interface region_if);
 	//
 	//     x, all-0, all-1, negate, random, no-change
 
-	extern virtual protected task inject_to_static_module();
-	extern virtual protected task inject_to_reconfigurable_module();
-	extern virtual protected task inject_to_internal_signals();
-	
-	// TODO: user-defined local tasks
-	
-	extern task ei_reset_rm();
-	extern task ei_inject_to_rm(logic [31:0] ei_data);
+	extern virtual protected task inject_to_static_module(rsv_ei_trans tr);
+	extern virtual protected task inject_to_reconfigurable_module(rsv_ei_trans tr);
+	extern virtual protected task inject_to_internal_signals(rsv_ei_trans tr);
+	extern virtual protected task end_of_injecting_errors(rsv_ei_trans tr);
 	
 endclass : lpfilter_ei
 
-task lpfilter_ei::inject_to_static_module ();
+task lpfilter_ei::inject_to_static_module (rsv_ei_trans tr);
 	// Default static error injection
 
-	rsv_ei_trans tr;
-	realtime ei_time;
+	// Enable the static error injection and wait until the 
+	// ei_vi.reconf_phase signal is asserted 
 
-	// 0. enable the static error injection
-
-	ei_vi.sei_en = 1'b1;
-
-	// 1. use ei_vi.reconf_phase as a trigger to start error injection
-	// ei_vi.reconf_phase is asserted during reconfiguration 
-
+	ei_vi.sei_en <= 1'b1;
 	@(posedge ei_vi.reconf_phase);
+	
+	// Drive undefined X values to all output signals
+	// of the reconfigurable module.
 
-	sei_vi.rc_ackn          = 'hx;
-	sei_vi.p_prdy           = 'hx;
-	sei_vi.p_data           = 'hx;
-	sei_vi.c_crdy           = 'hx;
-	sei_vi.c_cerr           = 'hx;
+	sei_vi.rc_ackn          <= 'hx;
+	sei_vi.p_prdy           <= 'hx;
+	sei_vi.p_data           <= 'hx;
+	sei_vi.c_crdy           <= 'hx;
+	sei_vi.c_cerr           <= 'hx;
 
-	tr = new($realtime, "Starting X Injection", OVM_MEDIUM);
-
-	`region_print_record_trans(get_parent(), tr);
-	`region_analysis_port_trans(get_parent(), tr.clone());
 
 endtask : lpfilter_ei::inject_to_static_module
 
-task lpfilter_ei::inject_to_reconfigurable_module ();
+task lpfilter_ei::inject_to_reconfigurable_module (rsv_ei_trans tr);
 	// User-defined dynamic error injection
 
-	// 0. enable the dynamic error injection
-	//    the real error sources are from the two user-defined tasks
-	//    ei_reset_rm(), ei_inject_to_rm()
+	// Enable the dynamic error injection and wait until the 
+	// ei_vi.reconf_phase signal is asserted 
 
-	ei_vi.dei_en = 1'b1;
+	ei_vi.dei_en <= 1'b1;
+	@(posedge ei_vi.reconf_phase);
+	
+	// Drive undefined X values to all input signals
+	// of the reconfigurable module.
+	
+	dei_vi.clk              <= 'hx;
+	dei_vi.rstn             <= 'hx;
+	dei_vi.rc_reqn          <= 'hx;
+	dei_vi.p_crdy           <= 'hx;
+	dei_vi.p_cerr           <= 'hx;
+	dei_vi.c_prdy           <= 'hx;
+	dei_vi.c_data           <= 'hx;
 	
 endtask : lpfilter_ei::inject_to_reconfigurable_module
 
-task lpfilter_ei::inject_to_internal_signals ();
+task lpfilter_ei::inject_to_internal_signals (rsv_ei_trans tr);
 	// User-defined internal error injection
 	
-	ei_vi.iei_en = 1'b1;
-	ei_vi.iei_sig_type = "x";    // none, zero OR. x
-	ei_vi.iei_mem_type = "zero"; // none, zero OR. rand
+	// Pass non-default parameter to the "rsv_iei_hdl_state" API. 
+	//     iei_sig_type = none, zero OR. x   
+	//     iei_mem_type = none, zero OR. rand
+
+	logic [7:0] old_rmid = ei_vi.active_module_id;
+	logic [7:0] new_rmid = tr.rmid;
+	
+	`rsv_execute_tcl(interp, $psprintf("ReSim::rsv_iei_hdl_state %s rm%0d x zero",rr_inst,old_rmid))
 	
 endtask : lpfilter_ei::inject_to_internal_signals
 
-task lpfilter_ei::ei_reset_rm ();
+task lpfilter_ei::end_of_injecting_errors (rsv_ei_trans tr);
+	// Default error injection clean up routine
 	
-	// 1. drive default value to all input signals
-	dei_vi.clk   = 1'b1;
-	dei_vi.rstn  = 1'b1;
-	
-	dei_vi.p_crdy = 1'b0;
-	dei_vi.p_cerr = 1'b0;
-	dei_vi.c_prdy = 1'b0;
-	dei_vi.c_data = 32'h0;
-	
-	dei_vi.rc_reqn  = 1'b1;
-	
-	// 2. assert and release reset signal 
-	dei_vi.rstn = 1'b0; #1 dei_vi.rstn = 1'b1;
-	
-endtask : lpfilter_ei::ei_reset_rm
-
-task lpfilter_ei::ei_inject_to_rm (logic [31:0] ei_data);
-	
-	rsv_ei_trans tr;
-	realtime ei_time;
-	
-	// 1. spawn clocking thread 
-	fork : clock_2_rm_thread
-		forever begin
-			@(sei_vi.clk); dei_vi.clk = sei_vi.clk;
-		end
-	join_none
-	ei_time = $realtime;
-	
-	// 2. force the rm to read 1 data
-	repeat (4) @(posedge sei_vi.clk);
-	#1 dei_vi.c_prdy = 1'b1; dei_vi.c_data  = ei_data;
-	
-	@(posedge sei_vi.clk iff (dei_vi.c_crdy == 1'b1) );
-	#1 dei_vi.c_prdy = 1'b0; dei_vi.c_data  = 0;
-	
-	// 3. disable the clocking thread
-	repeat (4) @(posedge sei_vi.clk);
-	disable clock_2_rm_thread;
-	
-	// 4. finish and create a transaction
-	tr = new(ei_time, $psprintf("DEI: Random Injection, data= 0x%0h",ei_data), OVM_MEDIUM);
-	
-	`region_print_record_trans(get_parent(), tr);
-	`region_analysis_port_trans(get_parent(), tr.clone());
-
-endtask : lpfilter_ei::ei_inject_to_rm
+endtask : lpfilter_ei::end_of_injecting_errors
 
 `endif // LPFILTER_EI_SVH
 

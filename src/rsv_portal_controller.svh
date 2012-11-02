@@ -84,8 +84,8 @@ class rsv_portal_controller#(type IF=virtual interface null_if) extends rsv_port
 
 	virtual task run();
 		
-		pc_vi.active_module_id = 8'h0;
-		pc_vi.reconf_phase = 1'h0;
+		pc_vi.active_module_id <= 8'h0;
+		pc_vi.reconf_phase <= `PORTAL_RESUME_NORMAL_CONNECTION;
 
 	endtask : run
 		
@@ -104,10 +104,10 @@ task rsv_portal_controller::select_module_phase(rsv_cfg_trans tr);
 		WCFG: begin portal_do_wcfg(tr); end
 		RCFG: begin portal_do_rcfg(tr); end
 		ENDCFG: begin portal_do_endcfg(tr); end
-		default: begin end
+		default: begin /* Ignore other operations */ end
 	endcase
 
-endtask : select_module_phase
+endtask : rsv_portal_controller::select_module_phase
 
 task rsv_portal_controller::portal_do_wcfg(rsv_cfg_trans tr);
 
@@ -158,23 +158,14 @@ task rsv_portal_controller::portal_do_rcfg(rsv_cfg_trans tr);
 endtask : rsv_portal_controller::portal_do_rcfg
 
 task rsv_portal_controller::portal_do_endcfg(rsv_cfg_trans tr);
-
-	if (tr.rmid == 8'hff) begin
-		
-		// End of a mask SBT: do nothing significant here
-		
-		tr.name = $psprintf("RR%0d.mask",tr.rrid);
-		
-	end else begin
-		`check_error(tr.rmid==pc_vi.active_module_id, $psprintf("RMid(0x%0h) == 0x%0h",tr.rmid,pc_vi.active_module_id))
-		
-		// Upon receiving a "endcfg" transaction, the portal is switched back 
-		// to NORMAL phase in which the static part is connected to the current active
-		// reconfigurable module. 
-		
-		pc_vi.reconf_phase <= `PORTAL_RESUME_NORMAL_CONNECTION;
-		tr.name = $psprintf("%s.rm%0d(%s)",rr_inst,tr.rmid,pc_vi.module_names[tr.rmid]);
-	end
+	
+	// Upon receiving a "endcfg" transaction, the portal is switched back 
+	// to NORMAL phase in which the static part is connected to the current active
+	// reconfigurable module. 
+	
+	pc_vi.reconf_phase <= `PORTAL_RESUME_NORMAL_CONNECTION;
+	tr.name = $psprintf("%s.rm%0d(%s)",rr_inst,pc_vi.active_module_id,pc_vi.module_names[pc_vi.active_module_id]);
+	
 	
 endtask : rsv_portal_controller::portal_do_endcfg
 	

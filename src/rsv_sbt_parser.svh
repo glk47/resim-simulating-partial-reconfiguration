@@ -91,29 +91,29 @@ class rsv_sbt_parser#(int NUM_RR = 1) extends rsv_configuration_parser_base#(NUM
 	`define sbt_t1h_wc(sbt_)   sbt_[10:0]
 	`define sbt_t2h_wc(sbt_)   sbt_[26:0]
 	
-	local logic [31:0] m_regs[32]; // configuration registers
+	protected logic [31:0] m_regs[32]; // configuration registers
 
-	local bit m_is_sync = 0;
-	local int unsigned m_sbt_op;
-	local int unsigned m_sbt_wc;
-	local int unsigned m_sbt_addr;
-	local realtime m_t12h_time;
+	protected bit m_is_sync = 0;
+	protected int unsigned m_sbt_op;
+	protected int unsigned m_sbt_wc;
+	protected int unsigned m_sbt_addr;
+	protected realtime m_t12h_time;
 
-	extern task icap_process_packet_header();
-	extern task icap_process_1_packet_data();
-	extern task icap_process_n_packet_data();
+	extern protected task icap_process_packet_header();
+	extern protected task icap_process_1_packet_data();
+	extern protected task icap_process_n_packet_data();
 
-	extern task icap_wr_cmd(realtime t);
-	extern task icap_wr_fdri(realtime t, int unsigned i, logic [31:0] d_);
-	extern task icap_rd_fdro(realtime t, int unsigned i, output logic [31:0] d_);
+	extern protected task icap_wr_cmd(realtime t);
+	extern protected task icap_wr_fdri(realtime t, int unsigned i, logic [31:0] d_);
+	extern protected task icap_rd_fdro(realtime t, int unsigned i, output logic [31:0] d_);
 	
-	extern task icap_start_of_configuration(realtime t);
-	extern task icap_end_of_configuration(realtime t);
+	extern protected task icap_start_of_configuration(realtime t);
+	extern protected task icap_end_of_configuration(realtime t);
 	
-	extern task icap_cmd_sync(realtime t);
-	extern task icap_cmd_dsync(realtime t);
-	extern task icap_cmd_gcapture(realtime t);
-	extern task icap_cmd_grestore(realtime t);
+	extern protected task icap_cmd_sync(realtime t);
+	extern protected task icap_cmd_dsync(realtime t);
+	extern protected task icap_cmd_gcapture(realtime t);
+	extern protected task icap_cmd_grestore(realtime t);
 	
 	// The run task converts raw cdata transactions from the configuration
 	// port to high-level sbt transactions to the reconfigurable regions
@@ -149,7 +149,7 @@ task rsv_sbt_parser::icap_process_packet_header();
 	rsv_cdata_trans tr;
 	
 	get_p.get(tr);
-	`check_error(tr.op==WSBT, $psprintf("SBT_ERROR: Expecting Configuration SBT"))
+	`check_error(tr.op==WCDATA, $psprintf("SBT_ERROR: Expecting Configuration SBT"))
 	
 	if ((m_is_sync == 0)||(tr.cdata == 32'haa995566)||(tr.cdata == 32'hffffffff)) begin
 		m_sbt_wc = 0;
@@ -185,24 +185,23 @@ task rsv_sbt_parser::icap_process_1_packet_data();
 	rsv_cdata_trans tr;
 	
 	// For single word packet, do not support reading/writing FDRI & FDRO
-	// The granularity of reading/writing configuration data is a frame
+	// The single packet processing task can only be used to read/write ICAP cfg registers
 	
 	`check_error(!((m_sbt_addr==IREG_FDRI)||(m_sbt_addr== IREG_FDRO)),
 		$psprintf("SBT_ERROR: Does not support 1 word packet for FDRI/FDRO"))
 	
-	// ICAP Artifact do not have pipeline, each SBT word is directly written to the 
-	// configuration port and is parsed consequently. Therefore, user can not
-	// insert unexpected NOP packets into the SBT. 
+	// The ICAP artifact do not have pipeline. Each SBT word is directly parsed by the 
+	// SBT_PARSER. Therefore, user can not insert unexpected NOP packets into the SBT. 
 
 	get_p.get(tr);
 	
 	case (m_sbt_op)
 		IOP_RD: begin 
-			`check_error(tr.op==RSBT, $psprintf("SBT_ERROR: Expecting Readback SBT"))
+			`check_error(tr.op==RCDATA, $psprintf("SBT_ERROR: Expecting Readback SBT"))
 			tr.cdata=m_regs[m_sbt_addr];
 		end
 		IOP_WR: begin 
-			`check_error(tr.op==WSBT, $psprintf("SBT_ERROR: Expecting Configuration SBT"))
+			`check_error(tr.op==WCDATA, $psprintf("SBT_ERROR: Expecting Configuration SBT"))
 			m_regs[m_sbt_addr] = tr.cdata;
 			if (m_sbt_addr == IREG_CMD) icap_wr_cmd(m_t12h_time);
 		end
@@ -217,7 +216,7 @@ task rsv_sbt_parser::icap_process_n_packet_data();
 	rsv_cdata_trans tr;
 
 	// For multiple word packet data, only support FDRI & FDRO
-	// This multiple packet processing task is specifically designed for 
+	// This multiple packet processing task can only be used for 
 	// writing/reading configuration data
 	
 	`check_error((m_sbt_addr==IREG_FDRI)||(m_sbt_addr== IREG_FDRO),
@@ -233,14 +232,14 @@ task rsv_sbt_parser::icap_process_n_packet_data();
 		
 		case (m_sbt_op)
 			IOP_RD: begin
-				`check_error(tr.op==RSBT, $psprintf("SBT_ERROR: Expecting Readback SBT"))
+				`check_error(tr.op==RCDATA, $psprintf("SBT_ERROR: Expecting Readback SBT"))
 				case (m_sbt_addr) 
 					IREG_FDRO: begin icap_rd_fdro(tr.event_time,i,tr.cdata); end
 					default: begin /* Read FDRI */ end
 				endcase
 			end
 			IOP_WR: begin
-				`check_error(tr.op==WSBT, $psprintf("SBT_ERROR: Expecting Configuration SBT"))
+				`check_error(tr.op==WCDATA, $psprintf("SBT_ERROR: Expecting Configuration SBT"))
 				case (m_sbt_addr) 
 					IREG_FDRI: begin icap_wr_fdri(tr.event_time,i,tr.cdata); end
 					default: begin /* Write FDRO */ end
@@ -290,12 +289,10 @@ task rsv_sbt_parser::icap_wr_fdri(realtime t, int unsigned i, logic [31:0] d_);
 	
 	put_p[rrid].put(tr); @tr.done;
 	
-	// When done, check whether the frame address has reached 
-	// the boundary of the current reconfigurable region (tr.reach_boundary == 1'b1).
-	// 
-	// ReSim do not support automatic updating the rrid to the next region
-	// because on real FPGAs, the frame addresses are, in general, not continuous
-	// across reconfigurable regions.
+	// When done, check whether the frame address has reached the boundary of 
+	// the current reconfigurable region (tr.reach_boundary == 1'b1).
+	// ReSim do not wrap the rrid to the next region. In general, the frame 
+	// are not continuous across RRs.
 	
 	if (tr.reach_boundary) begin
 		`print_info("ReSim", "SBT_INFO: End of current Reconfigurable Region", OVM_HIGH)
@@ -322,12 +319,10 @@ task rsv_sbt_parser::icap_rd_fdro(realtime t, int unsigned i, output logic [31:0
 	
 	put_p[rrid].put(tr); @tr.done; d_ = tr.cdata;
 	
-	// When done, check whether the frame address has reached 
-	// the boundary of the current reconfigurable region (tr.reach_boundary == 1'b1).
-	// 
-	// ReSim do not support automatic updating the rrid to the next region
-	// because on real FPGAs, the frame addresses are, in general, not continuous
-	// across reconfigurable regions.
+	// When done, check whether the frame address has reached the boundary of 
+	// the current reconfigurable region (tr.reach_boundary == 1'b1).
+	// ReSim do not wrap the rrid to the next region. In general, the frame 
+	// are not continuous across RRs.
 	
 	if (tr.reach_boundary) begin
 		`print_info("ReSim", "SBT_INFO: End of current Reconfigurable Region", OVM_HIGH)
@@ -345,7 +340,7 @@ endtask : rsv_sbt_parser::icap_rd_fdro
 task rsv_sbt_parser::icap_cmd_sync(realtime t);
 
 	for (int i = 0; i<NUM_RR; i++) begin
-		rsv_sbt_trans tr = new(t, SYNC);
+		rsv_sbt_trans tr = new(t, i, 8'hff, SYNC);
 		put_p[i].put(tr);
 	end
 	m_is_sync = 1; 
@@ -355,7 +350,7 @@ endtask : rsv_sbt_parser::icap_cmd_sync
 task rsv_sbt_parser::icap_cmd_dsync(realtime t);
 	
 	for (int i = 0; i<NUM_RR; i++) begin
-		rsv_sbt_trans tr = new(t, DESYNC);
+		rsv_sbt_trans tr = new(t, i, 8'hff, DESYNC);
 		put_p[i].put(tr);
 	end
 	m_is_sync = 0; 
@@ -365,50 +360,69 @@ endtask : rsv_sbt_parser::icap_cmd_dsync
 task rsv_sbt_parser::icap_start_of_configuration(realtime t);
 
 	// This task represents the start of "DURING phase" of a reconfiguration
-	// process. In ReSim, it inform the portal controller to (1) swap in the 
-	// new module and, (2) start error injection. 
+	// process. In ReSim, it informs (1) the portal controller to perform
+	// module swapping and, (2) the error injector to start error injection. 
 	
 	logic [7:0] rrid = m_regs[IREG_FAR][31:24];
 	logic [7:0] rmid = m_regs[IREG_FAR][23:16];
-	rsv_cfg_trans tr;
+	logic [15:0] mna = m_regs[IREG_FAR][15:0];
+	rsv_cfg_trans tr_0;
+	rsv_ei_trans tr_1;
 	
 	`check_error(rrid<=NUM_RR, $psprintf("RRid(0x%0h) <= 0x%0h",rrid,NUM_RR))
 	
 	case (m_sbt_op)
-		IOP_RD: begin `check_error(m_regs[IREG_CMD][4:0]==ICMD_RCFG,"") tr = new(t, rrid, rmid, RCFG, OVM_MEDIUM); end
-		IOP_WR: begin `check_error(m_regs[IREG_CMD][4:0]==ICMD_WCFG,"") tr = new(t, rrid, rmid, WCFG, OVM_MEDIUM); end
+		IOP_RD: begin 
+			`check_error(m_regs[IREG_CMD][4:0]==ICMD_RCFG,"")
+			tr_0 = new(t, rrid, rmid, RCFG, OVM_MEDIUM);
+			tr_1 = new(t, rrid, rmid, RCFG, OVM_FULL);
+		end
+		IOP_WR: begin 
+			`check_error(m_regs[IREG_CMD][4:0]==ICMD_WCFG,"")
+			tr_0 = new(t, rrid, rmid, WCFG, OVM_MEDIUM);
+			tr_1 = new(t, rrid, rmid, WCFG, OVM_FULL);
+		end
 		default: begin /* IOP_NOP, IOP_RESERVED */ `check_error(0,"") end
 	endcase
 	
-	put_p[rrid].put(tr); @tr.done;
+	// Push the transaction to the target RR and wait until done
+	
+	fork
+		begin put_p[rrid].put(tr_0); @tr_0.done; end
+		begin put_p[rrid].put(tr_1); @tr_1.done; end
+	join
 	
 endtask : rsv_sbt_parser::icap_start_of_configuration
 	
 task rsv_sbt_parser::icap_end_of_configuration(realtime t);
 
-	// This task inform the portal controller the end of "DURING phase" so
-	// as to end error injection. Meanwhile, it also informs the the state 
-	// spy to check the signature of the spy memory. 
-	// 
-	// Note, these transactions/commands/operations do not exist on real
-	// FPGAs, so they are not visualized. 
+	// This task represents end start of "DURING phase" of a reconfiguration
+	// process. In ReSim, it informs (1) the portal controller to resume
+	// normal connection, (2) the error injector to stop error injection and,
+	// (3) the state spy to check module signature. 
 	
 	logic [7:0] rrid = m_regs[IREG_FAR][31:24];
-	logic [7:0] rmid = m_regs[IREG_FAR][23:16];
-	rsv_spy_trans tr_0 = new(t, rrid, rmid, 0, 0, 0, ENDSPY);
-	rsv_cfg_trans tr_1 = new(t, rrid, rmid, ENDCFG);
+	
+	rsv_cfg_trans tr_0 = new(t, rrid, 8'hff, ENDCFG, OVM_FULL);
+	rsv_ei_trans tr_1 = new(t, rrid, 8'hff, ENDCFG, OVM_FULL);
+	rsv_spy_trans tr_2 = new(t, rrid, 8'hff, 0, 0, 0, ENDCFG, OVM_FULL);
 	
 	`check_error(rrid<=NUM_RR, $psprintf("RRid(0x%0h) <= 0x%0h",rrid,NUM_RR))
 	
-	tr_0.sensitivity_level = OVM_FULL; put_p[rrid].put(tr_0); @tr_0.done;
-	tr_1.sensitivity_level = OVM_FULL; put_p[rrid].put(tr_1); @tr_1.done;
+	// Push the transaction to the target RR and wait until done
+	
+	fork
+		begin put_p[rrid].put(tr_0); @tr_0.done; end
+		begin put_p[rrid].put(tr_1); @tr_1.done; end
+		begin put_p[rrid].put(tr_2); @tr_2.done; end
+	join
 	
 endtask : rsv_sbt_parser::icap_end_of_configuration
 
 task rsv_sbt_parser::icap_cmd_gcapture(realtime t);
 
 	for (int i = 0; i<NUM_RR; i++) begin 
-		rsv_spy_trans tr = new(t, i, 0, 0, 0, 0, GCAPTURE, OVM_MEDIUM);
+		rsv_spy_trans tr = new(t, i, 8'hff, 0, 0, 0, GCAPTURE, OVM_MEDIUM);
 		put_p[i].put(tr); @tr.done;
 	end
 	
@@ -417,7 +431,7 @@ endtask : rsv_sbt_parser::icap_cmd_gcapture
 task rsv_sbt_parser::icap_cmd_grestore(realtime t);
 	
 	for (int i = 0; i<NUM_RR; i++) begin 
-		rsv_spy_trans tr = new(t, i, 0, 0, 0, 0, GRESTORE, OVM_MEDIUM);
+		rsv_spy_trans tr = new(t, i, 8'hff, 0, 0, 0, GRESTORE, OVM_MEDIUM);
 		put_p[i].put(tr); @tr.done;
 	end
 	

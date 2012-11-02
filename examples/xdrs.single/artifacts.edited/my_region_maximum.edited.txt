@@ -8,7 +8,7 @@
 //     bitwith = 32. Note that in sll file, signal_path start from the top of the 
 //     reconfigurable region, thus the full path of the data1 signal is:
 //     
-//         $HIERACHICAL_PATH_TO_RECONFIGURABLE_REGION/data1. 
+//         $HIERACHICAL_PATH_TO_RECONFIGURABLE_REGION/rm0/data1. 
 //
 
 0x00000000 32 32 data1

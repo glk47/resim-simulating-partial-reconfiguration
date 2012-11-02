@@ -49,43 +49,55 @@ class math_ei extends rsv_error_injector#(virtual interface math_if);
 	//
 	//     x, all-0, all-1, negate, random, no-change
 
-	extern virtual protected task inject_to_static_module();
-	extern virtual protected task inject_to_reconfigurable_module();
-	extern virtual protected task inject_to_internal_signals();
+	extern virtual protected task inject_to_static_module(rsv_ei_trans tr);
+	extern virtual protected task inject_to_reconfigurable_module(rsv_ei_trans tr);
+	extern virtual protected task inject_to_internal_signals(rsv_ei_trans tr);
+	extern virtual protected task end_of_injecting_errors(rsv_ei_trans tr);
 
 endclass : math_ei
 
-task math_ei::inject_to_static_module ();
-	rsv_ei_trans tr;
-	realtime ei_time;
+task math_ei::inject_to_static_module (rsv_ei_trans tr);
+	// User-defined static error injection
 
-	ei_vi.sei_en = 1'b1;
-	
+	// Enable the static error injection and wait until the 
+	// ei_vi.reconf_phase signal is asserted 
+
+	ei_vi.sei_en <= 1'b1;
 	@(posedge ei_vi.reconf_phase);
-
-	sei_vi.result           = $urandom;
-	sei_vi.statistic        = $urandom;
-
-	tr = new($realtime, "Starting Ramdom Injection", OVM_MEDIUM);
 	
-	`region_print_record_trans(get_parent(), tr);
-	`region_analysis_port_trans(get_parent(), tr.clone());
+	// Drive undefined X values to all output signals
+	// of the reconfigurable module.
+
+	sei_vi.result           <= $urandom;
+	sei_vi.statistic        <= $urandom;
 
 endtask : math_ei::inject_to_static_module
 
-task math_ei::inject_to_reconfigurable_module ();
+task math_ei::inject_to_reconfigurable_module (rsv_ei_trans tr);
+	// User-defined dynamic error injection
 
-	ei_vi.dei_en = 1'b0;
+	ei_vi.dei_en <= 1'b0;
 
 endtask : math_ei::inject_to_reconfigurable_module
 
-task math_ei::inject_to_internal_signals ();
+task math_ei::inject_to_internal_signals (rsv_ei_trans tr);
+	// User-defined internal error injection
+	
+	// Pass non-default parameter to the "rsv_iei_hdl_state" API. 
+	//     iei_sig_type = none, zero OR. x   
+	//     iei_mem_type = none, zero OR. rand
 
-	ei_vi.iei_en = 1'b1;
-	ei_vi.iei_sig_type = "x";    // none, zero OR. x
-	ei_vi.iei_mem_type = "rand"; // none, zero OR. rand
+	logic [7:0] old_rmid = ei_vi.active_module_id;
+	logic [7:0] new_rmid = tr.rmid;
+	
+	`rsv_execute_tcl(interp, $psprintf("ReSim::rsv_iei_hdl_state %s rm%0d x rand",rr_inst,old_rmid))
 	
 endtask : math_ei::inject_to_internal_signals
+
+task math_ei::end_of_injecting_errors (rsv_ei_trans tr);
+	// Default error injection clean up routine
+	
+endtask : math_ei::end_of_injecting_errors
 
 `endif // MATH_EI_SVH
 

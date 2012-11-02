@@ -77,39 +77,79 @@ class rsv_error_injector#(type IF=virtual interface null_if) extends rsv_error_i
 	// run(), member tasks & member variables
 	//---------------------------------------------------------------------
 	
-	// The error injector is typically re-defined by users. Users should 
-	// initialize the error sources in the run task, and define error injection
-	// tasks tailer to design-/test- specific needs. 
-	//
-	// For example, the error sources can be undefined-x-values, stuck-to-0,
-	// stuck-to-1, random-signal-value, or some design-specific sequence of 
-	// signal transition. 
+	protected chandle interp;
+	
+	extern virtual task inject_errors(rsv_ei_trans tr);
+	extern virtual protected task inject_to_static_module(rsv_ei_trans tr);
+	extern virtual protected task inject_to_reconfigurable_module(rsv_ei_trans tr);
+	extern virtual protected task inject_to_internal_signals(rsv_ei_trans tr);
+	extern virtual protected task end_of_injecting_errors(rsv_ei_trans tr);
 	
 	virtual task run();
-		fork
-			inject_to_static_module();
-			inject_to_reconfigurable_module();
-			inject_to_internal_signals();
-		join_none
-	endtask : run
-
-	virtual protected task inject_to_static_module();
-		`ovm_warning("ReSim", "Using the default error injector")
-	endtask : inject_to_static_module
-
-	virtual protected task inject_to_reconfigurable_module();
-		`ovm_warning("ReSim", "Using the default error injector")
-	endtask : inject_to_reconfigurable_module
-	
-	virtual protected task inject_to_internal_signals();
-		`ovm_warning("ReSim", "Using the default error injector")
-	
-		ei_vi.iei_en = 1'b0;
-		ei_vi.iei_sig_type = "none"; // none, zero OR. x
-		ei_vi.iei_mem_type = "none"; // none, zero OR. rand
+		interp = mti_Interp();
 		
-	endtask : inject_to_internal_signals
+		ei_vi.sei_en <= 1'b0;
+		ei_vi.dei_en <= 1'b0;
+		
+	endtask : run
 	
 endclass : rsv_error_injector
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+task rsv_error_injector::inject_errors(rsv_ei_trans tr);
+	
+	// At the beginning of error injection, this task calls the inject_to_static_module(), 
+	// inject_to_reconfigurable_module() and inject_to_internal_signals() tasks to 
+	// perform the error injection. At the end of error injection, this task calls 
+	// the end_of_injecting_errors() task to clean up error injection. 
+	// 
+	// The error injector is typically re-defined by users. Users should override the 
+	// three tasks for design-/test- specific error sources. The error sources can be 
+	// undefined-x-values, stuck-to-0, stuck-to-1, random-signal-value, or some 
+	// design-specific sequence of signal transition. 
+	
+	case (tr.op)
+		WCFG: begin 
+			if ((tr.rmid!=ei_vi.active_module_id)&&(tr.rmid!=8'hff)) begin
+				fork
+					inject_to_static_module(tr);
+					inject_to_reconfigurable_module(tr);
+					inject_to_internal_signals(tr);
+				join_none
+				tr.error_msg = "Starting Error Injection ...";
+			end else begin
+				tr.error_msg = "Error Injection not required ...";
+			end
+			
+		end
+		RCFG: begin tr.error_msg = "Error Injection not required ..."; end
+		ENDCFG: begin 
+			fork
+				end_of_injecting_errors(tr); 
+			join_none
+			tr.error_msg = "End of Error Injection ..."; 
+		end
+		default: begin /* Ignore other operations */ end
+	endcase
+	
+endtask : rsv_error_injector::inject_errors
+
+task rsv_error_injector::inject_to_static_module(rsv_ei_trans tr);
+	`ovm_warning("ReSim", "Using the default error injector")
+endtask : rsv_error_injector::inject_to_static_module
+
+task rsv_error_injector::inject_to_reconfigurable_module(rsv_ei_trans tr);
+	`ovm_warning("ReSim", "Using the default error injector")
+endtask : rsv_error_injector::inject_to_reconfigurable_module
+
+task rsv_error_injector::inject_to_internal_signals(rsv_ei_trans tr);
+	`ovm_warning("ReSim", "Using the default error injector")
+endtask : rsv_error_injector::inject_to_internal_signals
+
+task rsv_error_injector::end_of_injecting_errors(rsv_ei_trans tr);
+	`ovm_warning("ReSim", "Using the default error injector")
+endtask : rsv_error_injector::end_of_injecting_errors
 
 `endif // RSV_ERROR_INJECTOR_SVH

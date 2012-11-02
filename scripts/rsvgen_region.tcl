@@ -45,111 +45,89 @@ module $rr_
 	`define rsv_select_phase_out(sig_)                  \\
 	always @(*) begin case (pif.reconf_phase)           \\
 		8'h0: begin sta_rif.sig_ = rm_rif.sig_; end     \\
-		8'h1: begin if (eif.sei_en) sta_rif.sig_ = sei_rif.sig_; end \\
+		8'h1: begin if (eif.sei_en) sta_rif.sig_ = sei_rif.sig_; if (eif.dei_en) dei_rif.sig_ = rm_rif.sig_; end \\
 		default: begin sta_rif.sig_ = rm_rif.sig_; end  \\
 	endcase end
 	
 	`define rsv_select_phase_in(sig_)                   \\
 	always @(*) begin case (pif.reconf_phase)           \\
 		8'h0: begin rm_rif.sig_ = sta_rif.sig_; end     \\
-		8'h1: begin if (eif.dei_en) rm_rif.sig_ = dei_rif.sig_; end \\
+		8'h1: begin if (eif.dei_en) rm_rif.sig_ = dei_rif.sig_; if (eif.dei_en) sei_rif.sig_ = sta_rif.sig_; end \\
 		default: begin rm_rif.sig_ = sta_rif.sig_; end  \\
 	endcase end
 	
 //-------------------------------------------------------------------
-// Portal
-//-------------------------------------------------------------------
-	
-	// Portal interface.
-	//
-	// The portal selects the current active module
-	// and the reconfiguration phase. The source of portal
-	// selection comes from the class-based environment
-
-	portal_if #(`NUM_RM) pif();
-	
-	chandle interp;
-	initial begin
-		interp = mti_Interp();
-		
-[rsv_print_region $rr_ rstate \n $id_]
-
-[rsv_print_region $rr_ pif \n]
-
-	end
-
-//-------------------------------------------------------------------
 // Selecting the active reconfigurable module
 //-------------------------------------------------------------------
 
-	// Region interface(s) of the dynamic side:
+	// Portal interface:
 	//
-	// The region interface (dynamic side) comes from the parallel connected 
-	// reconfigurable modules. Only one module is active at a time. 
+	// The portal selects the current active module and the reconfiguration 
+	// phase. The source of portal selection is from the class-based environment
+
+	portal_if #(`NUM_RM) pif();
+	
+	initial begin
+[rsv_print_region $rr_ pif \n]
+
+	end
+	
+	// Selecting IO signals of the dynamic side:
+	//
+	// The IO signals of parallel connected reconfigurable modules 
+	// (dynamic side) are interleaved and only one set of IO signals 
+	// is active at a time. The selection mimics the swapping of modules 
+	// and is controlled by the portal interface, which is in turn 
+	// driven by the class-based environment. 
 
 [rsv_print_region $rr_ rif \n]
 	$ri_    rm_rif();  // current active module
 
-	// Selecting the current active module so as to mimic the swapping of 
-	// modules. This selection is controlled by the portal interface, 
-	// which is in turn driven by the class-based environment
-
 [rsv_print_portmap $ri_ slrm \n]
 
-//-------------------------------------------------------------------
-// Selecting the reconfiguration phase
-//-------------------------------------------------------------------
-
-	// Region interface of the static side:
+	// Connecting IO signals of the static side:
 	//
-	// The region interface (static side) comes from the static part of 
-	// user logic. 
+	// The IO signals of the static part of the user logic (static side)
+	// are connected to the reconfigurable modules during normal opertion, 
+	// or to the error sources during partial reconfiguration. 
 
 	$ri_    sta_rif();
 
 [rsv_print_portmap $ri_ assg \n]
 
-	// Region interface for error injection:
+//-------------------------------------------------------------------
+// Selecting the reconfiguration phase
+//-------------------------------------------------------------------
+
+	// Error interface: 
 	//
-	// Error injection mimics the un-defined output to both static & dynamic 
-	// sides DURING reconfiguration. Errors injected towoards the static 
-	// side stress tests the isolation mechanism of user logic; errors
-	// injected to the dynamic side mimics the undifined state of reconfigurable
-	// modules, and assists the testing of the initialization mechanism of 
-	// user logic. The source of the error comes from the class-based environment
+	// During reconfiguration, errors are injected to both static region (SEI) 
+	// and the active reconfigurable module in the dynamic region (DEI). The 
+	// selection of reconfiguration phase is controlled by the portal interface 
+	// whereas the error interface enables/disables the error sources. Both 
+	// interfaces are driven by the class-based environment
 
-	$ri_    sei_rif(); // error injection to the static side
-	$ri_    dei_rif(); // error injection to the dynamic side
+	error_if eif();
 
-	error_if    eif(); // error injection control interface
-
-	// Selecting reconfiguration phase:
-	//
-	// Selecting between the current active module or the error
-	// injector, depending on the current reconfiguration phase.
-	// During reconfiguration, errors are injected to both static
-	// region (SEI) and the active module in the dynamic region (DEI). 
-	// 
-	// The selection of reconfiguration phase is controlled by 
-	// the portal interface, which is in turn driven by the 
-	// class-based artifacts.
-
-[rsv_print_portmap $ri_ slei \n]
-	
 	always @(*) begin
 		eif.active_module_id   = pif.active_module_id;
 		eif.reconf_phase       = pif.reconf_phase;
 	end
-
-	// Internal Error Injection (IEI): 
-	//
-	// When a module is swapped out, the all internal signals of the module
-	// are injected with errors. The injection is implemented by the ReSim
-	// Simulator Kernel Thread (SKT), which is invoked here
 	
-[rsv_print_region $rr_ ieia \n]
-
-[rsv_print_region $rr_ ieib \n]
+	// Selecting the error sources:
+	//
+	// Error injection mimics the un-defined output to both static & dynamic 
+	// sides DURING reconfiguration. Errors injected towoards the static 
+	// side stress tests the isolation mechanism of user logic; errors
+	// injected to the dynamic side mimics the undifined state of 
+	// reconfigurable modules, and assists the testing of the initialization 
+	// mechanism of the user logic. The source of the error comes from the 
+	// class-based environment
+	
+	$ri_    sei_rif(); // error source to the static side
+	$ri_    dei_rif(); // error source to the dynamic side
+	
+[rsv_print_portmap $ri_ slei \n]
 
 //-------------------------------------------------------------------
 // State saving/restoring
@@ -162,10 +140,17 @@ module $rr_
 	// memory, GRESTORE: configuration memory -> HDL).
 	// 
 	// The configuration data is stored in the state interface. 
-	// and is maintained by the state_spy artifacts of the class-
-	// based part. 
+	// and is maintained by the state_spy artifacts of the class-based part. 
 	
 	state_if #(`NUM_FR)  rm_sif();
+	
+	chandle interp;
+	initial begin
+		interp = mti_Interp();
+		
+[rsv_print_region $rr_ rstate \n $id_]
+
+	end
 	
 	always @(*) begin
 		rm_sif.active_module_id   = pif.active_module_id;

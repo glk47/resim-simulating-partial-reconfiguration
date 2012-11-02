@@ -98,7 +98,7 @@ task rsv_icap_virtex::rsv_cdata_thread();
 
 	forever begin
 		@(posedge iif.cclk iff ((iif.ccs_n === 0) && (iif.cwe_n==1'b0) && (iif.cbusy==1'b0)));
-		tr = new($realtime, WSBT, iif.cdata);
+		tr = new($realtime, WCDATA, iif.cdata);
 		
 		@(negedge iif.cclk); put_p.put(tr); @tr.done;
 	end
@@ -111,7 +111,7 @@ task rsv_icap_virtex::rsv_readback_thread();
 	iif.cdata_rb <= 32'h0;
 	forever begin
 		@(posedge iif.cclk iff ((iif.ccs_n === 0) && (iif.cwe_n==1'b1) && (iif.cbusy==1'b0)));
-		tr = new($realtime, RSBT, 32'h0);
+		tr = new($realtime, RCDATA, 32'h0);
 		
 		@(negedge iif.cclk); put_p.put(tr); @tr.done;
 		iif.cdata_rb <= tr.cdata;

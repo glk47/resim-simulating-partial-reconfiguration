@@ -67,7 +67,7 @@ interface error_if ();
 
 	// The error_if is under the control of portal_if
 	
-	logic    [7:0]   active_module_id   ; // ei: in   ---- region: out\
+	logic    [7:0]   active_module_id   ; // ei: in   ---- region: out
 	logic            reconf_phase       ; // ei: in   ---- region: out
 
 	// The error_if of a reconfigurable region enables or disables
@@ -75,10 +75,6 @@ interface error_if ();
 	
 	logic            sei_en          ; // ei: out ---- region: in (injecting io signals to the static region)
 	logic            dei_en          ; // ei: out ---- region: in (injecting io signals to the dynamic region)
-	
-	logic            iei_en          ; // ei: out ---- SKT: in (injecting module internal signals/memory)
-	string           iei_sig_type    ; // ei: out ---- SKT: in (injection type: none, zero OR. x)
-	string           iei_mem_type    ; // ei: out ---- SKT: in (injection type: none, zero OR. rand)
 
 endinterface: error_if
 
@@ -89,25 +85,21 @@ interface state_if #(parameter NUM = 1)();
 	logic    [7:0]   active_module_id   ; // spy: in   ---- region: out
 	logic            reconf_phase       ; // spy: in   ---- region: out
 	
+	// Spy memory
+	//
 	// The state_if of a reconfigurable region is the place holder
 	// for the spy memory, which stores the configuration data of the
 	// CURRENT ACTIVE module.
-
-	logic            gcapture    ;     // spy: out ---- region: in
-	logic            grestore    ;     // spy: out ---- region: in
-	logic            msk         ;     // spy: out ---- region: in (spy memory mask)
-
-	// Spy memory
-	//
-	// Each RR has NUM frames and each frame has 4 32-bit words. Thus,
-	//     word_address = frame_address*4 + word_offset.
+	// 
+	// In the spy memory, each RR has NUM frames and each frame has 4 32-bit words. Thus,
+	//     word_address_in_spy_memory = frame_address*4 + word_offset.
 	//
 	// For one frame, the 0th word is to storage configuration data for "logic"
 	// and word 1-3 is to store the "state data". state_if also hold a "signature"
 	// field, which is the XORed value of all words with offset=0. This signature
-	// is checked every time the spy memory is read or written.
+	// is checked at the end of "DURING" reconfiguration phase. 
 
-	logic    [31:0]  mem[4*NUM]  ;     // spy: in/out ---- region: in/out (spy memory data)
+	logic    [31:0]  mem[4*NUM]  ;     // spy: in/out ---- region: in/out (configuration data)
 	logic    [31:0]  signature   ;     // spy: in  ---- region: out
 
 	// Spy buffer
@@ -116,9 +108,9 @@ interface state_if #(parameter NUM = 1)();
 	// specified in the .sll file. It is used to assembly the state data from
 	// HDL signal values OR extract signal values from the state data.
 	//
-	// ReSim assumes that the average bitwidth of HDL signals are 8, thus on average,
-	// each frame can store 16 signals. Users should adjust the frame size so as to
-	// have enough space to hold HDL signals in their design.
+	// WAR: ReSim assumes that the average bitwidth of HDL signals are 8, thus 
+	// each frame can store 16 signals. Users should allocate enough number of frames
+	// so as to have enough space to store all HDL signals of interest.
 
 	string           name[16*NUM] ;    // spy: in/out ---- SKT: in/out (hdl signal name)
 	logic    [95:0]  value[16*NUM];    // spy: in/out ---- SKT: in/out (hdl signal value)

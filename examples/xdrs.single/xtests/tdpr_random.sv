@@ -57,15 +57,3 @@
 	end
 	
 `endif
-
-/*
-
-# ----------------------------------------------------------------
-# OVM-2.1.1
-# (C) 2007-2009 Mentor Graphics Corporation
-# (C) 2007-2009 Cadence Design Systems, Inc.
-# ----------------------------------------------------------------
-# OVM_INFO @ 0: reporter [XDRS] Running test: TEST_DPR_RANDOM
-# OVM_INFO @ 1: reporter [RNTST] Running test ...
-
-*/

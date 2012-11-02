@@ -47,6 +47,10 @@
 		#5_000
 
 		forever begin
+			
+			// The consumer thread has "long" delays and the
+			// reconfigurable module need to retry the operation. 
+			
 			#(4*`ONE_CYCLE_DELAY) pc_0.consume_data(data,1);
 		end
 
@@ -76,15 +80,3 @@
 	end
 	
 `endif
-
-/*
-
-# ----------------------------------------------------------------
-# OVM-2.1.1
-# (C) 2007-2009 Mentor Graphics Corporation
-# (C) 2007-2009 Cadence Design Systems, Inc.
-# ----------------------------------------------------------------
-# OVM_INFO @ 0: reporter [XDRS] Running test: TEST_TDPR_RETRY
-# OVM_INFO @ 1: reporter [RNTST] Running test ...
-
-*/

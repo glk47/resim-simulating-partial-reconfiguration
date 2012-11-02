@@ -77,8 +77,8 @@ class rsv_state_spy#(type IF=virtual interface null_if) extends rsv_state_spy_ba
 	
 	`define num_of_hdl_signals (16*num_fr)
 	
-	local logic m_gCapRes_msk = 0; 
-	local chandle interp;
+	protected logic m_gCapRes_msk = 0; 
+	protected chandle interp;
 	
 	extern virtual task save_restore_state(rsv_spy_trans tr);
 	extern virtual protected task state_spy_read(rsv_spy_trans tr);
@@ -89,11 +89,6 @@ class rsv_state_spy#(type IF=virtual interface null_if) extends rsv_state_spy_ba
 	
 	virtual task run();
 		interp = mti_Interp();
-		
-		spy_vi.gcapture = 1'b0;
-		spy_vi.grestore = 1'b0;
-		spy_vi.msk = 1'b0;
-
 	endtask : run
 
 endclass : rsv_state_spy
@@ -114,13 +109,13 @@ task rsv_state_spy::save_restore_state(rsv_spy_trans tr);
 	case (tr.op)
 		WSPY: begin state_spy_write(tr); end
 		RSPY: begin state_spy_read(tr); end
-		ENDSPY: begin state_spy_check_signature(tr); end
+		ENDCFG: begin state_spy_check_signature(tr); end
 		GCAPTURE: begin if (m_gCapRes_msk==1'b0) state_spy_gcapture(tr); end
 		GRESTORE: begin if (m_gCapRes_msk==1'b0) state_spy_grestore(tr); end
-		default: begin end
+		default: begin /* Ignore other operations */ end
 	endcase
 
-endtask : save_restore_state
+endtask : rsv_state_spy::save_restore_state
 
 task rsv_state_spy::state_spy_write(rsv_spy_trans tr);
 
@@ -131,7 +126,6 @@ task rsv_state_spy::state_spy_write(rsv_spy_trans tr);
 
 		if (tr.wofft == 3) begin
 			m_gCapRes_msk = tr.cdata[13:13];
-			spy_vi.msk = m_gCapRes_msk;
 			tr.reach_boundary = 1'b1;
 		end
 		
@@ -195,9 +189,7 @@ task rsv_state_spy::state_spy_gcapture(rsv_spy_trans tr);
 	// frame addresses, offsets in the .sll files) to state_if. Some delay is added 
 	// to avoid clock edge. 
 	
-	#0.001 spy_vi.gcapture = 1'b1; // TODO: These signals are no-longer used, remove ????
-	#0.001 spy_vi.gcapture = 1'b0; // TODO: These signals are no-longer used, remove ????
-	
+	#0.001;
 	`rsv_execute_tcl(interp, $psprintf("ReSim::rsv_load_spy_buffer %s rm%0d",rr_inst,spy_vi.active_module_id))
 	
 	// Call the utilities in the SKT to perform GCAPTURE. The SKT reads values (using 
@@ -256,9 +248,7 @@ task rsv_state_spy::state_spy_grestore(rsv_spy_trans tr);
 	// frame addresses, offsets in the .sll files) to state_if. Some delay is added 
 	// to avoid clock edge. 
 	
-	#0.001 spy_vi.grestore = 1'b1; // TODO: These signals are no-longer used, remove ????
-	#0.001 spy_vi.grestore = 1'b0; // TODO: These signals are no-longer used, remove ????
-	
+	#0.001;
 	`rsv_execute_tcl(interp, $psprintf("ReSim::rsv_load_spy_buffer %s rm%0d",rr_inst,spy_vi.active_module_id))
 	
 	// Extract the signal values from the spy memory: The state spy reads 

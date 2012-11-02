@@ -32,39 +32,37 @@
 `ifndef RSV_REGION_COMPONENT_BASE_SVH
 `define RSV_REGION_COMPONENT_BASE_SVH
 
-// The base class defines the TLM communication channel (port/expor/imp)
-// of simulation-only artifacts. The simulation-only layer connects the
-// base classes defined in this file, and therefore defines the processing
-// flow of transactions/operations.
+// The base classes define the TLM communication channel (port/expor/imp)
+// of simulation-only artifacts. By connecting instances of the base classes, 
+// the simulation-only thereby defines the flow of transactions/operations.
 //
 // The detailed implementation of individual artifacts are defined in
 // the derived classes, and can either be parameterized or overwritten by users.
 // In particular, users must parameterize the virtual interfaces with real
-// interfaces of the module-based user design (i.e., DUT), so as to munipulate
-// module-based user design in the class-based verification environment
+// interfaces so as to establish the connection between the module-based user 
+// design and the class-based verification environment
 
 class rsv_region_base extends ovm_component;
 
 	// Port: get_p -- get port
 	//       ap -- analysis port
 	//
-	// Through the get_p port, the derived class (e.g. rsv_region) typically
+	// Through the get_p port, the derived class (i.e. rsv_region) typically
 	// get a transation, and performs the required operation in the transaction. 
 	// 
 	// After processing the transaction, the derived class typically writes the
 	// finalized transactions to the analysis port, through which further analysis
 	// (e.g. coerage) is performed
 
-	ovm_blocking_get_port #(rsv_trans) get_p;
-	ovm_analysis_port #(rsv_trans) ap;
+	ovm_blocking_get_port #(rsv_sbt_trans) get_p;
+	ovm_analysis_port #(rsv_sbt_trans) ap;
 
 	`ovm_component_utils_begin(rsv_region_base)
 	`ovm_component_utils_end
 
 	// Function: new
 	//
-	// The new constructor creates the super class in the compoenent hierarchy
-	// of the verification environment, and it then creates instantces of the
+	// The new constructor creates the super class and instantiates the
 	// TLM ports/exports (get_p, ap).
 
 	function new (string name, ovm_component parent);
@@ -80,7 +78,7 @@ class rsv_region_base extends ovm_component;
 	// transactions to the analysis port
 
 	virtual task run();
-		rsv_trans tr;
+		rsv_sbt_trans tr;
 
 		forever begin
 			get_p.get(tr);
@@ -131,7 +129,11 @@ class rsv_error_injector_base extends ovm_component;
 	function new (string name, ovm_component parent);
 		super.new(name, parent);
 	endfunction : new
-
+	
+	virtual task inject_errors(rsv_ei_trans tr);
+		`ovm_warning("ReSim", "Using the abstract class")
+	endtask : inject_errors
+	
 endclass : rsv_error_injector_base
 
 class rsv_monitor_base extends ovm_component;
@@ -143,7 +145,7 @@ class rsv_monitor_base extends ovm_component;
 		super.new(name, parent);
 	endfunction : new
 
-	virtual task print_record_trans(rsv_trans tr);
+	virtual task print_record_trans(rsv_sbt_trans tr);
 		`ovm_warning("ReSim", "Using the abstract class")
 	endtask : print_record_trans
 	
@@ -153,18 +155,17 @@ class rsv_scoreboard_base#(int NUM_RR = 1) extends ovm_component;
 
 	// Port: get_p -- get port
 	//
-	// Through the get_p port, the derived class (e.g. rsv_scoreboard)
+	// Through the get_p port, the derived class (i.e. rsv_scoreboard)
 	// typically get a transation, and performs coverag analysis
 
-	ovm_blocking_get_port #(rsv_trans) get_p;
+	ovm_blocking_get_port #(rsv_sbt_trans) get_p;
 
 	`ovm_component_param_utils_begin(rsv_scoreboard_base#(NUM_RR))
 	`ovm_component_utils_end
 
 	// Function: new
 	//
-	// The new constructor creates the super class in the compoenent hierarchy
-	// of the verification environment, and it then creates instantces of the
+	// The new constructor creates the super class and instantiates the
 	// TLM ports/exports (get_p).
 
 	function new (string name, ovm_component parent);
@@ -199,8 +200,7 @@ class rsv_configuration_port_base extends ovm_component;
 	
 	// Function: new
 	//
-	// The new constructor creates the super class in the compoenent hierarchy
-	// of the verification environment, and it then creates instantces of the
+	// The new constructor creates the super class and instantiates the
 	// TLM ports/exports (put_p).
 	
 	function new (string name, ovm_component parent);
@@ -225,25 +225,24 @@ class rsv_configuration_parser_base#(int NUM_RR = 1) extends ovm_component;
 	// Port: get_p   -- get port
 	// Port: put_p[] -- put port
 	//
-	// Through the get port, the derived class (e.g. rsv_sbt_parser) typically
+	// Through the get port, the derived class (i.e. rsv_sbt_parser) typically
 	// gets raw configuration data (configuration or readback), and converts 
 	// raw transaction into SBT transactions. 
 	//
-	// Through the put port, the derived class (e.g. rsv_sbt_parser) typically
+	// Through the put port, the derived class (i.e. rsv_sbt_parser) typically
 	// send the converted SBT transations, which are typically passed to the  
 	// reconfigurable regions, and initiates simulation-only tasks such as 
 	// selecting the current active module and the reconfiguration phase.
 	
 	ovm_blocking_get_port #(rsv_cdata_trans) get_p;
-	ovm_blocking_put_port #(rsv_trans) put_p[NUM_RR];
+	ovm_blocking_put_port #(rsv_sbt_trans) put_p[NUM_RR];
 
 	`ovm_component_param_utils_begin(rsv_configuration_parser_base#(NUM_RR))
 	`ovm_component_utils_end
 	
 	// Function: new
 	//
-	// The new constructor creates the super class in the compoenent hierarchy
-	// of the verification environment, and it then creates instantces of the
+	// The new constructor creates the super class and instantiates the
 	// TLM ports/exports (get_p, put_p[]). 
 	
 	function new (string name, ovm_component parent);

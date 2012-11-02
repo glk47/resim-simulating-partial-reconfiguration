@@ -23,9 +23,20 @@ copy and paste the following scripts to your own Modelsim do script
     vlog +incdir+./artifacts+\$RSV_HOME/src+\$OVM_HOME/src -L mtiReSim ./artifacts/$vf_.sv
 
 TODO 3: For simulating the testbench, you need to turn on the \"permit_unmatched_virtual_intf\"
-option so as to use the virtual interfaces. You also need to include the compiled library For example, 
+option so as to use the virtual interfaces, and to include the compiled library with \"-L mtiReSim\" 
+For example, 
 
     vsim -L mtiReSim -permit_unmatched_virtual_intf \$MY_TEST
+    
+You also need to load the simulation-only bitstreams into the bitstream storage memory using the 
+ModelSim command \"mem load\". Note, by default, the generated bitstreams are in binary format and 
+you can use the \"rsv_create_memory\" and \"rsv_add_2_memory\" APIs to convert bitstreams into 
+ModelSim memory format (see the released examples). Alternatively, you can create your own utilities 
+to perform such conversion. 
+
+    mem load -infile ./artifacts/sbt/xxx_bank0.txt -format hex \$DESIGN_HIERARCHY_TO_BITSTREAM_MEMORY
+    mem load -infile ./artifacts/sbt/xxx_bank1.txt -format hex \$DESIGN_HIERARCHY_TO_BITSTREAM_MEMORY
+    ...
 
 TODO 4: To integrate the generated code into the HDL testbench, you need to instantiate 
 the generated modules. More specifically you need to instantiate 3 types of modules 
@@ -42,6 +53,9 @@ the generated modules. More specifically you need to instantiate 3 types of modu
 the auto-generation script, and is a module with no input or output. e.g.,
 
     ${vf_} i_sol();
+
+Furthermore, you need to create test stimuli that performs partial reconfiguration. Typically, 
+this involves transferring bitstreams from the bitstream storage memory to the configuration port.
 
 TODO 5 (optional): For state spy, you need to create a logic allocation file (sll) specifying
 the frame address of all hdl signals that are of interest to your verification. An empty sll 

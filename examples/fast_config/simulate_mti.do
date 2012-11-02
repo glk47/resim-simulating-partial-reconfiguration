@@ -32,12 +32,10 @@ vsim -novopt +notimingchecks +nowarnTFMPC +nowarnPCDPC -permit_unmatched_virtual
 do wave_mti.do
 mem load -infile ./artifacts/sbt/mem_bank0.txt -format hex /board/RP/tx_usrapp/sbtmem
 
-# start simulation & state spy
+# start simulation
 #=============================
 
 run 10ns
-
-add wave -noupdate -expand -group loader //solyr/rr0/mon/usr_trans
 add wave -noupdate -expand -group loader -expand //solyr/rr0/mon/sbt_trans
 
 run 80us
