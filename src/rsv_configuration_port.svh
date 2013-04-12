@@ -29,30 +29,31 @@
  *
 *******************************************************************************/
 
-`ifndef RSV_SOLYR_SVH
-`define RSV_SOLYR_SVH
+`ifndef RSV_CONFIGURATION_PORT_SVH
+`define RSV_CONFIGURATION_PORT_SVH
+
+`include "rsv_icap_virtex.svh"
+`include "rsv_sbt_parser.svh"
 
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 
-class rsv_solyr#(int NUM_RR = 1) extends ovm_env;
+class rsv_configuration_port#(int NUM_RR = 1) extends rsv_configuration_port_base#(NUM_RR);
 
 	//---------------------------------------------------------------------
 	// port, channel & sub-components
 	//---------------------------------------------------------------------
 	
-	rsv_configuration_port_base#(NUM_RR) cp;
-	rsv_region rr[NUM_RR];
-	rsv_scoreboard_base#(NUM_RR) scb;
-	
-	tlm_fifo #(rsv_simop_trans) rr_fifo[NUM_RR];   // Configuration Port <-> Reconfigurable Region
-	tlm_analysis_fifo #(rsv_simop_trans) scb_fifo; // Reconfigurable Region <-> Scoreboard
+	rsv_configuration_interface_base ci;
+	rsv_configuration_parser_base#(NUM_RR) cc;
+
+	tlm_fifo #(rsv_cdata_trans) cdata_fifo; // ICAP <-> SBT Parser
 	
 	//---------------------------------------------------------------------
 	// configuration table and parameter(s)
 	//---------------------------------------------------------------------
 	
-	`ovm_component_param_utils_begin(rsv_solyr#(NUM_RR))
+	`ovm_component_param_utils_begin(rsv_configuration_port#(NUM_RR))
 	`ovm_component_utils_end
 
 	//---------------------------------------------------------------------
@@ -61,38 +62,38 @@ class rsv_solyr#(int NUM_RR = 1) extends ovm_env;
 	
 	function new (string name, ovm_component parent);
 		super.new(name, parent);
-		
-		for (int i=0; i < NUM_RR; i++) begin
-			rr_fifo[i]  = new($psprintf("rr_fifo_%0d", i), this);
-		end
-		scb_fifo = new("scb_fifo", this);
-		
+		cdata_fifo = new("cdata_fifo", this);
 	endfunction : new
 
 	virtual function void build();
 		super.build();
 
-		cp  = rsv_configuration_port_base#(NUM_RR)::type_id::create("cp", this);
-		for (int i=0; i < NUM_RR; i++) begin
-			rr[i] = rsv_region::type_id::create($psprintf("rr%0d", i), this);
-		end
-		scb = rsv_scoreboard_base#(NUM_RR)::type_id::create("scb", this);
-
+		ci  = rsv_configuration_interface_base::type_id::create("ci", this);
+		cc  = rsv_configuration_parser_base#(NUM_RR)::type_id::create("cc", this);
 	endfunction : build
 
 	virtual function void connect();
 		super.connect();
+
+		ci.put_p.connect(cdata_fifo.put_export);
+		cc.get_p.connect(cdata_fifo.get_peek_export);
 		
 		for (int i=0; i < NUM_RR; i++) begin
-			cp.put_p[i].connect(rr_fifo[i].put_export);
-			rr[i].get_p.connect(rr_fifo[i].get_peek_export);
-			rr[i].ap.connect(scb_fifo.analysis_export);
+			cc.put_p[i].connect(put_p[i]);
 		end
 		
-		scb.get_p.connect(scb_fifo.get_peek_export);
 
 	endfunction : connect
+	
+	//---------------------------------------------------------------------
+	// run()
+	//---------------------------------------------------------------------
+	
+	// The run task does nothing
+	
+	virtual task run();
+	endtask : run
 
-endclass : rsv_solyr
+endclass : rsv_configuration_port
 
-`endif // RSV_SOLYR_SVH
+`endif // RSV_CONFIGURATION_PORT_SVH

@@ -195,7 +195,7 @@ module $rr_
 		`set_config_interface(rsv_if_wrapper #(error_if_type), \"*.rr${id_}.ei\", \"ei_tag\", eif)
 		`set_config_interface(rsv_if_wrapper #(${ri_}_type), \"*.rr${id_}.ei\", \"sei_tag\", sei_rif)
 		`set_config_interface(rsv_if_wrapper #(${ri_}_type), \"*.rr${id_}.ei\", \"dei_tag\", dei_rif)
-		`set_config_interface(rsv_if_wrapper #(${ri_}_type), \"*.rr${id_}.mon\", \"mon_tag\", sta_rif)
+		`set_config_interface(rsv_if_wrapper #(${ri_}_type), \"*.rr${id_}.rec\", \"rec_tag\", sta_rif)
 
 		// Set number of reconfigurable modules to the desired value
 		// Set number of words in the spy memory to the desired value
@@ -209,33 +209,33 @@ module $rr_
 		set_config_string(\"*.rr${id_}.pc\", \"rr_inst\", \$psprintf(\"%m\"));
 		set_config_string(\"*.rr${id_}.ei\", \"rr_inst\", \$psprintf(\"%m\"));
 		set_config_string(\"*.rr${id_}.ss\", \"rr_inst\", \$psprintf(\"%m\"));
-		set_config_string(\"*.rr${id_}.mon\", \"rr_inst\", \$psprintf(\"%m\"));
+		set_config_string(\"*.rr${id_}.rec\", \"rr_inst\", \$psprintf(\"%m\"));
 		
 		// Enable transaction recording by default
 		
-		set_config_int(\"*.rr${id_}.mon\", \"is_record_trans\", 1);
+		set_config_int(\"*.rr${id_}.rec\", \"is_record_trans\", 1);
 		
 		// Set your own classes here using the factory mechanism of OVM.
 		// You can change the components within the simulation-only layer without editing
-		// the source code of the library, for example, if you define your own version of monitor
+		// the source code of the library, for example, if you define your own version of region recorder
 		// and error injector, you can replace the default code with your own code, for example:
 		//
 		//     rsv_error_injector_base::type_id::set_inst_override(my_error_injector::get_type(), \"*.rr?.ei\");
-		//     rsv_monitor_base::type_id::set_inst_override(my_monitor::get_type(), \"*.rr?.mon\");
+		//     rsv_region_recorder_base::type_id::set_inst_override(my_region_recorder::get_type(), \"*.rr?.rec\");
 		//
-		// Of course, you can also use the default code for general processing, which is
+		// As a quick start, you can use the generated default code, which is
 		// parameterized with the user-defined interface, and consumes the incomming
 		// transactions without processing them, for example:
 		//
 		//     rsv_error_injector_base::type_id::set_inst_override(rsv_error_injector#(${ri_}_type)::get_type(), \"*.rr?.ei\");
-		//     rsv_monitor_base::type_id::set_inst_override(rsv_monitor#(${ri_}_type)::get_type(), \"*.rr?.mon\");
+		//     rsv_region_recorder_base::type_id::set_inst_override(my_region_recorder#(${ri_}_type)::get_type(), \"*.rr?.rec\");
 		//
 		// For more information about factory, see the OVM User Guide
 
 		rsv_portal_controller_base::type_id::set_inst_override(rsv_portal_controller#(portal_if_type)::get_type(), \"*.rr${id_}.pc\");
 		rsv_state_spy_base::type_id::set_inst_override(rsv_state_spy#(state_if_type)::get_type(), \"*.rr${id_}.ss\");
 		rsv_error_injector_base::type_id::set_inst_override(${ei_}::get_type(), \"*.rr${id_}.ei\");
-		rsv_monitor_base::type_id::set_inst_override(${mon_}::get_type(), \"*.rr${id_}.mon\");
+		rsv_region_recorder_base::type_id::set_inst_override(${rec_}::get_type(), \"*.rr${id_}.rec\");
 
 	end
 

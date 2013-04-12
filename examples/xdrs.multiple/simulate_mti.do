@@ -56,9 +56,9 @@ profile on -p
 profile on -m
 
 run 10ns
-add wave -noupdate -expand -group icap -expand //solyr/rr0/mon/sbt_trans
-add wave -noupdate -expand -group icap -expand //solyr/rr1/mon/sbt_trans
-add wave -noupdate -expand -group icap -expand //solyr/rr2/mon/sbt_trans
+add wave -noupdate -expand -group icap -expand //solyr/rr0/rec/sbt_trans
+add wave -noupdate -expand -group icap -expand //solyr/rr1/rec/sbt_trans
+add wave -noupdate -expand -group icap -expand //solyr/rr2/rec/sbt_trans
 
 run -all
 

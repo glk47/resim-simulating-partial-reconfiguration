@@ -36,6 +36,6 @@ mem load -infile ./artifacts/sbt/mem_bank0.txt -format hex /board/RP/tx_usrapp/s
 #=============================
 
 run 10ns
-add wave -noupdate -expand -group loader -expand //solyr/rr0/mon/sbt_trans
+add wave -noupdate -expand -group loader -expand //solyr/rr0/rec/sbt_trans
 
 run 80us

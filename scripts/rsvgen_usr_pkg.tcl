@@ -12,7 +12,7 @@ package usr_solyr_pkg;
 	`include \"ovm_macros.svh\"
 	`include \"rsv_defines.svh\"
 
-[rsv_print_fpga $vf_ mon \n]
+[rsv_print_fpga $vf_ rec \n]
 [rsv_print_fpga $vf_ ei \n]
 [rsv_print_fpga $vf_ scb \n]
 

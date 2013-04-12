@@ -29,6 +29,9 @@
  *
 *******************************************************************************/
 
+`ifndef RSV_DEFINES_SVH
+`define RSV_DEFINES_SVH
+
 `define print_info(tag, msg, ver) begin         \
 	if (ovm_report_enabled(ver, OVM_INFO, tag)) \
 		ovm_report_info (tag, msg, ver);        \
@@ -41,7 +44,7 @@ end
 `define region_print_record_trans(rr_, tr_) begin \
 	rsv_region rr;                              \
 	`check_error($cast(rr, rr_), $psprintf("Fail to cast to a Reconfigurable Region")) \
-	rr.mon.print_record_trans(tr_);             \
+	rr.rec.print_record_trans(tr_);             \
 end
 
 `define region_analysis_port_trans(rr_, tr_) begin \
@@ -97,3 +100,5 @@ typedef virtual interface error_if error_if_type;
 		if_.signature  = sg_;                                          \
 		if_.name       = nm_;
 */
+
+`endif

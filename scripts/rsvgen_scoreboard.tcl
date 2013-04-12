@@ -31,7 +31,7 @@ class ${scb_}#(int NUM_RR = 1) extends rsv_scoreboard#(NUM_RR);
 	// You should not change the name or the prototype of these tasks
 
 	extern virtual protected task initialize_coverage();
-	extern virtual protected task collect_coverage(rsv_sbt_trans tr);
+	extern virtual protected task collect_coverage(rsv_simop_trans tr);
 
 endclass : ${scb_}
 
@@ -43,7 +43,7 @@ task ${scb_}::initialize_coverage();
 	
 endtask : ${scb_}::initialize_coverage
 
-task ${scb_}::collect_coverage(rsv_sbt_trans tr);
+task ${scb_}::collect_coverage(rsv_simop_trans tr);
 	// TODO: Implement your own collect_coverage() task here
 	// It should triggers/samples functional coverage group
 

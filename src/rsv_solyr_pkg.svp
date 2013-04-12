@@ -45,8 +45,7 @@ package rsv_solyr_pkg;
 	`include "rsv_artifact_base.svh"
 	`include "rsv_region.svh"
 	`include "rsv_scoreboard.svh"
-	`include "rsv_icap_virtex.svh"
-	`include "rsv_sbt_parser.svh"
+	`include "rsv_configuration_port.svh"
 
 	`include "rsv_solyr.svh"
 

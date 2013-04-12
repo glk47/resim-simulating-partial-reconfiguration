@@ -119,9 +119,10 @@ module $cp_
 		// Here, the settins are done by the configuration & factory mechanism of OVM
 		// for details, see the OVM User Guide
 
-		`set_config_interface(rsv_if_wrapper #(icap_if_type), \"*.cp\", \"iif_tag\", iif)
+		`set_config_interface(rsv_if_wrapper #(icap_if_type), \"*.ci\", \"iif_tag\", iif)
 		
-		rsv_configuration_port_base::type_id::set_type_override(rsv_icap_virtex::get_type());
+		rsv_configuration_port_base#(`NUM_RR)::type_id::set_type_override(rsv_configuration_port#(`NUM_RR)::get_type());
+		rsv_configuration_interface_base::type_id::set_type_override(rsv_icap_virtex::get_type());
 		rsv_configuration_parser_base#(`NUM_RR)::type_id::set_type_override(rsv_sbt_parser#(`NUM_RR)::get_type());
 
 	end

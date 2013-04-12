@@ -42,6 +42,9 @@
 // interfaces so as to establish the connection between the module-based user 
 // design and the class-based verification environment
 
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
 class rsv_region_base extends ovm_component;
 
 	// Port: get_p -- get port
@@ -54,8 +57,8 @@ class rsv_region_base extends ovm_component;
 	// finalized transactions to the analysis port, through which further analysis
 	// (e.g. coerage) is performed
 
-	ovm_blocking_get_port #(rsv_sbt_trans) get_p;
-	ovm_analysis_port #(rsv_sbt_trans) ap;
+	ovm_blocking_get_port #(rsv_simop_trans) get_p;
+	ovm_analysis_port #(rsv_simop_trans) ap;
 
 	`ovm_component_utils_begin(rsv_region_base)
 	`ovm_component_utils_end
@@ -78,7 +81,7 @@ class rsv_region_base extends ovm_component;
 	// transactions to the analysis port
 
 	virtual task run();
-		rsv_sbt_trans tr;
+		rsv_simop_trans tr;
 
 		forever begin
 			get_p.get(tr);
@@ -136,20 +139,23 @@ class rsv_error_injector_base extends ovm_component;
 	
 endclass : rsv_error_injector_base
 
-class rsv_monitor_base extends ovm_component;
+class rsv_region_recorder_base extends ovm_component;
 
-	`ovm_component_utils_begin(rsv_monitor_base)
+	`ovm_component_utils_begin(rsv_region_recorder_base)
 	`ovm_component_utils_end
 
 	function new (string name, ovm_component parent);
 		super.new(name, parent);
 	endfunction : new
 
-	virtual task print_record_trans(rsv_sbt_trans tr);
+	virtual task print_record_trans(rsv_simop_trans tr);
 		`ovm_warning("ReSim", "Using the abstract class")
 	endtask : print_record_trans
 	
-endclass : rsv_monitor_base
+endclass : rsv_region_recorder_base
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
 class rsv_scoreboard_base#(int NUM_RR = 1) extends ovm_component;
 
@@ -158,7 +164,7 @@ class rsv_scoreboard_base#(int NUM_RR = 1) extends ovm_component;
 	// Through the get_p port, the derived class (i.e. rsv_scoreboard)
 	// typically get a transation, and performs coverag analysis
 
-	ovm_blocking_get_port #(rsv_sbt_trans) get_p;
+	ovm_blocking_get_port #(rsv_simop_trans) get_p;
 
 	`ovm_component_param_utils_begin(rsv_scoreboard_base#(NUM_RR))
 	`ovm_component_utils_end
@@ -185,17 +191,58 @@ class rsv_scoreboard_base#(int NUM_RR = 1) extends ovm_component;
 
 endclass : rsv_scoreboard_base
 
-class rsv_configuration_port_base extends ovm_component;
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+class rsv_configuration_port_base#(int NUM_RR = 1) extends ovm_component;
+
+	// Port: put_p -- put port
+	//
+	// Through the put port, the derived class (e.g. rsv_configuration_port) typically
+	// send the converted simop transations, which are typically passed to the  
+	// reconfigurable regions, and initiates simulation-only tasks such as 
+	// selecting the current active module and the reconfiguration phase.
+	
+	ovm_blocking_put_port #(rsv_simop_trans) put_p[NUM_RR];
+
+	`ovm_component_param_utils_begin(rsv_configuration_port_base#(NUM_RR))
+	`ovm_component_utils_end
+	
+	// Function: new
+	//
+	// The new constructor creates the super class and instantiates the
+	// TLM ports/exports (put_p[]). 
+	
+	function new (string name, ovm_component parent);
+		super.new(name, parent);
+		for (int i = 0; i<NUM_RR; i++) begin
+			put_p[i] = new($psprintf("put_p[%0d]", i), this);
+		end
+	endfunction : new
+		
+	// Task: run
+	//
+	// The run task will be called automatically by the OVM library. The base  
+	// class provides a default implementation which simply print an warning 
+	// message without generating any transactions
+	
+	virtual task run();
+		`ovm_warning("ReSim", "Using the abstract class")
+	endtask : run
+
+endclass : rsv_configuration_port_base
+
+class rsv_configuration_interface_base extends ovm_component;
 
 	// Port: put_p -- put port
 	//
 	// Through the put port, the derived class (e.g. rsv_icap_virtex) typically
 	// send raw configuration data transations, which will be parsed and converted
-	// to the SBT transactions.
+	// to the simop transactions.
 	
 	ovm_blocking_put_port #(rsv_cdata_trans) put_p;
 
-	`ovm_component_utils_begin(rsv_configuration_port_base)
+	`ovm_component_utils_begin(rsv_configuration_interface_base)
 	`ovm_component_utils_end
 	
 	// Function: new
@@ -218,7 +265,7 @@ class rsv_configuration_port_base extends ovm_component;
 		`ovm_warning("ReSim", "Using the abstract class")
 	endtask : run
 
-endclass : rsv_configuration_port_base
+endclass : rsv_configuration_interface_base
 
 class rsv_configuration_parser_base#(int NUM_RR = 1) extends ovm_component;
 
@@ -227,15 +274,15 @@ class rsv_configuration_parser_base#(int NUM_RR = 1) extends ovm_component;
 	//
 	// Through the get port, the derived class (i.e. rsv_sbt_parser) typically
 	// gets raw configuration data (configuration or readback), and converts 
-	// raw transaction into SBT transactions. 
+	// raw transaction into simop transactions. 
 	//
 	// Through the put port, the derived class (i.e. rsv_sbt_parser) typically
-	// send the converted SBT transations, which are typically passed to the  
+	// send the converted simop transations, which are typically passed to the  
 	// reconfigurable regions, and initiates simulation-only tasks such as 
 	// selecting the current active module and the reconfiguration phase.
 	
 	ovm_blocking_get_port #(rsv_cdata_trans) get_p;
-	ovm_blocking_put_port #(rsv_sbt_trans) put_p[NUM_RR];
+	ovm_blocking_put_port #(rsv_simop_trans) put_p[NUM_RR];
 
 	`ovm_component_param_utils_begin(rsv_configuration_parser_base#(NUM_RR))
 	`ovm_component_utils_end

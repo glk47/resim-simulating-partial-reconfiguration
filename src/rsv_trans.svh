@@ -29,6 +29,9 @@
  *
 *******************************************************************************/
 
+`ifndef RSV_TRANS_SVH
+`define RSV_TRANS_SVH
+
 // All possible phases of reconfiguration transition
 
 typedef enum {
@@ -55,7 +58,7 @@ endclass
 
 // Simulation only bitstream (sbt) reconfiguration transactions:
 //
-//    rsv_sbt_trans: The base class
+//    rsv_simop_trans: The base class
 //    rsv_cfg_trans: The transaction indicating the start and end of reconfiguration.
 //        If it is a start, it also indicate whether it is to reconfigure or readback.
 //        This transaction is created by sbt parser and is processed by the portal controller. 
@@ -67,16 +70,16 @@ endclass
 // operations of the simulation-only bitstream
 typedef enum {
 	SYNC, DESYNC, RCFG, WCFG, RSPY, WSPY, ENDCFG, GCAPTURE, GRESTORE
-} rsv_sbt_op_t;
+} rsv_sim_op_t;
 
-class rsv_sbt_trans extends rsv_trans;
+class rsv_simop_trans extends rsv_trans;
 
 	logic [7:0] rrid;
 	logic [7:0] rmid;
 	
-	rsv_sbt_op_t op;
+	rsv_sim_op_t op;
 
-	function new (realtime t_, logic [7:0] rr_, logic [7:0] rm_, rsv_sbt_op_t op_, int unsigned sl_ = OVM_HIGH);
+	function new (realtime t_, logic [7:0] rr_, logic [7:0] rm_, rsv_sim_op_t op_, int unsigned sl_ = OVM_HIGH);
 		super.new(t_, DURING_PH, sl_);
 		op = op_;
 		rrid = rr_; rmid = rm_;
@@ -90,17 +93,17 @@ class rsv_sbt_trans extends rsv_trans;
 		end
 	endfunction : conv2str
 
-	virtual function rsv_sbt_trans clone();
-		rsv_sbt_trans tr = new(event_time, rrid, rmid, op, sensitivity_level);
+	virtual function rsv_simop_trans clone();
+		rsv_simop_trans tr = new(event_time, rrid, rmid, op, sensitivity_level);
 		return tr;
 	endfunction : clone;
-endclass: rsv_sbt_trans
+endclass: rsv_simop_trans
 
-class rsv_cfg_trans extends rsv_sbt_trans;
+class rsv_cfg_trans extends rsv_simop_trans;
 
 	string name;
 
-	function new(realtime t_, logic [7:0] rr_, logic [7:0] rm_, rsv_sbt_op_t op_, int unsigned sl_ = OVM_HIGH);
+	function new(realtime t_, logic [7:0] rr_, logic [7:0] rm_, rsv_sim_op_t op_, int unsigned sl_ = OVM_HIGH);
 		super.new(t_, rr_, rm_, op_, sl_);
 
 		`check_error((op_==WCFG) || (op_==RCFG) || (op_==ENDCFG),
@@ -116,18 +119,18 @@ class rsv_cfg_trans extends rsv_sbt_trans;
 		end
 	endfunction : conv2str
 
-	virtual function rsv_sbt_trans clone();
+	virtual function rsv_simop_trans clone();
 		rsv_cfg_trans tr = new(event_time, rrid, rmid, op, sensitivity_level);
 		tr.name = name;
 		return tr;
 	endfunction : clone;
 endclass: rsv_cfg_trans
 
-class rsv_ei_trans extends rsv_sbt_trans;
+class rsv_ei_trans extends rsv_simop_trans;
 	
 	string error_msg;
 	
-	function new(realtime t_, logic [7:0] rr_, logic [7:0] rm_, rsv_sbt_op_t op_, int unsigned sl_ = OVM_HIGH);
+	function new(realtime t_, logic [7:0] rr_, logic [7:0] rm_, rsv_sim_op_t op_, int unsigned sl_ = OVM_HIGH);
 		super.new(t_, rr_, rm_, op_, sl_);
 
 		`check_error((op_==WCFG) || (op_==RCFG) || (op_==ENDCFG),
@@ -144,14 +147,14 @@ class rsv_ei_trans extends rsv_sbt_trans;
 		end
 	endfunction : conv2str
 
-	virtual function rsv_sbt_trans clone();
+	virtual function rsv_simop_trans clone();
 		rsv_ei_trans tr = new(event_time, rrid, rmid, op, sensitivity_level);
 		tr.error_msg = error_msg;
 		return tr;
 	endfunction : clone;
 endclass: rsv_ei_trans
 
-class rsv_spy_trans extends rsv_sbt_trans;
+class rsv_spy_trans extends rsv_simop_trans;
 
 	logic [15:0] mna;
 	logic [31:0] cdata;
@@ -159,7 +162,7 @@ class rsv_spy_trans extends rsv_sbt_trans;
 	bit reach_boundary = 0;
 
 	function new(realtime t_, logic [7:0] rr_, logic [7:0] rm_, logic [15:0] a_, int unsigned w_, logic [31:0] d_, 
-		rsv_sbt_op_t op_, int unsigned sl_ = OVM_HIGH
+		rsv_sim_op_t op_, int unsigned sl_ = OVM_HIGH
 	);
 		super.new(t_, rr_, rm_, op_, sl_);
 
@@ -177,7 +180,7 @@ class rsv_spy_trans extends rsv_sbt_trans;
 		end
 	endfunction : conv2str
 
-	virtual function rsv_sbt_trans clone();
+	virtual function rsv_simop_trans clone();
 		rsv_spy_trans tr = new(event_time, rrid, rmid, mna, wofft, cdata, op, sensitivity_level);
 		tr.reach_boundary = reach_boundary;
 		return tr;
@@ -213,3 +216,5 @@ class rsv_cdata_trans extends rsv_trans;
 		return tr;
 	endfunction : clone;
 endclass: rsv_cdata_trans
+
+`endif

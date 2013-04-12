@@ -81,6 +81,6 @@ when -label l_loading_ddr2_memory "/board/system/ppc440_0_PPC440MC_MCMIADDRREADY
 do wave_mti.do
 
 run 10ns
-add wave -group icapctrl -group icap sim:/solyr/rr0/mon/sbt_trans
+add wave -group icapctrl -group icap sim:/solyr/rr0/rec/sbt_trans
 
 run -all

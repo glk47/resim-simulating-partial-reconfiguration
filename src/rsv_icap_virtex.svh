@@ -35,7 +35,7 @@
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 
-class rsv_icap_virtex extends rsv_configuration_port_base;
+class rsv_icap_virtex extends rsv_configuration_interface_base;
 
 	//---------------------------------------------------------------------
 	// virtual interface(s)

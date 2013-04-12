@@ -35,7 +35,7 @@
 `include "rsv_portal_controller.svh"
 `include "rsv_state_spy.svh"
 `include "rsv_error_injector.svh"
-`include "rsv_monitor.svh"
+`include "rsv_region_recorder.svh"
 
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
@@ -49,7 +49,7 @@ class rsv_region extends rsv_region_base;
 	rsv_portal_controller_base     pc;
 	rsv_state_spy_base             ss;
 	rsv_error_injector_base        ei;
-	rsv_monitor_base               mon;
+	rsv_region_recorder_base       rec;
 
 	//---------------------------------------------------------------------
 	// configuration table and parameter(s)
@@ -81,7 +81,7 @@ class rsv_region extends rsv_region_base;
 		pc  = rsv_portal_controller_base::type_id::create("pc", this);
 		ss  = rsv_state_spy_base::type_id::create("ss", this);
 		ei  = rsv_error_injector_base::type_id::create("ei", this);
-		mon = rsv_monitor_base::type_id::create("mon", this);
+		rec = rsv_region_recorder_base::type_id::create("rec", this);
 
 	endfunction : build
 
@@ -89,16 +89,16 @@ class rsv_region extends rsv_region_base;
 	// run()
 	//---------------------------------------------------------------------
 	
-	// The run task read rsv_sbt_trans from the port, and calls the member functions
+	// The run task read rsv_simop_trans from the port, and calls the member functions
 	// of pc, ei, ss to process the transaction (e.g., module selection, error 
 	// injection, state saving and restoration). It also calls the member function 
-	// of the monitor for transaction visualization. 
+	// of the recoder for transaction visualization. 
 	// 
 	// Finially, it writes the processed transaction to the analysis port, through
 	// which the scoreboard perfroms further analysis (e.g. coverage collection)
 	
 	virtual task run();
-		rsv_sbt_trans tr;
+		rsv_simop_trans tr;
 		
 		rsv_cfg_trans  tr_0;
 		rsv_ei_trans   tr_1;
@@ -111,7 +111,7 @@ class rsv_region extends rsv_region_base;
 			if ( $cast( tr_1, tr ) ) begin ei.inject_errors(tr_1); end
 			if ( $cast( tr_2, tr ) ) begin ss.save_restore_state(tr_2); end
 			
-			mon.print_record_trans(tr);
+			rec.print_record_trans(tr);
 
 			-> tr.done;
 			ap.write(tr.clone());

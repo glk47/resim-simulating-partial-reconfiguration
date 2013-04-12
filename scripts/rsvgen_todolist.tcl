@@ -84,18 +84,16 @@ The following commands are for the default reconfigurable region (rr0) in your d
 If you have multiple reconfigurable regions feel free to substitute rr0 with rr1, rr2, etc.
 
     run 10ns
-    add wave sim:/solyr/rr0/mon/usr_trans
-    add wave sim:/solyr/rr0/mon/sbt_trans
+    add wave sim:/solyr/rr0/rec/usr_trans
+    add wave sim:/solyr/rr0/rec/sbt_trans
 
-TODO 7 (optional): To use monitor and/or error injector, you need to add design specific code in 
-the generated template file for your monitor and/or error injector. If no monitor or error injector
-has been generated, check the auto-generation script. You can optionally specify the monitor or 
+TODO 7 (optional): To define your own error injector, you need to specify the name of the 
 error injector when creating your reconfigurable region. e.g.,
 
-    rsv_create_region \"[lindex $rr_ 0]\" ... YOUR_MONITOR YOUR_ERROR_INJECTOR
+    rsv_create_region \"[lindex $rr_ 0]\" ... \"\" YOUR_ERROR_INJECTOR
     
-Note, if you don't want to use monitor or error injection, please don't specify those options 
-in the auto-generation script (just use \"\" as a place-holder for the two options). 
+and add design specific code in the generated template file. Note, if you don't want to use 
+error injection, please use \"\" as a place-holder when creating the reconfigurable region. 
 
     rsv_create_region \"[lindex $rr_ 0]\" ... \"\" \"\"
     

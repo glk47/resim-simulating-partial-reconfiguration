@@ -29,21 +29,21 @@
  *
 *******************************************************************************/
 
-`ifndef RSV_MONITOR_SVH
-`define RSV_MONITOR_SVH
+`ifndef RSV_REGION_RECORDER_SVH
+`define RSV_REGION_RECORDER_SVH
 
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 
-class rsv_monitor#(type IF=virtual interface null_if) extends rsv_monitor_base;
+class rsv_region_recorder#(type IF=virtual interface null_if) extends rsv_region_recorder_base;
 
 	//---------------------------------------------------------------------
 	// virtual interface(s)
 	//---------------------------------------------------------------------
 	
-	IF mon_vi;
-	virtual function void register_if(IF mon_);
-		mon_vi = mon_;
+	IF rec_vi;
+	virtual function void register_if(IF rec_);
+		rec_vi = rec_;
 	endfunction : register_if
 
 	//---------------------------------------------------------------------
@@ -52,7 +52,7 @@ class rsv_monitor#(type IF=virtual interface null_if) extends rsv_monitor_base;
 	
 	protected int is_record_trans = 0;
 	protected string rr_inst = "";
-	`ovm_component_param_utils_begin(rsv_monitor#(IF))
+	`ovm_component_param_utils_begin(rsv_region_recorder#(IF))
 		`ovm_field_int(is_record_trans, OVM_ALL_ON)
 		`ovm_field_string(rr_inst, OVM_ALL_ON)
 	`ovm_component_utils_end
@@ -67,7 +67,7 @@ class rsv_monitor#(type IF=virtual interface null_if) extends rsv_monitor_base;
 
 	virtual function void build();
 		super.build();
-		`get_config_interface(rsv_if_wrapper#(IF),"mon_tag",mon_vi)
+		`get_config_interface(rsv_if_wrapper#(IF),"rec_tag",rec_vi)
 	endfunction : build
 
 	//---------------------------------------------------------------------
@@ -76,7 +76,7 @@ class rsv_monitor#(type IF=virtual interface null_if) extends rsv_monitor_base;
 	
 	integer sbt_stream_h=0;
 	integer sbt_trans_h=0;
-	extern virtual task print_record_trans(rsv_sbt_trans tr);
+	extern virtual task print_record_trans(rsv_simop_trans tr);
 	
 	// The run task initialize the transaction stream to be visualized
 
@@ -86,11 +86,11 @@ class rsv_monitor#(type IF=virtual interface null_if) extends rsv_monitor_base;
 		end
 	endtask : run
 
-endclass : rsv_monitor
+endclass : rsv_region_recorder
 
-task rsv_monitor::print_record_trans(rsv_sbt_trans tr);
+task rsv_region_recorder::print_record_trans(rsv_simop_trans tr);
 	
-	// This task visualize the SBT transactions and records them in ModelSim.
+	// This task visualize the simop transactions and records them in ModelSim.
 	// You can use "add wave" command to view them on the waveform window. Please
 	// refer to ModelSim User Manual for details.
 	// 
@@ -104,22 +104,22 @@ task rsv_monitor::print_record_trans(rsv_sbt_trans tr);
 		integer this_trans_h = 0;
 		
 		if (tr.op == SYNC) begin
-			`check_fatal(sbt_trans_h == 0, "SBT_ERROR: @SYNC, SBT transaction stream should not exist");
+			`check_fatal(sbt_trans_h == 0, "SBT_ERROR: @SYNC, simop transaction stream should not exist");
 			sbt_trans_h = $begin_transaction(sbt_stream_h, "PARTIAL_RECONFIGURATION", tr.event_time);
 		end
 
-		`check_fatal(sbt_trans_h != 0, "SBT_ERROR: @PARTIAL_RECONFIGURATION, SBT transaction stream should exist");
+		`check_fatal(sbt_trans_h != 0, "SBT_ERROR: @PARTIAL_RECONFIGURATION, simop transaction stream should exist");
 
 		this_trans_h = $begin_transaction(sbt_stream_h, $psprintf("%s",tr.op), tr.event_time, sbt_trans_h);
 		$add_attribute(this_trans_h, tr.conv2str(), "OP");
 		$end_transaction(this_trans_h, $realtime, 1);
 
 		if (tr.op == DESYNC) begin
-			`check_fatal(sbt_trans_h != 0, "SBT_ERROR: @DESYNC, SBT transaction stream should exist");
+			`check_fatal(sbt_trans_h != 0, "SBT_ERROR: @DESYNC, simop transaction stream should exist");
 			$end_transaction(sbt_trans_h, $realtime, 1); sbt_trans_h = 0;
 		end
 	end
 
 endtask : print_record_trans
 
-`endif // RSV_MONITOR_SVH
+`endif // RSV_REGION_RECORDER_SVH

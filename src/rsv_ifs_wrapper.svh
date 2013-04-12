@@ -29,6 +29,9 @@
  *
 *******************************************************************************/
 
+`ifndef RSV_IFS_WRAPPER_SVH
+`define RSV_IFS_WRAPPER_SVH
+
 // The rsv_if_wrapper class is a wrapper for the virtual interfaces. Using virual 
 // interfaces and their wrappers, ReSim is de-coupled from the user-design, and 
 // can be flexibly adapted to various design styles. 
@@ -61,3 +64,5 @@ class rsv_if_wrapper#(type IF=virtual interface null_if) extends ovm_object;
 	endfunction
 
 endclass : rsv_if_wrapper
+
+`endif

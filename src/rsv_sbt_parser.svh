@@ -116,7 +116,7 @@ class rsv_sbt_parser#(int NUM_RR = 1) extends rsv_configuration_parser_base#(NUM
 	extern protected task icap_cmd_grestore(realtime t);
 	
 	// The run task converts raw cdata transactions from the configuration
-	// port to high-level sbt transactions to the reconfigurable regions
+	// port to high-level simop transactions to the reconfigurable regions
 	// (RRs) through the put ports (put_p[])
 
 	virtual task run();
@@ -340,7 +340,7 @@ endtask : rsv_sbt_parser::icap_rd_fdro
 task rsv_sbt_parser::icap_cmd_sync(realtime t);
 
 	for (int i = 0; i<NUM_RR; i++) begin
-		rsv_sbt_trans tr = new(t, i, 8'hff, SYNC);
+		rsv_simop_trans tr = new(t, i, 8'hff, SYNC);
 		put_p[i].put(tr);
 	end
 	m_is_sync = 1; 
@@ -350,7 +350,7 @@ endtask : rsv_sbt_parser::icap_cmd_sync
 task rsv_sbt_parser::icap_cmd_dsync(realtime t);
 	
 	for (int i = 0; i<NUM_RR; i++) begin
-		rsv_sbt_trans tr = new(t, i, 8'hff, DESYNC);
+		rsv_simop_trans tr = new(t, i, 8'hff, DESYNC);
 		put_p[i].put(tr);
 	end
 	m_is_sync = 0; 

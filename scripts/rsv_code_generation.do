@@ -82,7 +82,7 @@ proc ReSim::rsv_add_port { ri_ nm_ io_ {bw_ 1} } {
 	
 	lappend portmap_a($ri_.pm) $my_port
 }
-proc ReSim::rsv_create_region { rr_ ri_ sz_ {mon_ ""} {ei_ ""} } {
+proc ReSim::rsv_create_region { rr_ ri_ sz_ {rec_ ""} {ei_ ""} } {
 	variable portmap_a
 	variable region_a
 
@@ -94,7 +94,7 @@ proc ReSim::rsv_create_region { rr_ ri_ sz_ {mon_ ""} {ei_ ""} } {
 	set region_a($rr_.nm) $rr_
 	set region_a($rr_.ri) $ri_
 	set region_a($rr_.sz) $sz_
-	set region_a($rr_.mon) $mon_
+	set region_a($rr_.rec) $rec_
 	set region_a($rr_.ei) $ei_
 	set region_a($rr_.rm) {}
 }
@@ -130,7 +130,7 @@ proc ReSim::rsv_create_solyr { vf_ {type_ VIRTEX4} {scb_ ""}} {
 	if { $type_ == "VIRTEX4" } { set solyr_a($vf_.cp) "ICAP_VIRTEX4_WRAPPER" }
 	if { $type_ == "VIRTEX5" } { set solyr_a($vf_.cp) "ICAP_VIRTEX5_WRAPPER" }
 	if { $type_ == "VIRTEX6" } { set solyr_a($vf_.cp) "ICAP_VIRTEX6_WRAPPER" }
-	set solyr_a($vf_.mon) {}
+	set solyr_a($vf_.rec) {}
 	set solyr_a($vf_.ei) {}
 	set solyr_a($vf_.scb) $scb_
 	set solyr_a($vf_.ri) {}
@@ -350,8 +350,8 @@ proc ReSim::rsv_print_region { rr_ op_ {sep_ ""} args} {
 	return $str
 }
 
-proc ReSim::rsv_print_fpga_mon { vf_ mon_ i args } {
-	return "\t`include \"$mon_.svh\""
+proc ReSim::rsv_print_fpga_rec { vf_ rec_ i args } {
+	return "\t`include \"$rec_.svh\""
 }
 proc ReSim::rsv_print_fpga_ei { vf_ ei_ i args } {
 	return "\t`include \"$ei_.svh\""
@@ -414,7 +414,7 @@ proc ReSim::rsv_print_fpga { vf_ op_ {sep_ ""} args} {
 	variable solyr_a
 
 	# e.g.
-	#    puts [ReSim::rsv_print_fpga $my_fpga_name mon \n]
+	#    puts [ReSim::rsv_print_fpga $my_fpga_name rec \n]
 	#    puts [ReSim::rsv_print_fpga $my_fpga_name ei \n]
 	#    puts [ReSim::rsv_print_fpga $my_fpga_name scb \n]
 	#    puts [ReSim::rsv_print_fpga $my_fpga_name ri \n\n]
@@ -458,14 +458,14 @@ proc ReSim::rsv_print_cp { vf_ op_ } {
 	return [rsv_print_cp_$op_ $vf_ $cp_ 0]
 }
 
-proc ReSim::rsv_update_mon_ei_ri { vf_ op_ } {
+proc ReSim::rsv_update_rec_ei_ri { vf_ op_ } {
 	variable region_a
 	variable solyr_a
 
 	# e.g.
-	#    puts [ReSim::rsv_update_mon_ei_ri $my_fpga_name mon]
-	#    puts [ReSim::rsv_update_mon_ei_ri $my_fpga_name ei]
-	#    puts [ReSim::rsv_update_mon_ei_ri $my_fpga_name ri]
+	#    puts [ReSim::rsv_update_rec_ei_ri $my_fpga_name rec]
+	#    puts [ReSim::rsv_update_rec_ei_ri $my_fpga_name ei]
+	#    puts [ReSim::rsv_update_rec_ei_ri $my_fpga_name ri]
 
 	foreach my_region $solyr_a($vf_.rr) {
 		set my_ $region_a($my_region.$op_)
@@ -492,18 +492,18 @@ proc ReSim::rsv_gen_region { rr_ id_ } {
 	set nm_  $region_a($rr_.nm)
 	set ri_  $region_a($rr_.ri)
 	set sz_  $region_a($rr_.sz)
-	set mon_ $region_a($rr_.mon)
+	set rec_ $region_a($rr_.rec)
 	set ei_  $region_a($rr_.ei)
 	set rm_  $region_a($rr_.rm)
 	set l_   [llength $region_a($rr_.rm)]
 
-	# Class-based part of the Reconfigurable Region: monitor
-	if { $mon_ != ""} {
-		set f [open "./artifacts/$mon_.svh" w+]; fconfigure $f -translation lf;
-		source $RSV_HOME/scripts/rsvgen_monitor.tcl; puts $f $str;
+	# Class-based part of the Reconfigurable Region: region_recorder
+	if { $rec_ != ""} {
+		set f [open "./artifacts/$rec_.svh" w+]; fconfigure $f -translation lf;
+		source $RSV_HOME/scripts/rsvgen_region_recorder.tcl; puts $f $str;
 		close $f
 	} else {
-		set mon_ "rsv_monitor#(${ri_}_type)"
+		set rec_ "rsv_region_recorder#(${ri_}_type)"
 	}
 
 	# Class-based part of the Reconfigurable Region: error injector
@@ -561,11 +561,11 @@ proc ReSim::rsv_gen_solyr { vf_ } {
 	set rr_ $solyr_a($vf_.rr)
 	set l_  [llength $solyr_a($vf_.rr)]
 
-	rsv_update_mon_ei_ri $vf_ mon; set mon_ solyr_a($vf_.mon) 
-	rsv_update_mon_ei_ri $vf_ ei;  set ei_  solyr_a($vf_.ei)  
-	rsv_update_mon_ei_ri $vf_ ri;  set ri_  solyr_a($vf_.ri)  
+	rsv_update_rec_ei_ri $vf_ rec; set rec_ solyr_a($vf_.rec) 
+	rsv_update_rec_ei_ri $vf_ ei;  set ei_  solyr_a($vf_.ei)  
+	rsv_update_rec_ei_ri $vf_ ri;  set ri_  solyr_a($vf_.ri)  
 
-	# All reconfigurable regions, monitors, error injectors of the simulation-only layer
+	# All reconfigurable regions, region_recorders, error injectors of the simulation-only layer
 	set i 0; foreach my_region $solyr_a($vf_.rr)  {
 		rsv_gen_region $my_region $i; incr i; 
 	}
