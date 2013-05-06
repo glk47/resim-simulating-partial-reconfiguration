@@ -13,7 +13,7 @@
 #    and/or other materials provided with the distribution.
 #
 #  * Neither the name of the copyright holder(s) nor the names of its
-#    contributors may be used to endorse or promote products derived from this 
+#    contributor(s) may be used to endorse or promote products derived from this 
 #    software without specific prior written permission.
 #
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
@@ -175,7 +175,7 @@ proc ReSim::rsv_print_license {} {
 	append str " *    and/or other materials provided with the distribution.                       \n"
 	append str " *                                                                                 \n"
 	append str " *  * Neither the name of the copyright holder(s) nor the names of its             \n"
-	append str " *    contributors may be used to endorse or promote products derived from this    \n"
+	append str " *    contributor(s) may be used to endorse or promote products derived from this  \n"
 	append str " *    software without specific prior written permission.                          \n"
 	append str " *                                                                                 \n"
 	append str " * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\" AND \n"

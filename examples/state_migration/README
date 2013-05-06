@@ -13,7 +13,7 @@
  *    and/or other materials provided with the distribution.                       
  *                                                                                 
  *  * Neither the name of the copyright holder(s) nor the names of its             
- *    contributors may be used to endorse or promote products derived from this    
+ *    contributor(s) may be used to endorse or promote products derived from this    
  *    software without specific prior written permission.                          
  *                                                                                 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
@@ -168,7 +168,7 @@ TO Run the "STATE_MIGRATION" example:
     5.2 Create SDK project
     5.3 Choose compilation target (ReSim or Virtex5)
     
-        In ./edk/tapp_dpr_0/src/fpga_family.h, change the compilation target
+        In ./sdk/tapp_dpr_0/src/fpga_family.h, change the compilation target
         to the desired one. For example: 
         
 #define XHI_FAMILY      XHI_DEV_RESIM   //// Using ReSim
