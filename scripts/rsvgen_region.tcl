@@ -162,6 +162,8 @@ module $rr_
 // Functional Coverage for module swapping
 //-------------------------------------------------------------------
 
+`ifdef MTI_QUESTA
+
 	covergroup cvg_${rr_}_drp @pif.active_module_id;
 		active_module: coverpoint pif.active_module_id {
 			bins cur\[\] = {\[0:`NUM_RM-1\]};
@@ -175,7 +177,9 @@ module $rr_
 	endgroup
 	
 	cvg_${rr_}_drp cvg_0 = new;
-	
+
+`endif
+
 //-------------------------------------------------------------------
 // Configuring the Simulation-only Layer
 //-------------------------------------------------------------------

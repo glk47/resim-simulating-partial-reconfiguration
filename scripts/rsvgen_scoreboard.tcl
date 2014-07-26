@@ -11,6 +11,8 @@ class ${scb_}#(int NUM_RR = 1) extends rsv_scoreboard#(NUM_RR);
 	// coverage group for partial reconfiguration
 [rsv_print_fpga $vf_ rr \n _cvsig]
 
+`ifdef MTI_QUESTA
+
 	covergroup cvg_${vf_}_drp;
 		option.per_instance = 1;
 [rsv_print_fpga $vf_ rr \n _cvp]
@@ -20,11 +22,15 @@ class ${scb_}#(int NUM_RR = 1) extends rsv_scoreboard#(NUM_RR);
 		
 [rsv_print_fpga $vf_ rr \  _cvcfg]
 	endgroup
-	
+
+`endif
+
 	// new - constructor
 	function new (string name, ovm_component parent);
 		super.new(name, parent);
+`ifdef MTI_QUESTA
 		cvg_${vf_}_drp = new;
+`endif
 	endfunction : new
 
 	// Define your own tasks to perform coverage analysis
@@ -39,7 +45,9 @@ task ${scb_}::initialize_coverage();
 	// TODO: Implement your own initialize_coverage() task here
 	// The following code sample the powerup state of reconfigurable modules
 
+`ifdef MTI_QUESTA
 	cvg_my_solyr_drp.sample();
+`endif
 	
 endtask : ${scb_}::initialize_coverage
 
@@ -47,6 +55,7 @@ task ${scb_}::collect_coverage(rsv_simop_trans tr);
 	// TODO: Implement your own collect_coverage() task here
 	// It should triggers/samples functional coverage group
 
+`ifdef MTI_QUESTA
 	rsv_cfg_trans tr_0;
 	
 	if (\$cast(tr_0,tr) && (tr.op==WCFG)) begin
@@ -55,6 +64,7 @@ task ${scb_}::collect_coverage(rsv_simop_trans tr);
 		
 		cvg_${vf_}_drp.sample();
 	end
+`endif
 
 endtask : ${scb_}::collect_coverage
 

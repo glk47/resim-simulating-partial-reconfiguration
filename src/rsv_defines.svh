@@ -54,15 +54,15 @@ end
 end
 
 `define get_config_interface(wrapper_,tag_,vi_) begin \
-	ovm_object obj;                             \
-	wrapper_ wrp;                               \
+	automatic ovm_object obj;                   \
+	automatic wrapper_ wrp;                     \
 	`check_error(get_config_object(tag_, obj, 0), $psprintf("Interface wrapper (%s) not found",tag_)) \
 	`check_error($cast(wrp, obj), $psprintf("Interface wrapper (%s) cast failed",tag_)) \
 	vi_ = wrp.vi;                               \
 end
 
 `define set_config_interface(wrapper_, path_, tag_, vi_) begin   \
-	wrapper_ wrp = new (tag_, vi_);             \
+	automatic wrapper_ wrp = new (tag_, vi_);   \
 	set_config_object(path_, tag_, wrp, 0);     \
 end
 

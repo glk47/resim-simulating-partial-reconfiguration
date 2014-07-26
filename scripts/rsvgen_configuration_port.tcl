@@ -127,6 +127,8 @@ module $cp_
 
 	end
 
+`ifdef MTI_QUESTA
+
 	// Coverage Groups and Assertions
 	
 	property icap_if_cwe_n_stable;
@@ -143,7 +145,9 @@ module $cp_
 		@(posedge iif.cclk) (iif.ccs_n == 1'b0) && (iif.cwe_n == 1'b1) |=> (!\$isunknown(iif.cdata_rb));
 	endproperty
 	assert_icap_if_cdata_rb_known : assert property (icap_if_cdata_rb_known);
-	
+
+`endif
+
 endmodule
 
 "

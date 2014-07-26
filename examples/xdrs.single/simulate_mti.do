@@ -26,9 +26,9 @@ vlog -work mtiReSim +acc "./artifacts/usr_ifs.sv"
 vlog -work mtiReSim +acc +incdir+./artifacts+$RSV_HOME/src+$OVM_HOME/src "./artifacts/usr_solyr_pkg.svp"
 
 # compile artifacts
-vlog +acc +incdir+./artifacts+$RSV_HOME/src+$OVM_HOME/src -L mtiReSim "./artifacts/icap_virtex_wrapper.sv"
-vlog +acc +incdir+./artifacts+$RSV_HOME/src+$OVM_HOME/src -L mtiReSim "./artifacts/my_region.sv"
-vlog +acc +incdir+./artifacts+$RSV_HOME/src+$OVM_HOME/src -L mtiReSim "./artifacts/my_solyr.sv"
+vlog +acc +incdir+./artifacts+$RSV_HOME/src+$OVM_HOME/src -L mtiReSim +define+MTI_QUESTA "./artifacts/icap_virtex_wrapper.sv"
+vlog +acc +incdir+./artifacts+$RSV_HOME/src+$OVM_HOME/src -L mtiReSim +define+MTI_QUESTA "./artifacts/my_region.sv"
+vlog +acc +incdir+./artifacts+$RSV_HOME/src+$OVM_HOME/src -L mtiReSim +define+MTI_QUESTA "./artifacts/my_solyr.sv"
 
 # TEST_DPR_DEMO TEST_DPR_SIMPLE TEST_DPR_READBACK TEST_DPR_ISOLATION TEST_DPR_RETRY TEST_DPR_RANDOM
 vlog +acc +incdir+./artifacts+$RSV_HOME/src+$OVM_HOME/src+./xtests -L mtiReSim +define+TEST_DPR_DEMO "./xdrs/xdrs.sv"
