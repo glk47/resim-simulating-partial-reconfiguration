@@ -44,6 +44,9 @@ interface icap_if ();
 	logic             cbusy    ;       // icap: out ---- user logic: in
 	logic    [31:0]   cdata    ;       // icap: in  ---- user logic: out
 	logic    [31:0]   cdata_rb ;       // icap: out ---- user logic: in
+	logic             cavail   ;       // icap: out ---- user logic: in (ultrascale)
+	logic             cprerror ;       // icap: out ---- user logic: in (ultrascale)
+	logic             cprdone  ;       // icap: out ---- user logic: in (ultrascale)
 
 endinterface: icap_if
 

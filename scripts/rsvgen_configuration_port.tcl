@@ -12,7 +12,31 @@ import usr_solyr_pkg::*;
 
 module $cp_
 #(parameter
+
+`ifdef ICAP_VIRTEX4_WRAPPER
 	ICAP_WIDTH = \"X8\"
+`endif
+
+`ifdef ICAP_VIRTEX5_WRAPPER
+	ICAP_WIDTH = \"X8\"
+`endif
+
+`ifdef ICAP_VIRTEX6_WRAPPER
+	ICAP_WIDTH = \"X8\"
+`endif
+	
+`ifdef ICAPE2_WRAPPER
+	DEVICE_ID  = 32'h03651093,
+	ICAP_WIDTH = \"X8\",
+	SIM_CFG_FILE_NAME = \"NONE\"
+`endif
+
+`ifdef ICAPE3_WRAPPER
+	DEVICE_ID = 32'h03651093,
+	ICAP_AUTO_SWITCH = \"DISABLE\",
+	SIM_CFG_FILE_NAME = \"NONE\"
+`endif
+
 )
 (
 
@@ -41,6 +65,25 @@ module $cp_
 	input      CLK      ,
 	input      \[31:0\] I ,
 	input      RDWRB
+`endif
+
+`ifdef ICAPE2_WRAPPER
+	output     \[31:0\] O ,
+	input      CSIB     ,
+	input      CLK      ,
+	input      \[31:0\] I ,
+	input      RDWRB
+`endif
+
+`ifdef ICAPE3_WRAPPER
+	output     \[31:0\] O ,
+	input      CSIB     ,
+	input      CLK      ,
+	input      \[31:0\] I ,
+	input      RDWRB    ,
+	output     AVAIL    ,
+	output     PRDONE   ,
+	output     PRERROR
 `endif
 
 );
@@ -81,7 +124,26 @@ module $cp_
 	assign iif.cdata       = I_nbs        ;
 	assign O               = O_bs         ;
 `endif
-	
+
+`ifdef ICAPE2_WRAPPER
+	assign iif.cclk        = CLK          ;
+	assign iif.ccs_n       = CSIB         ;
+	assign iif.cwe_n       = RDWRB        ;
+	assign iif.cdata       = I_nbs        ;
+	assign O               = O_bs         ;
+`endif
+
+`ifdef ICAPE3_WRAPPER
+	assign iif.cclk        = CLK          ;
+	assign iif.ccs_n       = CSIB         ;
+	assign iif.cwe_n       = RDWRB        ;
+	assign iif.cdata       = I_nbs        ;
+	assign O               = O_bs         ;
+	assign AVAIL           = iif.cavail   ;
+	assign PRDONE          = iif.cprerror ;
+	assign PRERROR         = iif.cprdone  ;
+`endif
+
 	// For Virtex5 and Virtex6, the bitstream need to be bitswapped before sending to 
 	// the 32b ICAP interface. Here, the bitstream is swapped back to the original 
 	// order before going into the class-bassed part of the simulation environment
@@ -124,6 +186,16 @@ module $cp_
 		rsv_configuration_port_base#(`NUM_RR)::type_id::set_type_override(rsv_configuration_port#(`NUM_RR)::get_type());
 		rsv_configuration_interface_base::type_id::set_type_override(rsv_icap_virtex::get_type());
 		rsv_configuration_parser_base#(`NUM_RR)::type_id::set_type_override(rsv_sbt_parser#(`NUM_RR)::get_type());
+
+`ifdef ICAP_VIRTEX4_WRAPPER
+		set_config_int(\"*.ci\", \"has_readback_delay\", 1);
+`endif
+`ifdef ICAP_VIRTEX5_WRAPPER
+		set_config_int(\"*.ci\", \"has_readback_delay\", 1);
+`endif
+`ifdef ICAP_VIRTEX6_WRAPPER
+		set_config_int(\"*.ci\", \"has_readback_delay\", 1);
+`endif
 
 	end
 

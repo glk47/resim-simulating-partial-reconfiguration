@@ -50,7 +50,9 @@ class rsv_icap_virtex extends rsv_configuration_interface_base;
 	// configuration table and parameter(s)
 	//---------------------------------------------------------------------
 	
+	protected int has_readback_delay = 0;
 	`ovm_component_utils_begin(rsv_icap_virtex)
+		`ovm_field_int(has_readback_delay, OVM_ALL_ON)
 	`ovm_component_utils_end
 
 	//---------------------------------------------------------------------
@@ -96,6 +98,9 @@ endclass : rsv_icap_virtex
 task rsv_icap_virtex::rsv_cdata_thread();
 	rsv_cdata_trans tr;
 
+	iif.cavail   <= 'h1;
+	iif.cprdone  <= 'h0;
+	iif.cprerror <= 'h0;
 	forever begin
 		@(posedge iif.cclk iff ((iif.ccs_n === 0) && (iif.cwe_n==1'b0) && (iif.cbusy==1'b0)));
 		tr = new($realtime, WCDATA, iif.cdata);
@@ -121,18 +126,22 @@ endtask : rsv_icap_virtex::rsv_readback_thread
 
 task rsv_icap_virtex::rsv_readback_busy_thread();
 
-	iif.cbusy <= 1'b1;
-	forever begin
-		@(negedge iif.ccs_n);
-		
-		if (iif.cwe_n==1'b1) begin /* Insert delay for configuration readback */
-			repeat($urandom()%4) @(posedge iif.cclk);
-		end
-		iif.cbusy <= 1'b0;
-		
-		@(posedge iif.ccs_n);
+	if (has_readback_delay==1) begin
 		iif.cbusy <= 1'b1;
-		
+		forever begin
+			@(negedge iif.ccs_n);
+			
+			if (iif.cwe_n==1'b1) begin /* Insert delay for configuration readback */
+				repeat($urandom()%4) @(posedge iif.cclk);
+			end
+			iif.cbusy <= 1'b0;
+			
+			@(posedge iif.ccs_n);
+			iif.cbusy <= 1'b1;
+			
+		end
+	end else begin
+		iif.cbusy <= 1'b0;
 	end
 	
 endtask : rsv_icap_virtex::rsv_readback_busy_thread

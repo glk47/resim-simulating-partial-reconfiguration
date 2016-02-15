@@ -203,3 +203,150 @@ begin
 
 end synth;
 
+---------------------------------------------------------------------
+--
+-- ICAPE2_WRAPPER 
+--
+-- Description: Instantiating ICAPE2
+-- Simulation/Synthesis: Synthesis
+-- Reference: $XILINX_HOME/data/vhdl/src/unisims/primitive
+--
+---------------------------------------------------------------------
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+library UNISIM;
+use UNISIM.VComponents.all;
+
+entity ICAPE2_WRAPPER is
+	generic (
+		DEVICE_ID            : bit_vector := X"03651093";
+		ICAP_WIDTH           : string := "X32";
+		SIM_CFG_FILE_NAME    : string := "NONE"
+	);
+	port (
+		O                    : out std_logic_vector(31 downto 0);
+		CLK                  : in std_ulogic;
+		CSIB                 : in std_ulogic;
+		I                    : in std_logic_vector(31 downto 0);
+		RDWRB                : in std_ulogic      
+	);
+end ICAPE2_WRAPPER;
+
+architecture synth of ICAPE2_WRAPPER is 
+
+	component ICAPE2 is
+		generic (
+			DEVICE_ID            : bit_vector := X"03651093";
+			ICAP_WIDTH           : string := "X32";
+			SIM_CFG_FILE_NAME    : string := "NONE"
+		);
+		port (
+			O                    : out std_logic_vector(31 downto 0);
+			CLK                  : in std_ulogic;
+			CSIB                 : in std_ulogic;
+			I                    : in std_logic_vector(31 downto 0);
+			RDWRB                : in std_ulogic      
+		);
+	end component;
+	
+begin
+
+	i_ICAP_7SERIES : ICAPE2
+		generic map (
+			DEVICE_ID         => DEVICE_ID,
+			ICAP_WIDTH        => ICAP_WIDTH,
+			SIM_CFG_FILE_NAME => SIM_CFG_FILE_NAME
+		)
+		port map (
+			CLK        => CLK,
+			CSIB       => CSIB,
+			RDWRB      => RDWRB,
+			I          => I,
+			O          => O
+		);
+
+end synth;
+
+---------------------------------------------------------------------
+--
+-- ICAPE3_WRAPPER 
+--
+-- Description: Instantiating ICAPE3
+-- Simulation/Synthesis: Synthesis
+-- Reference: $XILINX_HOME/data/vhdl/src/unisims/primitive
+--
+---------------------------------------------------------------------
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+library UNISIM;
+use UNISIM.VComponents.all;
+
+entity ICAPE3_WRAPPER is
+	generic (
+		DEVICE_ID            : bit_vector := X"03651093";
+		ICAP_AUTO_SWITCH     : string := "DISABLE";
+		SIM_CFG_FILE_NAME    : string := "NONE"
+	);
+	port (
+		AVAIL                : out std_ulogic := '0';
+		O                    : out std_logic_vector(31 downto 0);
+		PRDONE               : out std_ulogic;
+		PRERROR              : out std_ulogic;
+		CLK                  : in std_ulogic;
+		CSIB                 : in std_ulogic;
+		I                    : in std_logic_vector(31 downto 0);
+		RDWRB                : in std_ulogic
+	);
+end ICAPE3_WRAPPER;
+
+architecture synth of ICAPE3_WRAPPER is 
+
+	component ICAPE3 is
+		generic (
+			DEVICE_ID            : bit_vector := X"03628093";
+			ICAP_AUTO_SWITCH     : string := "DISABLE";
+			SIM_CFG_FILE_NAME    : string := "NONE"
+		);
+		port (
+			AVAIL                : out std_ulogic := '0';
+			O                    : out std_logic_vector(31 downto 0);
+			PRDONE               : out std_ulogic;
+			PRERROR              : out std_ulogic;
+			CLK                  : in std_ulogic;
+			CSIB                 : in std_ulogic;
+			I                    : in std_logic_vector(31 downto 0);
+			RDWRB                : in std_ulogic
+		);
+	end component;
+	
+begin
+
+	i_ICAP_ULTRASCALE : ICAPE3
+		generic map (
+			DEVICE_ID         => DEVICE_ID,
+			ICAP_AUTO_SWITCH  => ICAP_AUTO_SWITCH,
+			SIM_CFG_FILE_NAME => SIM_CFG_FILE_NAME
+		)
+		port map (
+			CLK        => CLK,
+			CSIB       => CSIB,
+			RDWRB      => RDWRB,
+			I          => I,
+			O          => O,
+			AVAIL      => AVAIL,
+			PRDONE     => PRDONE,
+			PRERROR    => PRERROR
+		);
+		
+end synth;
+
+
+

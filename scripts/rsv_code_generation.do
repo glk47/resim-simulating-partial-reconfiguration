@@ -123,13 +123,17 @@ proc ReSim::rsv_create_solyr { vf_ {type_ VIRTEX4} {scb_ ""}} {
 		"\[ERROR\] you can only create one solyr!!!"
 	rsv_assert { [string equal $type_ VIRTEX4] == 1 || \
 		[string equal $type_ VIRTEX5] == 1 || \
-		[string equal $type_ VIRTEX6] == 1} \
-		"\[ERROR\] wrong solyr type specified, only support VIRTEX4/5/6!!!"
+		[string equal $type_ VIRTEX6] == 1 || \
+		[string equal $type_ 7SERIES] == 1 || \
+		[string equal $type_ ULTRASCALE] == 1} \
+		"\[ERROR\] wrong solyr type specified, only support VIRTEX4/5/6, 7SERIES, ULTRASCALE!!!"
 		
 	set solyr_a($vf_.nm) $vf_
 	if { $type_ == "VIRTEX4" } { set solyr_a($vf_.cp) "ICAP_VIRTEX4_WRAPPER" }
 	if { $type_ == "VIRTEX5" } { set solyr_a($vf_.cp) "ICAP_VIRTEX5_WRAPPER" }
 	if { $type_ == "VIRTEX6" } { set solyr_a($vf_.cp) "ICAP_VIRTEX6_WRAPPER" }
+	if { $type_ == "7SERIES" } { set solyr_a($vf_.cp) "ICAPE2_WRAPPER" }
+	if { $type_ == "ULTRASCALE" } { set solyr_a($vf_.cp) "ICAPE3_WRAPPER" }
 	set solyr_a($vf_.rec) {}
 	set solyr_a($vf_.ei) {}
 	set solyr_a($vf_.scb) $scb_
@@ -435,12 +439,16 @@ proc ReSim::rsv_print_fpga { vf_ op_ {sep_ ""} args} {
 }
 
 proc ReSim::rsv_print_cp_io { vf_ cp_ i args } {
-	set str    "\toutput     BUSY,\n\toutput     \[31:0\] O,\n"
-	append str "\tinput      CLK, \n\tinput      \[31:0\] I,\n"
+	set str    "\tinput      CLK, \n"
+	append str "\tinput      \[31:0\] I,\n"
+	append str "\toutput     \[31:0\] O,\n"
 	
-	if { $cp_ == "ICAP_VIRTEX4_WRAPPER" } { append str "\tinput      CE, \n\tinput      WRITE" }
-	if { $cp_ == "ICAP_VIRTEX5_WRAPPER" } { append str "\tinput      CE, \n\tinput      WRITE" }
-	if { $cp_ == "ICAP_VIRTEX6_WRAPPER" } { append str "\tinput      CSB,\n\tinput      RDWRB" }
+	if { $cp_ == "ICAP_VIRTEX4_WRAPPER" } { append str "\toutput     BUSY, \n\tinput      CE, \n\tinput      WRITE" }
+	if { $cp_ == "ICAP_VIRTEX5_WRAPPER" } { append str "\toutput     BUSY, \n\tinput      CE, \n\tinput      WRITE" }
+	if { $cp_ == "ICAP_VIRTEX6_WRAPPER" } { append str "\toutput     BUSY, \n\tinput      CSB,\n\tinput      RDWRB" }
+	
+	if { $cp_ == "ICAPE2_WRAPPER" } { append str "\tinput      CSIB,\n\tinput      RDWRB" }
+	if { $cp_ == "ICAPE3_WRAPPER" } { append str "\tinput      CSIB,\n\tinput      RDWRB,\n\toutput     AVAIL,\n\toutput     PRDONE,\n\toutput     PRERROR" }
 	
 	return str;
 }
