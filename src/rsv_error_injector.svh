@@ -59,6 +59,8 @@ class rsv_error_injector#(type IF=virtual interface null_if) extends rsv_error_i
 		`ovm_field_string(rr_inst, OVM_ALL_ON)
 	`ovm_component_utils_end
 
+	int has_reported_default_class_warning = 0;
+	
 	//---------------------------------------------------------------------
 	// constructor, build(), connect() & other ovm phase(s)
 	//---------------------------------------------------------------------
@@ -137,19 +139,31 @@ task rsv_error_injector::inject_errors(rsv_ei_trans tr);
 endtask : rsv_error_injector::inject_errors
 
 task rsv_error_injector::inject_to_static_module(rsv_ei_trans tr);
-	`ovm_warning("ReSim", "Using the default error injector")
+	if (!has_reported_default_class_warning) begin
+		has_reported_default_class_warning = 1;
+		`ovm_warning("ReSim", "Using the default error injector")
+	end
 endtask : rsv_error_injector::inject_to_static_module
 
 task rsv_error_injector::inject_to_reconfigurable_module(rsv_ei_trans tr);
-	`ovm_warning("ReSim", "Using the default error injector")
+	if (!has_reported_default_class_warning) begin
+		has_reported_default_class_warning = 1;
+		`ovm_warning("ReSim", "Using the default error injector")
+	end
 endtask : rsv_error_injector::inject_to_reconfigurable_module
 
 task rsv_error_injector::inject_to_internal_signals(rsv_ei_trans tr);
-	`ovm_warning("ReSim", "Using the default error injector")
+	if (!has_reported_default_class_warning) begin
+		has_reported_default_class_warning = 1;
+		`ovm_warning("ReSim", "Using the default error injector")
+	end
 endtask : rsv_error_injector::inject_to_internal_signals
 
 task rsv_error_injector::end_of_injecting_errors(rsv_ei_trans tr);
-	`ovm_warning("ReSim", "Using the default error injector")
+	if (!has_reported_default_class_warning) begin
+		has_reported_default_class_warning = 1;
+		`ovm_warning("ReSim", "Using the default error injector")
+	end
 endtask : rsv_error_injector::end_of_injecting_errors
 
 `endif // RSV_ERROR_INJECTOR_SVH

@@ -63,6 +63,8 @@ class rsv_region_base extends ovm_component;
 	`ovm_component_utils_begin(rsv_region_base)
 	`ovm_component_utils_end
 
+	int has_reported_abtract_class_warning = 0;
+
 	// Function: new
 	//
 	// The new constructor creates the super class and instantiates the
@@ -86,7 +88,10 @@ class rsv_region_base extends ovm_component;
 		forever begin
 			get_p.get(tr);
 			
-			`ovm_warning("ReSim", "Using the abstract class")
+			if (!has_reported_abtract_class_warning) begin
+				has_reported_abtract_class_warning = 1;
+				`ovm_warning("ReSim", "Using the abstract class")
+			end
 
 			ap.write(tr.clone());
 		end
@@ -99,12 +104,17 @@ class rsv_portal_controller_base extends ovm_component;
 	`ovm_component_utils_begin(rsv_portal_controller_base)
 	`ovm_component_utils_end
 
+	int has_reported_abtract_class_warning = 0;
+
 	function new (string name, ovm_component parent);
 		super.new(name, parent);
 	endfunction : new
 
 	virtual task select_module_phase(rsv_cfg_trans tr);
-		`ovm_warning("ReSim", "Using the abstract class")
+		if (!has_reported_abtract_class_warning) begin
+			has_reported_abtract_class_warning = 1;
+			`ovm_warning("ReSim", "Using the abstract class")
+		end
 	endtask : select_module_phase
 
 endclass : rsv_portal_controller_base
@@ -114,12 +124,17 @@ class rsv_state_spy_base extends ovm_component;
 	`ovm_component_utils_begin(rsv_state_spy_base)
 	`ovm_component_utils_end
 
+	int has_reported_abtract_class_warning = 0;
+
 	function new (string name, ovm_component parent);
 		super.new(name, parent);
 	endfunction : new
 
 	virtual task save_restore_state(rsv_spy_trans tr);
-		`ovm_warning("ReSim", "Using the abstract class")
+		if (!has_reported_abtract_class_warning) begin
+			has_reported_abtract_class_warning = 1;
+			`ovm_warning("ReSim", "Using the abstract class")
+		end
 	endtask : save_restore_state
 
 endclass : rsv_state_spy_base
@@ -129,12 +144,17 @@ class rsv_error_injector_base extends ovm_component;
 	`ovm_component_utils_begin(rsv_error_injector_base)
 	`ovm_component_utils_end
 
+	int has_reported_abtract_class_warning = 0;
+
 	function new (string name, ovm_component parent);
 		super.new(name, parent);
 	endfunction : new
 	
 	virtual task inject_errors(rsv_ei_trans tr);
-		`ovm_warning("ReSim", "Using the abstract class")
+		if (!has_reported_abtract_class_warning) begin
+			has_reported_abtract_class_warning = 1;
+			`ovm_warning("ReSim", "Using the abstract class")
+		end
 	endtask : inject_errors
 	
 endclass : rsv_error_injector_base
@@ -144,12 +164,17 @@ class rsv_region_recorder_base extends ovm_component;
 	`ovm_component_utils_begin(rsv_region_recorder_base)
 	`ovm_component_utils_end
 
+	int has_reported_abtract_class_warning = 0;
+
 	function new (string name, ovm_component parent);
 		super.new(name, parent);
 	endfunction : new
 
 	virtual task print_record_trans(rsv_simop_trans tr);
-		`ovm_warning("ReSim", "Using the abstract class")
+		if (!has_reported_abtract_class_warning) begin
+			has_reported_abtract_class_warning = 1;
+			`ovm_warning("ReSim", "Using the abstract class")
+		end
 	endtask : print_record_trans
 	
 endclass : rsv_region_recorder_base
@@ -169,6 +194,8 @@ class rsv_scoreboard_base#(int NUM_RR = 1) extends ovm_component;
 	`ovm_component_param_utils_begin(rsv_scoreboard_base#(NUM_RR))
 	`ovm_component_utils_end
 
+	int has_reported_abtract_class_warning = 0;
+
 	// Function: new
 	//
 	// The new constructor creates the super class and instantiates the
@@ -186,7 +213,10 @@ class rsv_scoreboard_base#(int NUM_RR = 1) extends ovm_component;
 	// message without processing any transactions
 
 	virtual task run();
-		`ovm_warning("ReSim", "Using the abstract class")
+		if (!has_reported_abtract_class_warning) begin
+			has_reported_abtract_class_warning = 1;
+			`ovm_warning("ReSim", "Using the abstract class")
+		end
 	endtask : run
 
 endclass : rsv_scoreboard_base
@@ -207,6 +237,8 @@ class rsv_configuration_port_base#(int NUM_RR = 1) extends ovm_component;
 
 	`ovm_component_param_utils_begin(rsv_configuration_port_base#(NUM_RR))
 	`ovm_component_utils_end
+
+	int has_reported_abtract_class_warning = 0;
 	
 	// Function: new
 	//
@@ -227,7 +259,10 @@ class rsv_configuration_port_base#(int NUM_RR = 1) extends ovm_component;
 	// message without generating any transactions
 	
 	virtual task run();
-		`ovm_warning("ReSim", "Using the abstract class")
+		if (!has_reported_abtract_class_warning) begin
+			has_reported_abtract_class_warning = 1;
+			`ovm_warning("ReSim", "Using the abstract class")
+		end
 	endtask : run
 
 endclass : rsv_configuration_port_base
@@ -244,6 +279,8 @@ class rsv_configuration_interface_base extends ovm_component;
 
 	`ovm_component_utils_begin(rsv_configuration_interface_base)
 	`ovm_component_utils_end
+
+	int has_reported_abtract_class_warning = 0;
 	
 	// Function: new
 	//
@@ -262,7 +299,10 @@ class rsv_configuration_interface_base extends ovm_component;
 	// message without generating any transactions
 	
 	virtual task run();
-		`ovm_warning("ReSim", "Using the abstract class")
+		if (!has_reported_abtract_class_warning) begin
+			has_reported_abtract_class_warning = 1;
+			`ovm_warning("ReSim", "Using the abstract class")
+		end
 	endtask : run
 
 endclass : rsv_configuration_interface_base
@@ -286,6 +326,8 @@ class rsv_configuration_parser_base#(int NUM_RR = 1) extends ovm_component;
 
 	`ovm_component_param_utils_begin(rsv_configuration_parser_base#(NUM_RR))
 	`ovm_component_utils_end
+
+	int has_reported_abtract_class_warning = 0;
 	
 	// Function: new
 	//
@@ -307,7 +349,10 @@ class rsv_configuration_parser_base#(int NUM_RR = 1) extends ovm_component;
 	// message without processing any transactions
 	
 	virtual task run();
-		`ovm_warning("ReSim", "Using the abstract class")
+		if (!has_reported_abtract_class_warning) begin
+			has_reported_abtract_class_warning = 1;
+			`ovm_warning("ReSim", "Using the abstract class")
+		end
 	endtask : run
 
 endclass : rsv_configuration_parser_base

@@ -149,32 +149,38 @@ task rsv_sbt_parser::icap_process_packet_header();
 	rsv_cdata_trans tr;
 	
 	get_p.get(tr);
-	`check_error(tr.op==WCDATA, $psprintf("SBT_ERROR: Expecting Configuration SBT"))
 	
-	if ((m_is_sync == 0)||(tr.cdata == 32'haa995566)||(tr.cdata == 32'hffffffff)) begin
-		m_sbt_wc = 0;
-		if ((m_is_sync == 0) && (tr.cdata == 32'haa995566)) begin
-			icap_cmd_sync(tr.event_time);
-		end
-	end else begin /* m_is_sync==1*/
+	//// We are expectig WCDATA here. We ignore RCDATA without reporting error.
+	////
+	//// `check_error(tr.op==WCDATA, $psprintf("SBT_ERROR: Expecting Configuration SBT"))
 	
-		case (`sbt_type(tr.cdata))
-			3'b001: begin /* Type 1 Header */
-				m_sbt_op = `sbt_t1h_op(tr.cdata);
-				m_sbt_wc = `sbt_t1h_wc(tr.cdata);
-				m_sbt_addr = `sbt_t1h_addr(tr.cdata);
-				m_t12h_time= tr.event_time;
+	if(tr.op==WCDATA) begin
+	
+		if ((m_is_sync == 0)||(tr.cdata == 32'haa995566)||(tr.cdata == 32'hffffffff)) begin
+			m_sbt_wc = 0;
+			if ((m_is_sync == 0) && (tr.cdata == 32'haa995566)) begin
+				icap_cmd_sync(tr.event_time);
 			end
-			3'b010: begin /* Type 2 Header */
-				`check_error(m_sbt_wc==0, $psprintf("SBT_ERROR: Type 2 Header should have zero Word Count"))
-				m_sbt_wc = `sbt_t2h_wc(tr.cdata);
-			end
-			default: begin /* Unexpected Header */
-				`check_error(0,"SBT_ERROR: Unexpected SBT Header type")
-				m_sbt_wc = 0;
-			end
-		endcase
+		end else begin /* m_is_sync==1*/
 		
+			case (`sbt_type(tr.cdata))
+				3'b001: begin /* Type 1 Header */
+					m_sbt_op = `sbt_t1h_op(tr.cdata);
+					m_sbt_wc = `sbt_t1h_wc(tr.cdata);
+					m_sbt_addr = `sbt_t1h_addr(tr.cdata);
+					m_t12h_time= tr.event_time;
+				end
+				3'b010: begin /* Type 2 Header */
+					`check_error(m_sbt_wc==0, $psprintf("SBT_ERROR: Type 2 Header should have zero Word Count"))
+					m_sbt_wc = `sbt_t2h_wc(tr.cdata);
+				end
+				default: begin /* Unexpected Header */
+					`check_error(0,"SBT_ERROR: Unexpected SBT Header type")
+					m_sbt_wc = 0;
+				end
+			endcase
+			
+		end
 	end
 
 	-> tr.done;
@@ -435,7 +441,11 @@ endtask : rsv_sbt_parser::icap_end_of_configuration
 task rsv_sbt_parser::icap_cmd_gcapture(realtime t);
 
 	for (int i = 0; i<NUM_RR; i++) begin 
-		rsv_spy_trans tr = new(t, i, 8'hff, 0, 0, 0, GCAPTURE, OVM_MEDIUM);
+		rsv_spy_trans tr;
+		if (i == 0)
+			tr = new(t, i, 8'hff, 0, 0, 0, GCAPTURE, OVM_MEDIUM);
+		else
+			tr = new(t, i, 8'hff, 0, 0, 0, GCAPTURE, OVM_HIGH);
 		put_p[i].put(tr); @tr.done;
 	end
 	
@@ -444,7 +454,11 @@ endtask : rsv_sbt_parser::icap_cmd_gcapture
 task rsv_sbt_parser::icap_cmd_grestore(realtime t);
 	
 	for (int i = 0; i<NUM_RR; i++) begin 
-		rsv_spy_trans tr = new(t, i, 8'hff, 0, 0, 0, GRESTORE, OVM_MEDIUM);
+		rsv_spy_trans tr;
+		if (i == 0)
+			tr = new(t, i, 8'hff, 0, 0, 0, GRESTORE, OVM_MEDIUM);
+		else
+			tr = new(t, i, 8'hff, 0, 0, 0, GRESTORE, OVM_HIGH);
 		put_p[i].put(tr); @tr.done;
 	end
 	

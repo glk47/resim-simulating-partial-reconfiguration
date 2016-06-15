@@ -44,6 +44,8 @@ class rsv_scoreboard#(int NUM_RR = 1) extends rsv_scoreboard_base#(NUM_RR);
 	`ovm_component_param_utils_begin(rsv_scoreboard#(NUM_RR))
 	`ovm_component_utils_end
 
+	int has_reported_default_class_warning = 0;
+
 	//---------------------------------------------------------------------
 	// constructor, build(), connect() & other ovm phase(s)
 	//---------------------------------------------------------------------
@@ -71,7 +73,10 @@ class rsv_scoreboard#(int NUM_RR = 1) extends rsv_scoreboard_base#(NUM_RR);
 	endtask : run
 
 	virtual protected task initialize_coverage();
-		`ovm_warning("ReSim", "Using the default scoreboard")
+		if (!has_reported_default_class_warning) begin
+			has_reported_default_class_warning = 1;
+			`ovm_warning("ReSim", "Using the default scoreboard")
+		end
 	endtask : initialize_coverage
 	
 	virtual protected task collect_coverage(rsv_simop_trans tr);
