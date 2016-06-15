@@ -206,7 +206,7 @@ task rsv_state_spy::state_spy_gcapture(rsv_spy_trans tr);
 	// note: each frame has 3*32=96bit storage
 
 	for (int i=0; i < `num_of_hdl_signals; i++ ) begin
-		if (spy_vi.name[i] != "0") begin // The unused entries are filled with "0" by ReSim::rsv_load_spy_buffer
+		if (spy_vi.name[i] != "") begin // The unused entries are ""
 			
 			logic [31:0] fa    = spy_vi.fa[i];
 			logic [31:0] offt  = spy_vi.offt[i];

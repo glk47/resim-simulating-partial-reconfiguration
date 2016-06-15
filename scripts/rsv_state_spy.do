@@ -42,7 +42,7 @@ proc ReSim::rsv_load_spy_buffer { rr_ rm_ } {
 	set rr_ /[regsub -all -- {[\.]} "${rr_}" {/}]
 	
 	mem load -infile "./artifacts/spy/spy_[rsv_gen_label $rr_ $rm_]_fa.txt" -format hex -filltype value -fillradix hex -filldata 0 $rr_/rm_sif/fa;
-	mem load -infile "./artifacts/spy/spy_[rsv_gen_label $rr_ $rm_]_name.txt" -format hex -filltype value -fillradix hex -filldata 0 $rr_/rm_sif/name;
+	mem load -infile "./artifacts/spy/spy_[rsv_gen_label $rr_ $rm_]_name.txt" -format hex $rr_/rm_sif/name; ## Bug in QuestaSim 10.1b? The simulator crashes
 	mem load -infile "./artifacts/spy/spy_[rsv_gen_label $rr_ $rm_]_offt.txt" -format hex -filltype value -fillradix hex -filldata 0 $rr_/rm_sif/offt;
 	
 }
