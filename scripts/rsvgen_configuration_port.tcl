@@ -98,6 +98,10 @@ module $cp_
 	wire \[31:0\]       I_nbs;   // non-bitswapped version of incoming bitstream from I
 	wire \[31:0\]       O_bs;    // bitswapped version of outgoing bitstream to O
 	
+	logic \[31:0\]      O_bs_d1;
+	logic \[31:0\]      O_bs_d2;
+	logic \[31:0\]      O_bs_d3;
+	
 `ifdef ICAP_VIRTEX4_WRAPPER
 	assign iif.cclk        = CLK          ;
 	assign iif.ccs_n       = CE           ;
@@ -130,7 +134,7 @@ module $cp_
 	assign iif.ccs_n       = CSIB         ;
 	assign iif.cwe_n       = RDWRB        ;
 	assign iif.cdata       = I_nbs        ;
-	assign O               = O_bs         ;
+	assign O               = O_bs_d2      ;
 `endif
 
 `ifdef ICAPE3_WRAPPER
@@ -138,7 +142,7 @@ module $cp_
 	assign iif.ccs_n       = CSIB         ;
 	assign iif.cwe_n       = RDWRB        ;
 	assign iif.cdata       = I_nbs        ;
-	assign O               = O_bs         ;
+	assign O               = O_bs_d2      ;
 	assign AVAIL           = iif.cavail   ;
 	assign PRDONE          = iif.cprerror ;
 	assign PRERROR         = iif.cprdone  ;
@@ -170,6 +174,15 @@ module $cp_
 			end
 		end
 	end endgenerate
+	
+	// For 7SERIES and ULTRASCALE, the readback bitstream needs 2 additional cycles of delays.
+	// (3 cycles in total). Note, iif.cdata_rb already has 1 cycle delay.
+	
+	always @(posedge CLK) begin
+		O_bs_d1 <= O_bs;
+		O_bs_d2 <= O_bs_d1;
+		O_bs_d3 <= O_bs_d2;
+	end
 	
 	initial begin
 

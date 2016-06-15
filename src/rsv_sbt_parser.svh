@@ -190,10 +190,15 @@ task rsv_sbt_parser::icap_process_1_packet_data();
 	`check_error(!((m_sbt_addr==IREG_FDRI)||(m_sbt_addr== IREG_FDRO)),
 		$psprintf("SBT_ERROR: Does not support 1 word packet for FDRI/FDRO"))
 	
-	// The ICAP artifact do not have pipeline. Each SBT word is directly parsed by the 
-	// SBT_PARSER. Therefore, user can not insert unexpected NOP packets into the SBT. 
+	// The ICAP artifact do not have pipeline but real FPGAs do. It is common to insert NOP
+	// packets at the ICAP Write-to-Read transition. The SBT_PARSER needs to ignore all
+	// NOPs inserted during the transition period.
 
 	get_p.get(tr);
+	while ((m_sbt_op == IOP_RD) && (tr.op==WCDATA) && (tr.cdata == 32'h20000000)) begin
+		-> tr.done;
+		get_p.get(tr);
+	end
 	
 	case (m_sbt_op)
 		IOP_RD: begin 
@@ -228,7 +233,15 @@ task rsv_sbt_parser::icap_process_n_packet_data();
 
 	for (int i=0; i < m_sbt_wc; i++ ) begin
 		
+		// The ICAP artifact do not have pipeline but real FPGAs do. It is common to insert NOP
+		// packets at the ICAP Write-to-Read transition. The SBT_PARSER needs to ignore all
+		// NOPs inserted during the transition period.
+	
 		get_p.get(tr);
+		while ((m_sbt_op == IOP_RD) && (tr.op==WCDATA) && (tr.cdata == 32'h20000000)) begin
+			-> tr.done;
+			get_p.get(tr);
+		end
 		
 		case (m_sbt_op)
 			IOP_RD: begin

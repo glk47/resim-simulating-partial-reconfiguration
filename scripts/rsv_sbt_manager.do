@@ -245,8 +245,6 @@ proc ReSim::rsv_create_memory { mem_ gra_ nbk_ edi_ } {
 		"\[ERROR\] only support memory granularity (smallest addressable unit) of 1/2/4/8 bytes!!!"
 	rsv_assert { $nbk_ == 1 || $nbk_ == 2 || $nbk_ == 4 || $nbk_ == 8 } \
 		"\[ERROR\] only support memory that has 1/2/4/8 banks!!!"
-	rsv_assert { [expr ($gra_ *  $nbk_)%4] == 0} \
-		"\[ERROR\] memory granularity * memory bank should be multiple of 4 since bitstream is 32bit aligned !!!"
 	rsv_assert { [string equal [string tolower $edi_] le] == 1 || [string equal [string tolower $edi_] be] == 1} \
 		"\[ERROR\] memory endian should be either little endian (le) OR big endian (be)!!!"
 	
